@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  MediumTitlebarViewController.swift
 //  MyAudioPlayer
 //
-//  Created by Tobias Dunkel on 13.12.17.
-//  Copyright © 2017 Tobias Dunkel. All rights reserved.
+//  Created by Tobias Dunkel on 26.03.18.
+//  Copyright © 2018 Tobias Dunkel. All rights reserved.
 //
 
 import Cocoa
 
-class MainViewController: NSViewController {
+class MediumTitlebarViewController: NSTitlebarAccessoryViewController {
 
     @IBOutlet weak var nowPlayingView: NSView!
     @IBOutlet weak var secondStackView: NSStackView!
@@ -22,32 +22,23 @@ class MainViewController: NSViewController {
     var uiState: UIState?
     
     override func viewDidLoad() {
-        
-        setupUI()
         super.viewDidLoad()
-        
+        // Do view setup here.
     }
     
-    
-
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
     
     private func setupUI() {
+        
         guard let viewModel = viewModel else { return }
         viewModel.uiState.bindAndFire { [unowned self] in
             self.uiState = $0
-            self.someStuff()
         }
+        
     }
     
-    func someStuff() {
-        print("someStuff")
-    }
-
 }
-
-

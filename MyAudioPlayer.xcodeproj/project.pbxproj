@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D224D7AF2069705600CA51C3 /* MediumTitlebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D224D7AE2069705600CA51C3 /* MediumTitlebarViewController.swift */; };
+		D224D7B12069A1BB00CA51C3 /* PlayerControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D224D7B02069A1BB00CA51C3 /* PlayerControlsViewController.swift */; };
+		D224D7B32069ABCA00CA51C3 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D224D7B22069ABCA00CA51C3 /* PlaylistViewController.swift */; };
+		D224D7B52069AC1A00CA51C3 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D224D7B42069AC1A00CA51C3 /* ProgressViewController.swift */; };
+		D224D7B72069AECE00CA51C3 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = D224D7B62069AECE00CA51C3 /* Track.swift */; };
 		D22CDCF81FE1DDBD00D988B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */; };
 		D22CDCFA1FE1DDBD00D988B6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDCF91FE1DDBD00D988B6 /* MainViewController.swift */; };
 		D22CDCFC1FE1DDBD00D988B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D22CDCFB1FE1DDBD00D988B6 /* Assets.xcassets */; };
@@ -16,9 +21,16 @@
 		D22CDD181FE215E200D988B6 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDD171FE215E200D988B6 /* ViewModel.swift */; };
 		D22CDD1A1FE2266D00D988B6 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDD191FE2266D00D988B6 /* Dynamic.swift */; };
 		D22CDD1C1FE2729100D988B6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDD1B1FE2729100D988B6 /* Constants.swift */; };
+		D26D69A1206A6F2B00BD1577 /* CoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26D69A0206A6F2B00BD1577 /* CoverViewController.swift */; };
+		D26D69A3206A6F8300BD1577 /* WideTitlebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26D69A2206A6F8300BD1577 /* WideTitlebarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D224D7AE2069705600CA51C3 /* MediumTitlebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumTitlebarViewController.swift; sourceTree = "<group>"; };
+		D224D7B02069A1BB00CA51C3 /* PlayerControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsViewController.swift; sourceTree = "<group>"; };
+		D224D7B22069ABCA00CA51C3 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
+		D224D7B42069AC1A00CA51C3 /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		D224D7B62069AECE00CA51C3 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		D22CDCF41FE1DDBD00D988B6 /* MyAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D22CDCF91FE1DDBD00D988B6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -31,6 +43,8 @@
 		D22CDD171FE215E200D988B6 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		D22CDD191FE2266D00D988B6 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		D22CDD1B1FE2729100D988B6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D26D69A0206A6F2B00BD1577 /* CoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewController.swift; sourceTree = "<group>"; };
+		D26D69A2206A6F8300BD1577 /* WideTitlebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideTitlebarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,17 +79,40 @@
 			children = (
 				D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */,
 				D22CDD171FE215E200D988B6 /* ViewModel.swift */,
-				D22CDD091FE1E6B800D988B6 /* MainWindowController.swift */,
-				D22CDCF91FE1DDBD00D988B6 /* MainViewController.swift */,
+				D224D7B62069AECE00CA51C3 /* Track.swift */,
+				D26D699F206A597E00BD1577 /* View */,
 				D22CDCFB1FE1DDBD00D988B6 /* Assets.xcassets */,
-				D22CDCFD1FE1DDBD00D988B6 /* Main.storyboard */,
 				D22CDD001FE1DDBD00D988B6 /* Info.plist */,
 				D22CDD011FE1DDBD00D988B6 /* MyAudioPlayer.entitlements */,
-				D22CDD151FE1F69A00D988B6 /* NowPlayingViewController.swift */,
 				D22CDD191FE2266D00D988B6 /* Dynamic.swift */,
 				D22CDD1B1FE2729100D988B6 /* Constants.swift */,
 			);
 			path = MyAudioPlayer;
+			sourceTree = "<group>";
+		};
+		D26D699E206A591A00BD1577 /* Titlebar */ = {
+			isa = PBXGroup;
+			children = (
+				D224D7AE2069705600CA51C3 /* MediumTitlebarViewController.swift */,
+				D26D69A2206A6F8300BD1577 /* WideTitlebarViewController.swift */,
+				D22CDD151FE1F69A00D988B6 /* NowPlayingViewController.swift */,
+				D224D7B02069A1BB00CA51C3 /* PlayerControlsViewController.swift */,
+				D224D7B42069AC1A00CA51C3 /* ProgressViewController.swift */,
+			);
+			path = Titlebar;
+			sourceTree = "<group>";
+		};
+		D26D699F206A597E00BD1577 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D22CDCFD1FE1DDBD00D988B6 /* Main.storyboard */,
+				D22CDD091FE1E6B800D988B6 /* MainWindowController.swift */,
+				D22CDCF91FE1DDBD00D988B6 /* MainViewController.swift */,
+				D224D7B22069ABCA00CA51C3 /* PlaylistViewController.swift */,
+				D26D69A0206A6F2B00BD1577 /* CoverViewController.swift */,
+				D26D699E206A591A00BD1577 /* Titlebar */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,11 +188,18 @@
 			files = (
 				D22CDD0A1FE1E6B800D988B6 /* MainWindowController.swift in Sources */,
 				D22CDD181FE215E200D988B6 /* ViewModel.swift in Sources */,
+				D224D7AF2069705600CA51C3 /* MediumTitlebarViewController.swift in Sources */,
+				D224D7B52069AC1A00CA51C3 /* ProgressViewController.swift in Sources */,
 				D22CDD161FE1F69A00D988B6 /* NowPlayingViewController.swift in Sources */,
+				D224D7B12069A1BB00CA51C3 /* PlayerControlsViewController.swift in Sources */,
 				D22CDD1A1FE2266D00D988B6 /* Dynamic.swift in Sources */,
+				D224D7B32069ABCA00CA51C3 /* PlaylistViewController.swift in Sources */,
 				D22CDD1C1FE2729100D988B6 /* Constants.swift in Sources */,
 				D22CDCFA1FE1DDBD00D988B6 /* MainViewController.swift in Sources */,
+				D26D69A3206A6F8300BD1577 /* WideTitlebarViewController.swift in Sources */,
 				D22CDCF81FE1DDBD00D988B6 /* AppDelegate.swift in Sources */,
+				D26D69A1206A6F2B00BD1577 /* CoverViewController.swift in Sources */,
+				D224D7B72069AECE00CA51C3 /* Track.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

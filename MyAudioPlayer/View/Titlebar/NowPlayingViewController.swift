@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class NowPlayingViewController: NSViewController {
+class NowPlayingViewController: NSTitlebarAccessoryViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
