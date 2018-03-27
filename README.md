@@ -1,5 +1,7 @@
 # SwiftAudioPlayer
 
+![Screenshot](SwiftAudioPlayer.png)
+
 This is my "Work in progress" audio player for macOS, written entirely in Swift.
 It's just a little project of mine to learn more about swift and macOS app development, since I'm quite new to programming.
 
