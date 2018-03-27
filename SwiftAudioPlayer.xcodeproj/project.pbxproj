@@ -31,7 +31,7 @@
 		D224D7B22069ABCA00CA51C3 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		D224D7B42069AC1A00CA51C3 /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		D224D7B62069AECE00CA51C3 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
-		D22CDCF41FE1DDBD00D988B6 /* MyAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D22CDCF41FE1DDBD00D988B6 /* SwiftAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D22CDCF91FE1DDBD00D988B6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D22CDCFB1FE1DDBD00D988B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		D22CDCEB1FE1DDBD00D988B6 = {
 			isa = PBXGroup;
 			children = (
-				D22CDCF61FE1DDBD00D988B6 /* MyAudioPlayer */,
+				D22CDCF61FE1DDBD00D988B6 /* SwiftAudioPlayer */,
 				D22CDCF51FE1DDBD00D988B6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,12 +69,12 @@
 		D22CDCF51FE1DDBD00D988B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D22CDCF41FE1DDBD00D988B6 /* MyAudioPlayer.app */,
+				D22CDCF41FE1DDBD00D988B6 /* SwiftAudioPlayer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D22CDCF61FE1DDBD00D988B6 /* MyAudioPlayer */ = {
+		D22CDCF61FE1DDBD00D988B6 /* SwiftAudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
 				D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */,
@@ -87,7 +87,7 @@
 				D22CDD191FE2266D00D988B6 /* Dynamic.swift */,
 				D22CDD1B1FE2729100D988B6 /* Constants.swift */,
 			);
-			path = MyAudioPlayer;
+			path = SwiftAudioPlayer;
 			sourceTree = "<group>";
 		};
 		D26D699E206A591A00BD1577 /* Titlebar */ = {
@@ -118,9 +118,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D22CDCF31FE1DDBD00D988B6 /* MyAudioPlayer */ = {
+		D22CDCF31FE1DDBD00D988B6 /* SwiftAudioPlayer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D22CDD041FE1DDBD00D988B6 /* Build configuration list for PBXNativeTarget "MyAudioPlayer" */;
+			buildConfigurationList = D22CDD041FE1DDBD00D988B6 /* Build configuration list for PBXNativeTarget "SwiftAudioPlayer" */;
 			buildPhases = (
 				D22CDCF01FE1DDBD00D988B6 /* Sources */,
 				D22CDCF11FE1DDBD00D988B6 /* Frameworks */,
@@ -130,9 +130,9 @@
 			);
 			dependencies = (
 			);
-			name = MyAudioPlayer;
+			name = SwiftAudioPlayer;
 			productName = MyAudioPlayer;
-			productReference = D22CDCF41FE1DDBD00D988B6 /* MyAudioPlayer.app */;
+			productReference = D22CDCF41FE1DDBD00D988B6 /* SwiftAudioPlayer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -151,7 +151,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D22CDCEF1FE1DDBD00D988B6 /* Build configuration list for PBXProject "MyAudioPlayer" */;
+			buildConfigurationList = D22CDCEF1FE1DDBD00D988B6 /* Build configuration list for PBXProject "SwiftAudioPlayer" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -164,7 +164,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D22CDCF31FE1DDBD00D988B6 /* MyAudioPlayer */,
+				D22CDCF31FE1DDBD00D988B6 /* SwiftAudioPlayer */,
 			);
 		};
 /* End PBXProject section */
@@ -332,7 +332,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MyAudioPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.MyAudioPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.SwiftAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -347,7 +347,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MyAudioPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.MyAudioPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.SwiftAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -356,7 +356,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D22CDCEF1FE1DDBD00D988B6 /* Build configuration list for PBXProject "MyAudioPlayer" */ = {
+		D22CDCEF1FE1DDBD00D988B6 /* Build configuration list for PBXProject "SwiftAudioPlayer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D22CDD021FE1DDBD00D988B6 /* Debug */,
@@ -365,7 +365,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D22CDD041FE1DDBD00D988B6 /* Build configuration list for PBXNativeTarget "MyAudioPlayer" */ = {
+		D22CDD041FE1DDBD00D988B6 /* Build configuration list for PBXNativeTarget "SwiftAudioPlayer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D22CDD051FE1DDBD00D988B6 /* Debug */,
