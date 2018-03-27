@@ -689,7 +689,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MyAudioPlayer" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SwiftAudioPlayer" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -698,7 +698,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" customClass="MainWindowController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="MainWindowController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="mainWindow" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -746,7 +746,7 @@
         <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="MainViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="MainViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -801,7 +801,7 @@
         <!--Medium Titlebar View Controller-->
         <scene sceneID="ehE-HJ-8PJ">
             <objects>
-                <viewController storyboardIdentifier="mediumTitlebarVC" id="nsS-mW-U82" customClass="MediumTitlebarViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mediumTitlebarVC" id="nsS-mW-U82" customClass="MediumTitlebarViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="gZP-y0-dG9">
                         <rect key="frame" x="0.0" y="0.0" width="496" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -856,7 +856,7 @@
         <!--Cover View Controller-->
         <scene sceneID="Tmy-s2-dAG">
             <objects>
-                <viewController id="vfA-ce-56X" customClass="CoverViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vfA-ce-56X" customClass="CoverViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="XH7-b5-afo">
                         <rect key="frame" x="0.0" y="0.0" width="126" height="123"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -883,7 +883,7 @@
         <!--Now Playing View Controller-->
         <scene sceneID="cmi-J5-UZd">
             <objects>
-                <viewController storyboardIdentifier="nowPlayingVC" id="SMm-gV-YvG" customClass="NowPlayingViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="nowPlayingVC" id="SMm-gV-YvG" customClass="NowPlayingViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="CtE-9B-7cZ">
                         <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
@@ -940,7 +940,7 @@
         <!--Progress View Controller-->
         <scene sceneID="iBm-r7-1qs">
             <objects>
-                <viewController storyboardIdentifier="progressVC" id="44z-sj-R9c" customClass="ProgressViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="progressVC" id="44z-sj-R9c" customClass="ProgressViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="cCq-22-BdV">
                         <rect key="frame" x="0.0" y="0.0" width="366" height="33"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
@@ -1004,7 +1004,7 @@
         <!--Playlist View Controller-->
         <scene sceneID="X2C-oG-YxT">
             <objects>
-                <viewController id="OdB-Da-G7H" customClass="PlaylistViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="OdB-Da-G7H" customClass="PlaylistViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <customView key="view" id="6yj-Jt-HGv">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1013,7 +1013,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="279"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JjZ-Qw-gHg">
                                     <rect key="frame" x="0.0" y="0.0" width="450" height="279"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="1" indentationMarkerFollowsCell="NO" outlineTableColumn="ncU-vc-414" id="h3Z-uJ-Hv7">
                                             <rect key="frame" x="0.0" y="0.0" width="450" height="279"/>
@@ -1154,7 +1154,7 @@
         <!--Player Controls View Controller-->
         <scene sceneID="st8-sZ-fWa">
             <objects>
-                <viewController storyboardIdentifier="playerControlsVC" id="Nfp-bk-cqK" customClass="PlayerControlsViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="playerControlsVC" id="Nfp-bk-cqK" customClass="PlayerControlsViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Osz-P9-pJK">
                         <rect key="frame" x="0.0" y="0.0" width="216" height="45"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1221,8 +1221,8 @@
         <!--Wide Titlebar View Controller-->
         <scene sceneID="Swm-xc-p1I">
             <objects>
-                <viewController storyboardIdentifier="mediumTitlebarVC" id="Pb5-Em-IPY" customClass="WideTitlebarViewController" customModule="MyAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="2zt-PN-yGn">
+                <viewController storyboardIdentifier="mediumTitlebarVC" id="Pb5-Em-IPY" customClass="WideTitlebarViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="2zt-PN-yGn">
                         <rect key="frame" x="0.0" y="0.0" width="528" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>

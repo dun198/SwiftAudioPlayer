@@ -78,14 +78,13 @@
 			isa = PBXGroup;
 			children = (
 				D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */,
-				D22CDD171FE215E200D988B6 /* ViewModel.swift */,
-				D224D7B62069AECE00CA51C3 /* Track.swift */,
+				D22CDD1B1FE2729100D988B6 /* Constants.swift */,
+				D26D69A4206A73B000BD1577 /* Model */,
 				D26D699F206A597E00BD1577 /* View */,
+				D26D69A5206A73E300BD1577 /* Helper Classes */,
 				D22CDCFB1FE1DDBD00D988B6 /* Assets.xcassets */,
 				D22CDD001FE1DDBD00D988B6 /* Info.plist */,
 				D22CDD011FE1DDBD00D988B6 /* SwiftAudioPlayer.entitlements */,
-				D22CDD191FE2266D00D988B6 /* Dynamic.swift */,
-				D22CDD1B1FE2729100D988B6 /* Constants.swift */,
 			);
 			path = SwiftAudioPlayer;
 			sourceTree = "<group>";
@@ -113,6 +112,23 @@
 				D26D699E206A591A00BD1577 /* Titlebar */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D26D69A4206A73B000BD1577 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D22CDD171FE215E200D988B6 /* ViewModel.swift */,
+				D224D7B62069AECE00CA51C3 /* Track.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D26D69A5206A73E300BD1577 /* Helper Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D22CDD191FE2266D00D988B6 /* Dynamic.swift */,
+			);
+			path = "Helper Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,10 +343,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MyAudioPlayer/MyAudioPlayer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SwiftAudioPlayer/SwiftAudioPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = MyAudioPlayer/Info.plist;
+				INFOPLIST_FILE = SwiftAudioPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.SwiftAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -342,10 +358,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MyAudioPlayer/MyAudioPlayer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SwiftAudioPlayer/SwiftAudioPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = MyAudioPlayer/Info.plist;
+				INFOPLIST_FILE = SwiftAudioPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.SwiftAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
