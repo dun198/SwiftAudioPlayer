@@ -37,7 +37,7 @@
 		D22CDCFB1FE1DDBD00D988B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D22CDCFE1FE1DDBD00D988B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D22CDD001FE1DDBD00D988B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D22CDD011FE1DDBD00D988B6 /* MyAudioPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyAudioPlayer.entitlements; sourceTree = "<group>"; };
+		D22CDD011FE1DDBD00D988B6 /* SwiftAudioPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftAudioPlayer.entitlements; sourceTree = "<group>"; };
 		D22CDD091FE1E6B800D988B6 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		D22CDD151FE1F69A00D988B6 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingViewController.swift; sourceTree = "<group>"; };
 		D22CDD171FE215E200D988B6 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 				D26D699F206A597E00BD1577 /* View */,
 				D22CDCFB1FE1DDBD00D988B6 /* Assets.xcassets */,
 				D22CDD001FE1DDBD00D988B6 /* Info.plist */,
-				D22CDD011FE1DDBD00D988B6 /* MyAudioPlayer.entitlements */,
+				D22CDD011FE1DDBD00D988B6 /* SwiftAudioPlayer.entitlements */,
 				D22CDD191FE2266D00D988B6 /* Dynamic.swift */,
 				D22CDD1B1FE2729100D988B6 /* Constants.swift */,
 			);
