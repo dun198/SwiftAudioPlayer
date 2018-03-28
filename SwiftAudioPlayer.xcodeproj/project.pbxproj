@@ -23,6 +23,7 @@
 		D22CDD1C1FE2729100D988B6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDD1B1FE2729100D988B6 /* Constants.swift */; };
 		D26D69A1206A6F2B00BD1577 /* CoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26D69A0206A6F2B00BD1577 /* CoverViewController.swift */; };
 		D26D69A3206A6F8300BD1577 /* WideTitlebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26D69A2206A6F8300BD1577 /* WideTitlebarViewController.swift */; };
+		D2B852C0206AC7BC00C31B35 /* InlineTitlebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B852BF206AC7BC00C31B35 /* InlineTitlebarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		D22CDD1B1FE2729100D988B6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D26D69A0206A6F2B00BD1577 /* CoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewController.swift; sourceTree = "<group>"; };
 		D26D69A2206A6F8300BD1577 /* WideTitlebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideTitlebarViewController.swift; sourceTree = "<group>"; };
+		D2B852BF206AC7BC00C31B35 /* InlineTitlebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTitlebarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				D22CDD151FE1F69A00D988B6 /* NowPlayingViewController.swift */,
 				D224D7B02069A1BB00CA51C3 /* PlayerControlsViewController.swift */,
 				D224D7B42069AC1A00CA51C3 /* ProgressViewController.swift */,
+				D2B852BF206AC7BC00C31B35 /* InlineTitlebarViewController.swift */,
 			);
 			path = Titlebar;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 				D22CDCF01FE1DDBD00D988B6 /* Sources */,
 				D22CDCF11FE1DDBD00D988B6 /* Frameworks */,
 				D22CDCF21FE1DDBD00D988B6 /* Resources */,
+				D2895D2F206BEF510079D0F5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -197,11 +201,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D2895D2F206BEF510079D0F5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D22CDCF01FE1DDBD00D988B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2B852C0206AC7BC00C31B35 /* InlineTitlebarViewController.swift in Sources */,
 				D22CDD0A1FE1E6B800D988B6 /* MainWindowController.swift in Sources */,
 				D22CDD181FE215E200D988B6 /* ViewModel.swift in Sources */,
 				D224D7AF2069705600CA51C3 /* MediumTitlebarViewController.swift in Sources */,

@@ -14,5 +14,5 @@ class WideTitlebarViewController: NSTitlebarAccessoryViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
 }

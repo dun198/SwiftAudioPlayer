@@ -12,21 +12,21 @@
  - filename: The cubes available for allocation
  - length: The people that require cubes
  */
-struct Track : Equatable {
-    
-    static func ==(lhs: Track, rhs: Track) -> Bool {
+struct Track: Equatable {
+
+    static func == (lhs: Track, rhs: Track) -> Bool {
         // TODO: should be changed to URL later
         return lhs.filename == rhs.filename
     }
-    
-    let filename : String
-    let duration : String
-    
+
+    let filename: String
+    let duration: String
+
     // Optional Tags
-    let title : String?
-    let artist : String?
-    let genre : String?
-    
+    let title: String?
+    let artist: String?
+    let genre: String?
+
     init(filename: String, duration: String, title: String? = nil, artist: String? = nil, genre: String? = nil) {
         self.filename = filename
         self.duration = duration
@@ -35,4 +35,3 @@ struct Track : Equatable {
         self.genre = genre
     }
 }
-

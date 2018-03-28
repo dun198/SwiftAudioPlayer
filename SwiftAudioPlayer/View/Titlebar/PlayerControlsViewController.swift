@@ -16,25 +16,27 @@ enum PlayState {
 class PlayerControlsViewController: NSTitlebarAccessoryViewController {
 
     var playState: PlayState = .paused
-    
+
     @IBOutlet weak var btnPlayPause: NSButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
     @IBAction func btnPlayPauseAction(_ sender: NSButton) {
-        
+
         switch playState {
-            case .paused:
-                playState = .playing
-                btnPlayPause.title = ""
-            case .playing:
-                playState = .paused
-                btnPlayPause.title = ""
+
+        case .paused:
+            playState = .playing
+            btnPlayPause.title = ""
+
+        case .playing:
+            playState = .paused
+            btnPlayPause.title = ""
 
         }
     }
-    
+
 }

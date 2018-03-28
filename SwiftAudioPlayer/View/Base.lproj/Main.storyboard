@@ -618,6 +618,13 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
+                                        <menuItem title="Toggle UI" id="Dv6-bt-pPA" userLabel="Toggle UI">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleAppearanceAction:" target="Ady-hI-5gd" id="0fe-nN-3La"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="UBG-0K-rS1"/>
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
@@ -704,7 +711,7 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-                        <toolbar key="toolbar" implicitIdentifier="F2F8DC4C-1799-42B9-A0C3-019F45675093" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="WjK-oy-HrT">
+                        <toolbar key="toolbar" implicitIdentifier="F2F8DC4C-1799-42B9-A0C3-019F45675093" autosavesConfiguration="NO" prefersToBeShown="NO" displayMode="iconOnly" sizeMode="regular" id="WjK-oy-HrT">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="xb3-2q-YtL"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Ha0-X7-rYQ"/>
@@ -719,9 +726,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="toggleAppearanceAction:" target="B8D-0N-5wS" id="Dh9-SM-bOL"/>
-                                        </connections>
                                     </button>
                                 </toolbarItem>
                             </allowedToolbarItems>
@@ -735,7 +739,6 @@
                         </connections>
                     </window>
                     <connections>
-                        <outlet property="toggleAppearance" destination="Qk9-FD-1J3" id="7vE-Ee-BMG"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
@@ -878,7 +881,7 @@
                 </viewController>
                 <customObject id="TB1-fK-uTo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="462" y="30"/>
+            <point key="canvasLocation" x="466" y="96"/>
         </scene>
         <!--Now Playing View Controller-->
         <scene sceneID="cmi-J5-UZd">
@@ -1149,7 +1152,7 @@
                 </viewController>
                 <customObject id="sQ2-6V-VcQ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="650" y="713"/>
+            <point key="canvasLocation" x="665" y="655"/>
         </scene>
         <!--Player Controls View Controller-->
         <scene sceneID="st8-sZ-fWa">
@@ -1217,6 +1220,49 @@
                 <customObject id="bnK-m1-Xeg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="867" y="288"/>
+        </scene>
+        <!--Inline Titlebar View Controller-->
+        <scene sceneID="6KM-UE-fxm">
+            <objects>
+                <viewController storyboardIdentifier="inlineTitlebarVC" id="xsc-JA-iC1" customClass="InlineTitlebarViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="NQG-aX-0Ja">
+                        <rect key="frame" x="0.0" y="0.0" width="449" height="24"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <stackView orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d48-d3-7f7">
+                                <rect key="frame" x="0.0" y="0.0" width="449" height="24"/>
+                                <edgeInsets key="edgeInsets" left="8" right="8" top="6" bottom="0.0"/>
+                                <endViews>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jac-eB-E8D">
+                                        <rect key="frame" x="373" y="-1" width="68" height="19"/>
+                                        <buttonCell key="cell" type="roundRect" title="Toggle UI" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="0tg-KP-xPq">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="changeAppearanceAction:" target="xsc-JA-iC1" id="BAz-De-6hj"/>
+                                        </connections>
+                                    </button>
+                                </endViews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="d48-d3-7f7" secondAttribute="trailing" id="N7F-FD-tPH"/>
+                            <constraint firstItem="d48-d3-7f7" firstAttribute="leading" secondItem="NQG-aX-0Ja" secondAttribute="leading" id="X5g-Me-HVm"/>
+                            <constraint firstItem="d48-d3-7f7" firstAttribute="top" secondItem="NQG-aX-0Ja" secondAttribute="top" id="e7A-gi-iqQ"/>
+                            <constraint firstAttribute="bottom" secondItem="d48-d3-7f7" secondAttribute="bottom" id="juv-II-bJs"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="MQb-Js-tT1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1205.5" y="452.5"/>
         </scene>
         <!--Wide Titlebar View Controller-->
         <scene sceneID="Swm-xc-p1I">

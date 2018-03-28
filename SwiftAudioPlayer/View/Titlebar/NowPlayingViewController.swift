@@ -14,5 +14,5 @@ class NowPlayingViewController: NSTitlebarAccessoryViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
 }

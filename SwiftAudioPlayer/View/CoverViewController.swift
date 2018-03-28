@@ -14,5 +14,5 @@ class CoverViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
 }

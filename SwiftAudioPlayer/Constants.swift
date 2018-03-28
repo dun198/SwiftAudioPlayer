@@ -9,8 +9,8 @@
 import Foundation
 
 class Constants {
-    
+
     static let narrowWidth: Int = 300
     static let wideWidth: Int = 500
-    
+
 }

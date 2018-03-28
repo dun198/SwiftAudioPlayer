@@ -14,5 +14,5 @@ class ProgressViewController: NSTitlebarAccessoryViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
 }

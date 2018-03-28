@@ -9,29 +9,29 @@
 import Cocoa
 
 class MainViewController: NSViewController {
-    
+
     var viewModel: ViewModelProtocol? {
         didSet {
             print("appState changed")
         }
     }
     var uiState: UIState?
-    
+
     override func viewDidLoad() {
-        
+
         setupUI()
         super.viewDidLoad()
-        
+
     }
-    
+
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }
     }
-    
+
     private func setupUI() {
-        
+
         guard let viewModel = viewModel else { return }
         viewModel.uiState.bindAndFire { [unowned self] in
             self.uiState = $0
@@ -39,11 +39,9 @@ class MainViewController: NSViewController {
         }
 
     }
-    
+
     func someStuff() {
         print("someStuff")
     }
 
 }
-
-
