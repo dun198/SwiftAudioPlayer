@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
@@ -707,18 +707,18 @@
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="MainWindowController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="mainWindow" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-                        <toolbar key="toolbar" implicitIdentifier="F2F8DC4C-1799-42B9-A0C3-019F45675093" autosavesConfiguration="NO" prefersToBeShown="NO" displayMode="iconOnly" sizeMode="regular" id="WjK-oy-HrT">
+                        <toolbar key="toolbar" implicitIdentifier="F2F8DC4C-1799-42B9-A0C3-019F45675093" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="WjK-oy-HrT">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="xb3-2q-YtL"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Ha0-X7-rYQ"/>
-                                <toolbarItem implicitItemIdentifier="0DFF322A-4BE2-4FD5-98E9-2ED9DFC2A51B" label="Custom View" paletteLabel="Custom View" id="3v7-EB-Bxq">
+                                <toolbarItem implicitItemIdentifier="0DFF322A-4BE2-4FD5-98E9-2ED9DFC2A51B" label="Toggle UI" paletteLabel="Toggle UI" id="3v7-EB-Bxq">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="82" height="19"/>
-                                    <size key="maxSize" width="82" height="19"/>
+                                    <size key="maxSize" width="82" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" id="Qk9-FD-1J3">
                                         <rect key="frame" x="0.0" y="14" width="82" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -726,10 +726,31 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="toggleUIAction:" target="B8D-0N-5wS" id="Gcc-GB-VyL"/>
+                                        </connections>
                                     </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="9BADD622-E051-4267-999A-757642BA1005" label="Custom View" paletteLabel="Custom View" id="ODb-AY-J1e">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="32" height="20"/>
+                                    <size key="maxSize" width="32" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="1Op-TH-ZW6">
+                                        <rect key="frame" x="22" y="14" width="32" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundRect" title="" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jbp-if-2bc">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" size="13" name="FontAwesome5ProLight"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="toggleSidebar:" target="B8D-0N-5wS" id="qsa-fy-Hg4"/>
+                                    </connections>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="Ha0-X7-rYQ"/>
+                                <toolbarItem reference="ODb-AY-J1e"/>
                                 <toolbarItem reference="Ha0-X7-rYQ"/>
                                 <toolbarItem reference="3v7-EB-Bxq"/>
                             </defaultToolbarItems>
@@ -738,68 +759,10 @@
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
                     </window>
-                    <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
-                    </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
-        </scene>
-        <!--Main View Controller-->
-        <scene sceneID="hIz-AP-VOD">
-            <objects>
-                <viewController id="XfG-lQ-9wD" customClass="MainViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OgZ-Jz-OU4">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
-                                <subviews>
-                                    <customView fixedFrame="YES" id="qNc-ot-ozf">
-                                        <rect key="frame" x="0.0" y="0.0" width="242" height="300"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </customView>
-                                    <customView id="fbO-dv-Yjb">
-                                        <rect key="frame" x="243" y="0.0" width="237" height="300"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <subviews>
-                                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="Iz9-lO-QTJ" userLabel="Playlist">
-                                                <rect key="frame" x="0.0" y="0.0" width="237" height="300"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="VwU-fO-p8a"/>
-                                                </constraints>
-                                                <connections>
-                                                    <segue destination="OdB-Da-G7H" kind="embed" id="qXR-cY-rkR"/>
-                                                </connections>
-                                            </containerView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Iz9-lO-QTJ" secondAttribute="trailing" id="BCR-qZ-Eg7"/>
-                                            <constraint firstItem="Iz9-lO-QTJ" firstAttribute="leading" secondItem="fbO-dv-Yjb" secondAttribute="leading" id="d6s-IF-A5Z"/>
-                                            <constraint firstAttribute="bottom" secondItem="Iz9-lO-QTJ" secondAttribute="bottom" id="f8I-aD-E2y"/>
-                                            <constraint firstItem="Iz9-lO-QTJ" firstAttribute="top" secondItem="fbO-dv-Yjb" secondAttribute="top" id="vXk-wK-8Z8"/>
-                                        </constraints>
-                                    </customView>
-                                </subviews>
-                                <holdingPriorities>
-                                    <real value="250"/>
-                                    <real value="250"/>
-                                </holdingPriorities>
-                            </splitView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="OgZ-Jz-OU4" secondAttribute="bottom" id="C8B-kb-HfH"/>
-                            <constraint firstAttribute="trailing" secondItem="OgZ-Jz-OU4" secondAttribute="trailing" id="k7r-mx-VnL"/>
-                            <constraint firstItem="OgZ-Jz-OU4" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="sdy-sK-kMp"/>
-                            <constraint firstItem="OgZ-Jz-OU4" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="skD-hz-jS9"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="74" y="280"/>
         </scene>
         <!--Medium Titlebar View Controller-->
         <scene sceneID="ehE-HJ-8PJ">
@@ -883,69 +846,12 @@
             </objects>
             <point key="canvasLocation" x="466" y="96"/>
         </scene>
-        <!--Now Playing View Controller-->
-        <scene sceneID="cmi-J5-UZd">
-            <objects>
-                <viewController storyboardIdentifier="nowPlayingVC" id="SMm-gV-YvG" customClass="NowPlayingViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="CtE-9B-7cZ">
-                        <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="254" verticalStackHuggingPriority="752" horizontalClippingResistancePriority="980" verticalClippingResistancePriority="979" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hLB-2v-DJO">
-                                <rect key="frame" x="38" y="8" width="64" height="34"/>
-                                <subviews>
-                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-2B-5Rw">
-                                        <rect key="frame" x="-2" y="17" width="68" height="17"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="17" id="8cg-U7-xcO"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Track Title" id="Udh-Nc-ZfN">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="988" verticalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="hOU-fb-AQD">
-                                        <rect key="frame" x="13" y="0.0" width="38" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Artist" id="m0b-Xy-d1z">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="tgV-2B-5Rw" secondAttribute="bottom" constant="17" id="e90-YI-qX1"/>
-                                </constraints>
-                                <visibilityPriorities>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                </visibilityPriorities>
-                                <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                </customSpacing>
-                            </stackView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="hLB-2v-DJO" firstAttribute="top" secondItem="CtE-9B-7cZ" secondAttribute="top" constant="8" id="RKf-W0-ZbE"/>
-                            <constraint firstItem="hLB-2v-DJO" firstAttribute="centerX" secondItem="CtE-9B-7cZ" secondAttribute="centerX" id="SDi-f7-rZo"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hLB-2v-DJO" secondAttribute="trailing" constant="8" id="V0e-S8-QNi"/>
-                            <constraint firstAttribute="bottom" secondItem="hLB-2v-DJO" secondAttribute="bottom" constant="8" id="wOC-dl-X5O"/>
-                            <constraint firstItem="hLB-2v-DJO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CtE-9B-7cZ" secondAttribute="leading" constant="8" id="wnV-kE-kXg"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <customObject id="Swu-TU-AMd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="639" y="287"/>
-        </scene>
         <!--Progress View Controller-->
         <scene sceneID="iBm-r7-1qs">
             <objects>
                 <viewController storyboardIdentifier="progressVC" id="44z-sj-R9c" customClass="ProgressViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="cCq-22-BdV">
-                        <rect key="frame" x="0.0" y="0.0" width="366" height="33"/>
+                        <rect key="frame" x="0.0" y="0.0" width="366" height="25"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                         <subviews>
                             <stackView orientation="horizontal" alignment="bottom" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XDx-tv-oPl">
@@ -993,36 +899,35 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="XDx-tv-oPl" firstAttribute="leading" secondItem="cCq-22-BdV" secondAttribute="leading" constant="8" id="0xG-ZC-Uyl"/>
-                            <constraint firstItem="XDx-tv-oPl" firstAttribute="top" secondItem="cCq-22-BdV" secondAttribute="top" priority="999" constant="8" id="5LZ-w1-yxV"/>
-                            <constraint firstAttribute="bottom" secondItem="XDx-tv-oPl" secondAttribute="bottom" priority="999" constant="8" id="9Sk-sM-Zp2"/>
+                            <constraint firstItem="XDx-tv-oPl" firstAttribute="top" secondItem="cCq-22-BdV" secondAttribute="top" id="5LZ-w1-yxV"/>
+                            <constraint firstAttribute="bottom" secondItem="XDx-tv-oPl" secondAttribute="bottom" constant="8" id="9Sk-sM-Zp2"/>
                             <constraint firstAttribute="trailing" secondItem="XDx-tv-oPl" secondAttribute="trailing" constant="8" id="OSE-Bu-Pj5"/>
-                            <constraint firstItem="XDx-tv-oPl" firstAttribute="centerY" secondItem="cCq-22-BdV" secondAttribute="centerY" id="wOf-AC-Lbv"/>
                         </constraints>
                     </view>
                 </viewController>
                 <customObject id="ZNS-Ka-9Nv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="752" y="403"/>
+            <point key="canvasLocation" x="744" y="352"/>
         </scene>
-        <!--Playlist View Controller-->
+        <!--Tracks List View Controller-->
         <scene sceneID="X2C-oG-YxT">
             <objects>
-                <viewController id="OdB-Da-G7H" customClass="PlaylistViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="OdB-Da-G7H" customClass="TracksListViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <customView key="view" id="6yj-Jt-HGv">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="ChS-sP-D0t">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="279"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JjZ-Qw-gHg">
-                                    <rect key="frame" x="0.0" y="0.0" width="450" height="279"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="1" indentationMarkerFollowsCell="NO" outlineTableColumn="ncU-vc-414" id="h3Z-uJ-Hv7">
-                                            <rect key="frame" x="0.0" y="0.0" width="450" height="279"/>
+                                        <outlineView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="1" indentationMarkerFollowsCell="NO" outlineTableColumn="ncU-vc-414" id="h3Z-uJ-Hv7">
+                                            <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
-                                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
                                                 <tableColumn identifier="" editable="NO" width="187" minWidth="40" maxWidth="1000" id="ncU-vc-414">
@@ -1099,50 +1004,11 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <stackView distribution="fillEqually" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfd-H2-Og3">
-                                <rect key="frame" x="0.0" y="279" width="450" height="21"/>
-                                <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SrI-Bw-LSc">
-                                        <rect key="frame" x="0.0" y="4" width="225" height="17"/>
-                                        <buttonCell key="cell" type="square" title="Artist" bezelStyle="shadowlessSquare" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="LRH-6R-Vyi">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="groupByArtist:" target="OdB-Da-G7H" id="YTU-FL-aaB"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="awP-hL-Peq">
-                                        <rect key="frame" x="225" y="4" width="225" height="17"/>
-                                        <buttonCell key="cell" type="square" title="Genre" bezelStyle="shadowlessSquare" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="qTx-Et-GpZ">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="groupByGenre:" target="OdB-Da-G7H" id="kiK-BR-nGj"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="ojU-oA-xSa"/>
-                                </constraints>
-                                <visibilityPriorities>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                </visibilityPriorities>
-                                <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                </customSpacing>
-                            </stackView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ChS-sP-D0t" secondAttribute="bottom" id="99p-29-cL5"/>
-                            <constraint firstItem="ChS-sP-D0t" firstAttribute="top" secondItem="vfd-H2-Og3" secondAttribute="bottom" id="Wfr-L7-sxt"/>
-                            <constraint firstItem="vfd-H2-Og3" firstAttribute="leading" secondItem="6yj-Jt-HGv" secondAttribute="leading" id="Wz2-zI-phD"/>
-                            <constraint firstItem="vfd-H2-Og3" firstAttribute="top" secondItem="6yj-Jt-HGv" secondAttribute="top" id="jQg-wC-avn"/>
+                            <constraint firstItem="ChS-sP-D0t" firstAttribute="top" secondItem="6yj-Jt-HGv" secondAttribute="top" id="Km1-UN-ZOt"/>
                             <constraint firstItem="ChS-sP-D0t" firstAttribute="leading" secondItem="6yj-Jt-HGv" secondAttribute="leading" id="mtd-B0-mkG"/>
-                            <constraint firstAttribute="trailing" secondItem="vfd-H2-Og3" secondAttribute="trailing" id="ugT-EB-pss"/>
                             <constraint firstAttribute="trailing" secondItem="ChS-sP-D0t" secondAttribute="trailing" id="vdi-hW-8jd"/>
                         </constraints>
                     </customView>
@@ -1152,41 +1018,67 @@
                 </viewController>
                 <customObject id="sQ2-6V-VcQ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="665" y="655"/>
+            <point key="canvasLocation" x="304" y="1097"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="kWI-BA-L0b">
+            <objects>
+                <viewController id="I7y-JH-wPz" sceneMemberID="viewController">
+                    <view key="view" id="ch1-1d-CSD">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="5ID-5M-Pl5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1475" y="913"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Jzi-5B-ihg">
+            <objects>
+                <viewController id="sMK-Ms-hJy" sceneMemberID="viewController">
+                    <view key="view" id="Rw1-6A-bmV">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="ZYc-Xt-r3g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1475" y="1285"/>
         </scene>
         <!--Player Controls View Controller-->
         <scene sceneID="st8-sZ-fWa">
             <objects>
                 <viewController storyboardIdentifier="playerControlsVC" id="Nfp-bk-cqK" customClass="PlayerControlsViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Osz-P9-pJK">
-                        <rect key="frame" x="0.0" y="0.0" width="216" height="45"/>
+                        <rect key="frame" x="0.0" y="0.0" width="216" height="48"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8vZ-KG-2RE">
-                                <rect key="frame" x="33" y="8" width="150" height="29"/>
+                                <rect key="frame" x="33" y="11" width="150" height="26"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EAb-KW-hrm" userLabel="Previous Button">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="29"/>
+                                    <button verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="EAb-KW-hrm" userLabel="Previous Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="26"/>
                                         <buttonCell key="cell" type="square" title="" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="dmA-9M-ADB">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="24" name="FontAwesome5ProSolid"/>
+                                            <font key="font" size="20" name="FontAwesome5ProSolid"/>
                                         </buttonCell>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Udz-lD-TbQ" userLabel="Play Button">
-                                        <rect key="frame" x="50" y="0.0" width="50" height="29"/>
+                                    <button verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Udz-lD-TbQ" userLabel="Play Button">
+                                        <rect key="frame" x="50" y="0.0" width="50" height="26"/>
                                         <buttonCell key="cell" type="square" title="" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="3Lr-JQ-ZNl">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="24" name="FontAwesome5ProSolid"/>
+                                            <font key="font" size="20" name="FontAwesome5ProSolid"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="btnPlayPauseAction:" target="Nfp-bk-cqK" id="pyA-dR-3Tg"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4c-9j-3Q3" userLabel="Next Button">
-                                        <rect key="frame" x="100" y="0.0" width="50" height="29"/>
+                                    <button verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="p4c-9j-3Q3" userLabel="Next Button">
+                                        <rect key="frame" x="100" y="0.0" width="50" height="26"/>
                                         <buttonCell key="cell" type="square" title="" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="1Ub-b8-1bN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="24" name="FontAwesome5ProSolid"/>
+                                            <font key="font" size="20" name="FontAwesome5ProSolid"/>
                                         </buttonCell>
                                     </button>
                                 </subviews>
@@ -1208,8 +1100,9 @@
                         <constraints>
                             <constraint firstItem="8vZ-KG-2RE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Osz-P9-pJK" secondAttribute="leading" constant="8" id="C0B-WY-CCP"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8vZ-KG-2RE" secondAttribute="trailing" constant="8" id="FdC-my-yJM"/>
-                            <constraint firstItem="8vZ-KG-2RE" firstAttribute="top" secondItem="Osz-P9-pJK" secondAttribute="top" constant="8" id="cNY-l1-0m0"/>
-                            <constraint firstAttribute="bottom" secondItem="8vZ-KG-2RE" secondAttribute="bottom" constant="8" id="e5T-ke-5Gc"/>
+                            <constraint firstItem="8vZ-KG-2RE" firstAttribute="centerY" secondItem="Osz-P9-pJK" secondAttribute="centerY" id="R1c-a2-j2X"/>
+                            <constraint firstItem="8vZ-KG-2RE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Osz-P9-pJK" secondAttribute="top" constant="8" id="cNY-l1-0m0"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8vZ-KG-2RE" secondAttribute="bottom" constant="8" id="e5T-ke-5Gc"/>
                             <constraint firstItem="8vZ-KG-2RE" firstAttribute="centerX" secondItem="Osz-P9-pJK" secondAttribute="centerX" id="wa4-n1-4Xc"/>
                         </constraints>
                     </view>
@@ -1219,113 +1112,7 @@
                 </viewController>
                 <customObject id="bnK-m1-Xeg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="867" y="288"/>
-        </scene>
-        <!--Inline Titlebar View Controller-->
-        <scene sceneID="6KM-UE-fxm">
-            <objects>
-                <viewController storyboardIdentifier="inlineTitlebarVC" id="xsc-JA-iC1" customClass="InlineTitlebarViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="NQG-aX-0Ja">
-                        <rect key="frame" x="0.0" y="0.0" width="449" height="24"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <stackView orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d48-d3-7f7">
-                                <rect key="frame" x="0.0" y="0.0" width="449" height="24"/>
-                                <edgeInsets key="edgeInsets" left="8" right="8" top="6" bottom="0.0"/>
-                                <endViews>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jac-eB-E8D">
-                                        <rect key="frame" x="373" y="-1" width="68" height="19"/>
-                                        <buttonCell key="cell" type="roundRect" title="Toggle UI" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="0tg-KP-xPq">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="cellTitle"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="changeAppearanceAction:" target="xsc-JA-iC1" id="BAz-De-6hj"/>
-                                        </connections>
-                                    </button>
-                                </endViews>
-                                <visibilityPriorities>
-                                    <integer value="1000"/>
-                                </visibilityPriorities>
-                                <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                </customSpacing>
-                            </stackView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="d48-d3-7f7" secondAttribute="trailing" id="N7F-FD-tPH"/>
-                            <constraint firstItem="d48-d3-7f7" firstAttribute="leading" secondItem="NQG-aX-0Ja" secondAttribute="leading" id="X5g-Me-HVm"/>
-                            <constraint firstItem="d48-d3-7f7" firstAttribute="top" secondItem="NQG-aX-0Ja" secondAttribute="top" id="e7A-gi-iqQ"/>
-                            <constraint firstAttribute="bottom" secondItem="d48-d3-7f7" secondAttribute="bottom" id="juv-II-bJs"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <customObject id="MQb-Js-tT1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1205.5" y="452.5"/>
-        </scene>
-        <!--Wide Titlebar View Controller-->
-        <scene sceneID="Swm-xc-p1I">
-            <objects>
-                <viewController storyboardIdentifier="mediumTitlebarVC" id="Pb5-Em-IPY" customClass="WideTitlebarViewController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="2zt-PN-yGn">
-                        <rect key="frame" x="0.0" y="0.0" width="528" height="50"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J45-bP-5ix">
-                                <rect key="frame" x="0.0" y="0.0" width="528" height="50"/>
-                                <subviews>
-                                    <containerView translatesAutoresizingMaskIntoConstraints="NO" id="9ME-Zx-orP" userLabel="NowPlaying">
-                                        <rect key="frame" x="0.0" y="0.0" width="181" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="5PL-Lw-Uae"/>
-                                        </constraints>
-                                    </containerView>
-                                    <containerView translatesAutoresizingMaskIntoConstraints="NO" id="fHU-vI-qIR" userLabel="Progress">
-                                        <rect key="frame" x="181" y="0.0" width="181" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="ffX-5y-a1T"/>
-                                        </constraints>
-                                    </containerView>
-                                    <containerView translatesAutoresizingMaskIntoConstraints="NO" id="Lb6-nb-syN" userLabel="PlayerControls">
-                                        <rect key="frame" x="362" y="0.0" width="166" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="166" id="JSg-dC-aFm"/>
-                                            <constraint firstAttribute="height" priority="250" constant="45" id="wdu-eL-a9n"/>
-                                        </constraints>
-                                    </containerView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="9ME-Zx-orP" firstAttribute="leading" secondItem="J45-bP-5ix" secondAttribute="leading" id="AdA-aX-D1U"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="528" id="O4r-8X-k8Y" userLabel="width ≤ 500"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="oBL-rZ-MvV"/>
-                                </constraints>
-                                <visibilityPriorities>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                </visibilityPriorities>
-                                <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                </customSpacing>
-                            </stackView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="J45-bP-5ix" secondAttribute="bottom" id="96o-6U-ipx"/>
-                            <constraint firstItem="J45-bP-5ix" firstAttribute="top" secondItem="2zt-PN-yGn" secondAttribute="top" id="Sjw-oa-Mxe"/>
-                            <constraint firstAttribute="trailing" secondItem="J45-bP-5ix" secondAttribute="trailing" id="Y4x-Wg-cxf"/>
-                            <constraint firstItem="J45-bP-5ix" firstAttribute="leading" secondItem="2zt-PN-yGn" secondAttribute="leading" id="sYB-kx-rs8"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="firstStackView" destination="J45-bP-5ix" id="cZb-YE-3dH"/>
-                    </connections>
-                </viewController>
-                <customObject id="AVR-Jm-QuA" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="825" y="-7"/>
+            <point key="canvasLocation" x="685" y="249"/>
         </scene>
     </scenes>
     <resources>

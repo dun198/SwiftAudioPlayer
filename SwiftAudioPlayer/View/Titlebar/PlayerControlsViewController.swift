@@ -13,7 +13,7 @@ enum PlayState {
     case playing
 }
 
-class PlayerControlsViewController: NSTitlebarAccessoryViewController {
+class PlayerControlsViewController: NSViewController {
 
     var playState: PlayState = .paused
 
@@ -38,5 +38,31 @@ class PlayerControlsViewController: NSTitlebarAccessoryViewController {
 
         }
     }
+}
 
+extension PlayerControlsViewController: PlayerControlsDelegate {
+    
+    @IBAction func playPause(sender: Any) {
+        if let button = sender as? ImageButton {
+            switch playState {
+                
+            case .paused:
+                playState = .playing
+                button.image = NSImage(named: NSImage.Name.touchBarPauseTemplate)
+                
+            case .playing:
+                playState = .paused
+                button.image = NSImage(named: NSImage.Name.touchBarPlayTemplate)
+            }
+        }
+    }
+    
+    @IBAction func next(sender: Any) {
+        print("pressed next")
+    }
+    
+    @IBAction func prev(sender: Any) {
+        print("pressed prev")
+    }
+    
 }

@@ -1,5 +1,5 @@
 //
-//  PlaylistViewController.swift
+//  TracksListViewController.swift
 //  MyAudioPlayer
 //
 //  Created by Tobias Dunkel on 27.03.18.
@@ -13,7 +13,7 @@ enum GroupType {
     case genre
 }
 
-final class PlaylistViewController: NSViewController {
+final class TracksListViewController: NSViewController {
 
     var tracks: [Track] = []
     var trackDictionary: [String: [Track]] = [:]
@@ -25,17 +25,17 @@ final class PlaylistViewController: NSViewController {
         super.viewDidLoad()
 
         // create an array of tracks
-        tracks = [Track(filename: "track1", duration: "3:45"),
-                  Track(filename: "track2", duration: "2:32",
-                        artist: "artist1", genre: "rock"),
-                  Track(filename: "track3", duration: "4:20", genre: "pop")]
-        for x in 1...1000 {
-            let track = Track(filename: "track\(x+3)", duration: "3:45",
-                              artist: "artist\(Int((x % 20) + 10))", genre: "electronic")
-            tracks.append(track)
-        }
-
-        setupTableGroups(for: .artist)
+//        tracks = [Track(filename: "track1", duration: "3:45"),
+//                  Track(filename: "track2", duration: "2:32",
+//                        artist: "artist1", genre: "rock"),
+//                  Track(filename: "track3", duration: "4:20", genre: "pop")]
+//        for count in 1...1000 {
+//            let track = Track(filename: "track\(count+3)", duration: "3:45",
+//                              artist: "artist\(Int((count % 20) + 10))", genre: "electronic")
+//            tracks.append(track)
+//        }
+//
+//        setupTableGroups(for: .artist)
 
         // set delegate and datasource of the outlineView
         outlineView.delegate = self
@@ -59,7 +59,7 @@ final class PlaylistViewController: NSViewController {
         self.trackDictionary = groupTracks(tracks, by: type)
 
         // group headers as an array of strings
-        self.groups = trackDictionary.flatMap { $0.0 }
+        self.groups = trackDictionary.compactMap { $0.0 }
         self.groups.sort()
     }
 
@@ -77,7 +77,7 @@ final class PlaylistViewController: NSViewController {
 
 // MARK: - NSOutlineViewDataSource
 
-extension PlaylistViewController: NSOutlineViewDataSource {
+extension TracksListViewController: NSOutlineViewDataSource {
 
     // Returns the number of child items encompassed by a given item.
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
@@ -128,7 +128,7 @@ extension PlaylistViewController: NSOutlineViewDataSource {
 
 // MARK: - NSOutlineViewDelegate
 
-extension PlaylistViewController: NSOutlineViewDelegate {
+extension TracksListViewController: NSOutlineViewDelegate {
 
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
         return item is String
