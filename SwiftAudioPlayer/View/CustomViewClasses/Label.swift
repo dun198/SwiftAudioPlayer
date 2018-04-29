@@ -1,5 +1,5 @@
 //
-//  Views.swift
+//  Label.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 28.04.18.
@@ -18,22 +18,6 @@ class Label: NSTextField {
         drawsBackground = false
         autoresizesSubviews = true
         translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class ImageButton: NSButton {
-    override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-        
-        self.isBordered = false
-        self.title = ""
-        self.imagePosition = .imageOnly
-        self.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {

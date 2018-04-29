@@ -1,5 +1,5 @@
 //
-//  PlayerControlsViewController.swift
+//  PlaybackControlsViewController.swift
 //  MyAudioPlayer
 //
 //  Created by Tobias Dunkel on 26.03.18.
@@ -13,7 +13,7 @@ enum PlayState {
     case playing
 }
 
-class PlayerControlsViewController: NSViewController {
+class PlaybackControlsViewController: NSViewController {
 
     var playState: PlayState = .paused
 
@@ -40,7 +40,7 @@ class PlayerControlsViewController: NSViewController {
     }
 }
 
-extension PlayerControlsViewController: PlayerControlsDelegate {
+extension PlaybackControlsViewController: PlayerControlsDelegate {
     
     @IBAction func playPause(sender: Any) {
         if let button = sender as? ImageButton {

@@ -22,7 +22,7 @@ class ProgressView: NSView {
         let stack = NSStackView()
         stack.orientation = .horizontal
         stack.spacing = 8
-        stack.edgeInsets = .init(top: 0, left: 8, bottom: 0, right: 8)
+        stack.edgeInsets = .init(top: 0, left: 16, bottom: 0, right: 16)
         stack.setHuggingPriority(.required, for: .horizontal)
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -30,17 +30,20 @@ class ProgressView: NSView {
     
     let progressSlider: NSSlider = {
         let slider = NSSlider()
+        slider.controlSize = NSControl.ControlSize.mini
         return slider
     }()
     
     let currentPositionLabel: Label = {
         let label = Label()
+        label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
         label.stringValue = "00:00"
         return label
     }()
     
     let durationLabel: Label = {
         let label = Label()
+        label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
         label.stringValue = "00:00"
         return label
     }()

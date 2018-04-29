@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainSplitViewController.swift
 //  MyAudioPlayer
 //
 //  Created by Tobias Dunkel on 13.12.17.
@@ -13,15 +13,11 @@ class SidebarSplitItem: NSSplitViewItem {
     override var isCollapsed: Bool {
         didSet {
             print("did toggle sidebar")
-            guard let windowController = NSApplication.shared.mainWindow?.windowController as? MainWindowController else { return }
-           
-            windowController.windowDidResize(Notification.init(name: Notification.Name.init("Test")))
         }
     }
-    
 }
 
-class MainViewController: NSSplitViewController {
+class MainSplitViewController: NSSplitViewController {
 
     let player = Player()
     
@@ -57,6 +53,7 @@ class MainViewController: NSSplitViewController {
         
     func toggleSidebar(_ sender: Any?, withCompletionHandler completion:@escaping () -> Void) {
         toggleSidebar(sender)
+        view.setNeedsDisplay(view.frame)
         completion()
     }
 

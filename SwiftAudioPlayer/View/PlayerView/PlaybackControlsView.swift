@@ -1,5 +1,5 @@
 //
-//  PlayerControlsView.swift
+//  PlaybackControlsView.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 28.04.18.
@@ -14,7 +14,7 @@ protocol PlayerControlsDelegate {
     func prev(sender: Any)
 }
 
-class PlayerControlsView: NSView {
+class PlaybackControlsView: NSView {
     
     var delegate: PlayerControlsDelegate?
     
@@ -72,14 +72,14 @@ class PlayerControlsView: NSView {
         leadingViews.forEach { stackView.addView($0, in: .leading) }
         trailingViews.forEach { stackView.addView($0, in: .trailing) }
 
-        prevButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        prevButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        prevButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        prevButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
-        playPauseButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        playPauseButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        playPauseButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        playPauseButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
-        nextButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        nextButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
     }
     
     @objc private func playPause() {
