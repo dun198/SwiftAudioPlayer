@@ -37,6 +37,7 @@
 		D29C53E920965D2300B83B84 /* TrackViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53E820965D2300B83B84 /* TrackViewItem.swift */; };
 		D29C53EB2096672700B83B84 /* RoundRectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53EA2096672700B83B84 /* RoundRectLabel.swift */; };
 		D29C53F020974AB800B83B84 /* ContentToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53EF20974AB800B83B84 /* ContentToolbarView.swift */; };
+		D29C53F3209764F100B83B84 /* CollapstibleSplitViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53F2209764F100B83B84 /* CollapstibleSplitViewItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,7 @@
 		D29C53E820965D2300B83B84 /* TrackViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackViewItem.swift; sourceTree = "<group>"; };
 		D29C53EA2096672700B83B84 /* RoundRectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRectLabel.swift; sourceTree = "<group>"; };
 		D29C53EF20974AB800B83B84 /* ContentToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentToolbarView.swift; sourceTree = "<group>"; };
+		D29C53F2209764F100B83B84 /* CollapstibleSplitViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapstibleSplitViewItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				D29C53C32094340A00B83B84 /* ViewController */,
+				D22CDCFD1FE1DDBD00D988B6 /* Main.storyboard */,
 				D29C53F1209763C900B83B84 /* SidebarView */,
 				D29C53EC2096AD9200B83B84 /* ToolbarView */,
 				D29C53E12095424E00B83B84 /* CollectionView */,
@@ -153,7 +156,6 @@
 		D29C53C32094340A00B83B84 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D22CDCFD1FE1DDBD00D988B6 /* Main.storyboard */,
 				D22CDD091FE1E6B800D988B6 /* MainWindowController.swift */,
 				D22CDCF91FE1DDBD00D988B6 /* MainSplitViewController.swift */,
 				D224D7B02069A1BB00CA51C3 /* PlaybackControlsViewController.swift */,
@@ -191,6 +193,7 @@
 				D29C53C12094318D00B83B84 /* Label.swift */,
 				D29C53EA2096672700B83B84 /* RoundRectLabel.swift */,
 				D29C53DF2095330200B83B84 /* ImageButton.swift */,
+				D29C53F2209764F100B83B84 /* CollapstibleSplitViewItem.swift */,
 			);
 			path = CustomViewClasses;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				D29C53F020974AB800B83B84 /* ContentToolbarView.swift in Sources */,
 				D224D7B52069AC1A00CA51C3 /* ProgressViewController.swift in Sources */,
 				D29C53DD2095326B00B83B84 /* RoundedShadowedBox.swift in Sources */,
+				D29C53F3209764F100B83B84 /* CollapstibleSplitViewItem.swift in Sources */,
 				D297E87C20714A4E00FE4929 /* SidebarViewController.swift in Sources */,
 				D224D7B12069A1BB00CA51C3 /* PlaybackControlsViewController.swift in Sources */,
 				D29C53E520954E3D00B83B84 /* HeaderViewItem.swift in Sources */,

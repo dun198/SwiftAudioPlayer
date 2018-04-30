@@ -8,22 +8,6 @@
 
 import Cocoa
 
-protocol CollapseSplitViewDelegate {
-    func splitView(didCollapse: Bool)
-}
-
-class CollapsibleSplitItem: NSSplitViewItem {
-    
-    var delegate: CollapseSplitViewDelegate?
-    
-    override var isCollapsed: Bool {
-        didSet {
-            print("toggle sidebar")
-            delegate?.splitView(didCollapse: isCollapsed)
-        }
-    }
-}
-
 class MainSplitViewController: NSSplitViewController {
 
     let player = Player()
