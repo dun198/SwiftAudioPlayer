@@ -22,32 +22,50 @@ class PlaybackControlsView: NSView {
         let stack = NSStackView()
         stack.orientation = .horizontal
         stack.spacing = 0
-        stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+        stack.edgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.setContentHuggingPriority(.required, for: .horizontal)
+        stack.setClippingResistancePriority(.required, for: .horizontal)
+        stack.setHuggingPriority(.defaultLow, for: .horizontal)
         return stack
     }()
     
     lazy var playPauseButton: ImageButton = {
-        let button = ImageButton()
-        button.image = NSImage(named: NSImage.Name.touchBarPlayTemplate)
+        let image = NSImage(named: NSImage.Name.touchBarPlayTemplate)
+        let size = NSSize(width: 48, height: 48)
+        let button = ImageButton(image: image!, size: size)
         button.target = self
         button.action = #selector(playPause)
         return button
     }()
     
     lazy var prevButton: ImageButton = {
-        let button = ImageButton()
-        button.image = NSImage(named: NSImage.Name.touchBarSkipBackTemplate)
+        let image = NSImage(named: NSImage.Name.touchBarSkipBackTemplate)
+        let button = ImageButton(image: image!)
         button.target = self
         button.action = #selector(prev)
         return button
     }()
     
     lazy var nextButton: ImageButton = {
-        let button = ImageButton()
-        button.image = NSImage(named: NSImage.Name.touchBarSkipAheadTemplate)
+        let image = NSImage(named: NSImage.Name.touchBarSkipAheadTemplate)
+        let button = ImageButton(image: image!)
         button.target = self
         button.action = #selector(next)
+        return button
+    }()
+    
+    lazy var shuffleButton: ImageButton = {
+        let image = NSImage(named: NSImage.Name.touchBarRotateLeftTemplate)
+        let button = ImageButton(image: image!)
+        button.target = self
+        return button
+    }()
+    
+    lazy var repeatButton: ImageButton = {
+        let image = NSImage(named: NSImage.Name.touchBarRefreshTemplate)
+        let button = ImageButton(image: image!)
+        button.target = self
         return button
     }()
     
@@ -64,22 +82,13 @@ class PlaybackControlsView: NSView {
         addSubview(stackView)
         stackView.fill(to: self)
         
-        let centerViews: [NSView] = [prevButton, playPauseButton, nextButton]
         let leadingViews: [NSView] = []
+        let centerViews: [NSView] = [prevButton, playPauseButton, nextButton]
         let trailingViews: [NSView] = []
-        
-        centerViews.forEach { stackView.addView($0, in: .center) }
-        leadingViews.forEach { stackView.addView($0, in: .leading) }
-        trailingViews.forEach { stackView.addView($0, in: .trailing) }
 
-        prevButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        prevButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        
-        playPauseButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        playPauseButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        
-        nextButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        leadingViews.forEach { stackView.addView($0, in: .leading) }
+        centerViews.forEach { stackView.addView($0, in: .center) }
+        trailingViews.forEach { stackView.addView($0, in: .trailing) }
     }
     
     @objc private func playPause() {

@@ -1,5 +1,5 @@
 //
-//  CustomBox.swift
+//  RoundedShadowedBox.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 29.04.18.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CustomBox: NSBox {
+class RoundedShadowedBox: NSBox {
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -19,11 +19,11 @@ class CustomBox: NSBox {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    var backgroundColor: NSColor = .white {
-//        didSet {
-//            needsDisplay = true
-//        }
-//    }
+    var backgroundColor: NSColor = .white {
+        didSet {
+            needsDisplay = true
+        }
+    }
     
     func setupBox() {
         boxType = .custom
@@ -32,13 +32,13 @@ class CustomBox: NSBox {
         cornerRadius = 6
         isTransparent = false
         wantsLayer = true
-//        backgroundColor = .white
+        backgroundColor = .controlBackgroundColor
         needsDisplay = true
     }
     
     override func updateLayer() {
         super.updateLayer()
-//        layer?.backgroundColor = backgroundColor.cgColor
+        layer?.backgroundColor = backgroundColor.cgColor
         shadow = NSShadow()
         layer?.shadowOpacity = 0.2
         layer?.shadowRadius = 5

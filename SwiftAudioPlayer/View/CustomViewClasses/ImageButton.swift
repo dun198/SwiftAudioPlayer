@@ -9,17 +9,20 @@
 import Cocoa
 
 class ImageButton: NSButton {
-    override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-        
+    
+    convenience init(image: NSImage, size: NSSize = NSSize(width: 32, height: 32)) {
+        self.init(image: image, target: nil, action: nil)
+                
         self.isBordered = false
         self.title = ""
         self.imagePosition = .imageOnly
+        
         self.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+//        self.setContentHuggingPriority(.required, for: .horizontal)
+//        self.setContentHuggingPriority(.required, for: .vertical)
+        
         self.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        self.widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        self.heightAnchor.constraint(equalToConstant: size.height).isActive = true
     }
 }

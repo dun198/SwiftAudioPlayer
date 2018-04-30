@@ -363,7 +363,7 @@
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleSourceList:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
+                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="SON-jj-9dt"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
@@ -428,52 +428,14 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="MainWindowController" customModule="SwiftAudioPlayer" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="mainWindow" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="mainWindow" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-                        <toolbar key="toolbar" implicitIdentifier="3A0D2C22-D2C5-4402-BE8C-0CF0CD5741B1" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="jBM-MX-LfJ" customClass="MainToolbar" customModule="SwiftAudioPlayer" customModuleProvider="target">
-                            <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="uEw-oP-wWc"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="3kV-on-GFi"/>
-                                <toolbarItem implicitItemIdentifier="BB6FB3A3-FB74-4756-A948-DB6B2FC13336" label="Search" paletteLabel="Search" id="5SO-w9-DHR">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="28" height="22"/>
-                                    <size key="maxSize" width="96" height="22"/>
-                                    <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="5cu-Qc-jfY">
-                                        <rect key="frame" x="0.0" y="14" width="88" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <searchFieldCell key="cell" selectable="YES" editable="YES" refusesFirstResponder="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="1JJ-8P-xig">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </searchFieldCell>
-                                    </searchField>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="5931CCC3-4C6B-48B8-B2BB-B69AA04F34F5" label="Custom View" paletteLabel="Custom View" image="NSTouchBarSidebarTemplate" id="z7y-vj-zyD">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="28" height="28"/>
-                                    <size key="maxSize" width="28" height="28"/>
-                                    <button key="view" verticalHuggingPriority="750" id="2cA-yJ-W62">
-                                        <rect key="frame" x="24" y="14" width="28" height="28"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSTouchBarSidebarTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="WE2-lO-5RB">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="toggleSidebar:" target="B8D-0N-5wS" id="cMR-cb-tXm"/>
-                                        </connections>
-                                    </button>
-                                </toolbarItem>
-                            </allowedToolbarItems>
-                            <defaultToolbarItems>
-                                <toolbarItem reference="3kV-on-GFi"/>
-                                <toolbarItem reference="z7y-vj-zyD"/>
-                                <toolbarItem reference="3kV-on-GFi"/>
-                                <toolbarItem reference="5SO-w9-DHR"/>
-                            </defaultToolbarItems>
+                        <toolbar key="toolbar" implicitIdentifier="05091B46-3A65-4D0F-8E5A-01C0C00E15C0" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="jBM-MX-LfJ" customClass="MainToolbar" customModule="SwiftAudioPlayer" customModuleProvider="target">
+                            <allowedToolbarItems/>
+                            <defaultToolbarItems/>
                         </toolbar>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -484,8 +446,29 @@
             </objects>
             <point key="canvasLocation" x="71" y="289"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="ajn-vq-CuK">
+            <objects>
+                <viewController id="RjJ-Ig-1Hw" sceneMemberID="viewController">
+                    <view key="view" id="sB6-1t-TDP">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Wm-xA-E7K">
+                                <rect key="frame" x="187" y="173" width="84" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label text etc punkt" usesSingleLineMode="YES" id="5g0-Ls-gLL">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="Ht8-iF-GyL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="62" y="693"/>
+        </scene>
     </scenes>
-    <resources>
-        <image name="NSTouchBarSidebarTemplate" width="22" height="30"/>
-    </resources>
 </document>

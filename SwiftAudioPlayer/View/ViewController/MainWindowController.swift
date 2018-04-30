@@ -14,12 +14,6 @@ class MainWindowController: NSWindowController {
         toggleAppearance()
     }
     
-    @IBAction func toggleSidebar(_ sender: Any) {
-        mainVC.toggleSidebar(sender) {
-            print("track flexible toolbar item")
-        }
-    }
-    
     let mainVC: MainSplitViewController = {
         let vc = MainSplitViewController()
         return vc
@@ -62,6 +56,8 @@ class MainWindowController: NSWindowController {
             window.styleMask.insert(.fullSizeContentView)
             window.appearance = NSAppearance(named: .vibrantDark)
             window.toolbar?.showsBaselineSeparator = false
+            window.toolbar?.allowsUserCustomization = false
+//            window.addTitlebarAccessoryViewController(mainAccessoryVC)
         }
     }
     
@@ -80,13 +76,13 @@ class MainWindowController: NSWindowController {
 }
 
 extension MainWindowController: NSWindowDelegate {
+    func windowWillEnterFullScreen(_ notification: Notification) {
+        window?.toolbar?.isVisible = false
+    }
     
-    func windowWillEnterFullScreen(_ notification: Notification) {}
-    func windowDidEnterFullScreen(_ notification: Notification) {}
-    func windowWillExitFullScreen(_ notification: Notification) {}
-    func windowDidExitFullScreen(_ notification: Notification) {}
-    func windowDidResize(_ notification: Notification) {}
-    
+    func windowDidExitFullScreen(_ notification: Notification) {
+        window?.toolbar?.isVisible = true
+    }
 }
 
 

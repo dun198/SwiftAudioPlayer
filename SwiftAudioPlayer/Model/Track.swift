@@ -7,10 +7,6 @@
 //
 
 /** this is the model which represents a track in the playlist
- 
- - Parameters:
- - filename: The cubes available for allocation
- - length: The people that require cubes
  */
 struct Track: Equatable {
 
@@ -26,12 +22,14 @@ struct Track: Equatable {
     let title: String?
     let artist: String?
     let genre: String?
+    let album: String?
 
-    init(filename: String, duration: String, title: String? = nil, artist: String? = nil, genre: String? = nil) {
+    init(filename: String, duration: String, title: String? = nil, artist: String? = nil, album: String? = nil, genre: String? = nil) {
         self.filename = filename
         self.duration = duration
         self.title = title
         self.artist = artist
+        self.album = album
         self.genre = genre
     }
 }

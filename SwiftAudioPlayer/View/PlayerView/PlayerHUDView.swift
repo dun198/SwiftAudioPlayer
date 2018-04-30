@@ -8,17 +8,17 @@
 
 import Cocoa
 
-class PlayerBox: CustomBox {
+class PlayerHUDView: RoundedShadowedBox {
     
-    let visualEffectView: NSVisualEffectView = {
-        let view = NSVisualEffectView()
-        view.material = .ultraDark
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.blendingMode = NSVisualEffectView.BlendingMode.withinWindow
-        view.wantsLayer = true
-        view.layer?.cornerRadius = 16
-        return view
-    }()
+//    let visualEffectView: NSVisualEffectView = {
+//        let view = NSVisualEffectView()
+//        view.material = .ultraDark
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.blendingMode = NSVisualEffectView.BlendingMode.withinWindow
+//        view.wantsLayer = true
+//        view.layer?.cornerRadius = 16
+//        return view
+//    }()
     
     lazy var playerControlsView: PlaybackControlsView = {
         let view = PlaybackControlsView()
@@ -54,12 +54,12 @@ class PlayerBox: CustomBox {
     }
     
     private func setupViews() {
-        addSubview(visualEffectView)
+//        addSubview(visualEffectView)
         addSubview(playerControlsView)
         addSubview(progressView)
         addSubview(nowPlayingView)
         
-        visualEffectView.fill(to: self)
+//        visualEffectView.fill(to: self)
         
         playerControlsView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         playerControlsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true

@@ -15,8 +15,16 @@ class Label: NSTextField {
         isEditable = false
         isBordered = false
         isBezeled = false
+        usesSingleLineMode = true
         drawsBackground = false
         autoresizesSubviews = true
+        cell?.truncatesLastVisibleLine = true
+        cell?.lineBreakMode = .byTruncatingMiddle
+        
+        setContentHuggingPriority(.required, for: .horizontal)
+        setContentHuggingPriority(.required, for: .vertical)
+        setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
         translatesAutoresizingMaskIntoConstraints = false
     }
     
