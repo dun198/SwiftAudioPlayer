@@ -44,7 +44,7 @@ class MainSplitViewController: NSSplitViewController {
         setupSplitView()
         setupUI()
     }
-        
+    
     func toggleSidebar(_ sender: Any?, withCompletionHandler completion:@escaping () -> Void) {
         toggleSidebar(sender)
         view.setNeedsDisplay(view.frame)
@@ -64,7 +64,6 @@ class MainSplitViewController: NSSplitViewController {
             print("setupUI")
         }
     }
-    
 }
 
 class CustomSidebarSplitViewItem: NSSplitViewItem {
@@ -78,5 +77,4 @@ class CustomSidebarSplitViewItem: NSSplitViewItem {
         self.collapseBehavior = NSSplitViewItem.CollapseBehavior.preferResizingSiblingsWithFixedSplitView
         self.holdingPriority = NSLayoutConstraint.Priority.init(rawValue: 10)
     }
-    
 }

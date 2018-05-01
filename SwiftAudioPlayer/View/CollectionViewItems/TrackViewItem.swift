@@ -40,8 +40,8 @@ class TrackViewItem: NSCollectionViewItem {
         let stack = NSStackView()
         stack.orientation = .horizontal
         stack.alignment = .centerY
-        stack.spacing = 8
-        stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 3)
+        stack.spacing = 4
+        stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
         stack.setClippingResistancePriority(.required, for: .horizontal)
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -75,11 +75,13 @@ class TrackViewItem: NSCollectionViewItem {
     
     let trackNumberLabel: Label = {
         let label = Label()
-        label.stringValue = "01 ."
+        label.stringValue = ""
         label.font = NSFont.systemFont(ofSize: 8)
         label.textColor = .gray
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.alignment = .right
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.widthAnchor.constraint(equalToConstant: 24).isActive = true
         return label
     }()
     

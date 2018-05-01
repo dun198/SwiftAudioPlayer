@@ -12,7 +12,6 @@ class SidebarView: NSView {
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        
         setupViews()
     }
     
@@ -21,7 +20,7 @@ class SidebarView: NSView {
     }
     
     private func setupViews() {
-
+        
     }
     
 }

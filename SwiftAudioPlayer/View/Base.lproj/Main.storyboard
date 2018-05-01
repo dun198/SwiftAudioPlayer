@@ -441,34 +441,26 @@
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
                     </window>
+                    <connections>
+                        <segue destination="xiA-dU-BUJ" kind="relationship" relationship="window.shadowedContentViewController" id="bLJ-2u-p8h"/>
+                    </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="71" y="289"/>
+            <point key="canvasLocation" x="75" y="259"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="ajn-vq-CuK">
+        <scene sceneID="Ldb-08-3ga">
             <objects>
-                <viewController id="RjJ-Ig-1Hw" sceneMemberID="viewController">
-                    <view key="view" id="sB6-1t-TDP">
+                <viewController id="xiA-dU-BUJ" sceneMemberID="viewController">
+                    <view key="view" id="lE3-Cz-mU3">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Wm-xA-E7K">
-                                <rect key="frame" x="187" y="173" width="84" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label text etc punkt" usesSingleLineMode="YES" id="5g0-Ls-gLL">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
                     </view>
                 </viewController>
-                <customObject id="Ht8-iF-GyL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="deg-DG-eaZ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="62" y="693"/>
+            <point key="canvasLocation" x="75" y="694"/>
         </scene>
     </scenes>
 </document>

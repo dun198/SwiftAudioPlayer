@@ -28,13 +28,3 @@ extension FileManager {
         return musicFiles
     }
 }
-
-extension URL {
-    private enum MusicFileExtension: String {
-        case mp3
-    }
-    
-    internal var isMusicFile: Bool {
-        return MusicFileExtension(rawValue: pathExtension) != nil
-    }
-}

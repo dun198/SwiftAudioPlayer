@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  UIConstants.swift
 //  MyAudioPlayer
 //
 //  Created by Tobias Dunkel on 14.12.17.
@@ -8,9 +8,7 @@
 
 import Foundation
 
-class Constants {
-
-    static let narrowWidth: Int = 300
-    static let wideWidth: Int = 500
-
+struct UIConstants {
+    static let sidebarMinWidth = 120
+    static let sidebarMaxWidth = 160
 }

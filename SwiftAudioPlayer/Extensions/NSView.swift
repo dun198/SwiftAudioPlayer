@@ -22,5 +22,4 @@ extension NSView {
         self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
-    
 }

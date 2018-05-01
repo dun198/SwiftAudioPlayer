@@ -19,7 +19,7 @@ class RoundedShadowedBox: NSBox {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var backgroundColor: NSColor = .white {
+    var backgroundColor: NSColor = .clear {
         didSet {
             needsDisplay = true
         }
@@ -30,8 +30,10 @@ class RoundedShadowedBox: NSBox {
         titlePosition = .noTitle
         borderType = .noBorder
         cornerRadius = 6
+        borderWidth = 0
         isTransparent = false
         wantsLayer = true
+        translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .controlBackgroundColor
         needsDisplay = true
     }

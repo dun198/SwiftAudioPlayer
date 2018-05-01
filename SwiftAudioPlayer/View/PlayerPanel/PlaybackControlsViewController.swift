@@ -40,7 +40,7 @@ class PlaybackControlsViewController: NSViewController {
     }
 }
 
-extension PlaybackControlsViewController: PlayerControlsDelegate {
+extension PlaybackControlsViewController: PlaybackControlsDelegate {
     
     @IBAction func playPause(sender: Any) {
         if let button = sender as? ImageButton {

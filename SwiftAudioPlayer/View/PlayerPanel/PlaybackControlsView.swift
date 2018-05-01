@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol PlayerControlsDelegate {
+protocol PlaybackControlsDelegate {
     func playPause(sender: Any)
     func next(sender: Any)
     func prev(sender: Any)
@@ -16,7 +16,7 @@ protocol PlayerControlsDelegate {
 
 class PlaybackControlsView: NSView {
     
-    var delegate: PlayerControlsDelegate?
+    var delegate: PlaybackControlsDelegate?
     
     let stackView: NSStackView = {
         let stack = NSStackView()
@@ -32,8 +32,8 @@ class PlaybackControlsView: NSView {
     
     lazy var playPauseButton: ImageButton = {
         let image = NSImage(named: NSImage.Name.touchBarPlayTemplate)
-        let size = NSSize(width: 48, height: 48)
-        let button = ImageButton(image: image!, size: size)
+        let scaling = NSImageScaling.scaleProportionallyUpOrDown
+        let button = ImageButton(image: image!, width: 48, height: 48, scaling: scaling)
         button.target = self
         button.action = #selector(playPause)
         return button

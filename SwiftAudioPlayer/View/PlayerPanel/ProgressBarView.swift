@@ -1,5 +1,5 @@
 //
-//  ProgressView.swift
+//  ProgressBarView.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 28.04.18.
@@ -8,15 +8,15 @@
 
 import Cocoa
 
-protocol ProgressDelegate {
+protocol ProgressBarDelegate {
     func updateDurationLabel()
     func updateCurrentPositionLabel()
     func seek()
 }
 
-class ProgressView: NSView {
+class ProgressBarView: NSView {
     
-    var delegate: ProgressDelegate?
+    var delegate: ProgressBarDelegate?
     
     let stackView: NSStackView = {
         let stack = NSStackView()

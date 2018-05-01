@@ -1,5 +1,5 @@
 //
-//  ContentToolbarView.swift
+//  ToolbarView.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 30.04.18.
@@ -8,12 +8,19 @@
 
 import Cocoa
 
-class ContentToolbarView: NSView {
+protocol ContentToolbarDelegate {
+    func toggleSidebar()
+}
+
+class ToolbarView: NSView {
+    
+    var delegate: ContentToolbarDelegate?
     
     let spacerForWindowButtons: NSView = {
         let view = NSView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        view.isHidden = true
         return view
     }()
     
@@ -30,20 +37,23 @@ class ContentToolbarView: NSView {
     lazy var searchField: NSSearchField = {
         let searchField = NSSearchField()
         searchField.focusRingType = NSFocusRingType.none
+        searchField.controlSize = NSControl.ControlSize.regular
         searchField.refusesFirstResponder = true
         searchField.setContentHuggingPriority(.required, for: .horizontal)
-        searchField.delegate = self
         searchField.translatesAutoresizingMaskIntoConstraints = false
         searchField.widthAnchor.constraint(lessThanOrEqualToConstant: 144).isActive = true
+        searchField.delegate = self
         return searchField
     }()
     
-    let toggleSidebarButton: ImageButton = {
+    lazy var toggleSidebarButton: ImageButton = {
         let image = NSImage(named: NSImage.Name.touchBarSidebarTemplate)!
-        let button = ImageButton(
-            image: image,
-            size: NSSize(width: 22, height: 22)
-        )
+        let button = ImageButton(image: image, width: 26, height: 26)
+        button.bezelStyle = NSButton.BezelStyle.texturedRounded
+        button.isBordered = true
+        button.target = self
+        button.action = #selector(toggleSidebar)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -68,9 +78,14 @@ class ContentToolbarView: NSView {
         centerViews.forEach { stackView.addView($0, in: .center) }
         trailingViews.forEach { stackView.addView($0, in: .trailing) }
     }
+    
+    @objc private func toggleSidebar() {
+        print("pressed toggleToolbarButton")
+        delegate?.toggleSidebar()
+    }
 }
 
-extension ContentToolbarView: NSSearchFieldDelegate {
+extension ToolbarView: NSSearchFieldDelegate {
     func searchFieldDidStartSearching(_ sender: NSSearchField) {
         print("didStartSearching")
     }
@@ -79,16 +94,13 @@ extension ContentToolbarView: NSSearchFieldDelegate {
     }
 }
 
-extension ContentToolbarView: CollapseSplitViewDelegate {
+extension ToolbarView: CollapseSplitViewDelegate {
     func splitView(didCollapse: Bool) {
         print("didCollapse: ", didCollapse)
         if didCollapse {
-            stackView.views(in: .leading).forEach { stackView.removeView($0) }
-            leadingViews.forEach { stackView.addView($0, in: .leading) }
+            spacerForWindowButtons.isHidden = false
         } else {
-            stackView.removeView(spacerForWindowButtons)
+            spacerForWindowButtons.isHidden = true
         }
     }
-    
-    
 }

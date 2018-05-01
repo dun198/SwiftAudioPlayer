@@ -1,5 +1,5 @@
 //
-//  ProgressViewController.swift
+//  CoverViewController.swift
 //  MyAudioPlayer
 //
 //  Created by Tobias Dunkel on 27.03.18.
@@ -8,7 +8,11 @@
 
 import Cocoa
 
-class ProgressViewController: NSTitlebarAccessoryViewController {
+protocol AlbumCoverDelegate {
+    func updateLabels()
+}
+
+class AlbumCoverViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

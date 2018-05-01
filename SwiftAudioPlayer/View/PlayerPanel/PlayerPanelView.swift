@@ -1,5 +1,5 @@
 //
-//  PlayerControlPanel.swift
+//  PlayerPanelView.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 29.04.18.
@@ -8,18 +8,9 @@
 
 import Cocoa
 
-class PlayerHUDView: RoundedShadowedBox {
+class PlayerPanelView: RoundedShadowedBox {
     
-//    let visualEffectView: NSVisualEffectView = {
-//        let view = NSVisualEffectView()
-//        view.material = .ultraDark
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.blendingMode = NSVisualEffectView.BlendingMode.withinWindow
-//        view.wantsLayer = true
-//        view.layer?.cornerRadius = 16
-//        return view
-//    }()
-    
+    // player controls
     lazy var playerControlsView: PlaybackControlsView = {
         let view = PlaybackControlsView()
         view.isHidden = true
@@ -28,17 +19,29 @@ class PlayerHUDView: RoundedShadowedBox {
         return view
     }()
     
-    lazy var progressView: ProgressView = {
-        let view = ProgressView()
+    // progress bar
+    lazy var progressView: ProgressBarView = {
+        let view = ProgressBarView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    // now playing info
     lazy var nowPlayingView: NowPlayingView = {
         let view = NowPlayingView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    //    let visualEffectView: NSVisualEffectView = {
+    //        let view = NSVisualEffectView()
+    //        view.material = .ultraDark
+    //        view.translatesAutoresizingMaskIntoConstraints = false
+    //        view.blendingMode = NSVisualEffectView.BlendingMode.withinWindow
+    //        view.wantsLayer = true
+    //        view.layer?.cornerRadius = 16
+    //        return view
+    //    }()
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -74,7 +77,7 @@ class PlayerHUDView: RoundedShadowedBox {
         progressView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         progressView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         progressView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
-        //progressView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+//        progressView.heightAnchor.constraint(equalToConstant: 16).isActive = true
     }
     
     override func mouseEntered(with event: NSEvent) {
