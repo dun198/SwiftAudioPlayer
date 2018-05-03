@@ -41,7 +41,7 @@ class Player: NSObject {
     
     // MARK: - Public API
     
-    private var currentTrack = Track(filename: "Test", duration: "300")
+    //private var currentTrack = Track(filename: "Test", duration: "300")
     
     func play(_ item: AVPlayerItem) {
         playerState = .playing(item)

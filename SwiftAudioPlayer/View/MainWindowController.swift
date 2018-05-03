@@ -53,11 +53,13 @@ class MainWindowController: NSWindowController {
             window.titleVisibility = .hidden
             window.titlebarAppearsTransparent = true
             window.isMovableByWindowBackground = true
-            window.styleMask.insert(.fullSizeContentView)
+            window.styleMask.insert([
+                .fullSizeContentView
+                ])
             window.appearance = NSAppearance(named: .vibrantDark)
             window.toolbar?.showsBaselineSeparator = false
             window.toolbar?.allowsUserCustomization = false
-//            window.addTitlebarAccessoryViewController(mainAccessoryVC)
+            window.toolbar?.isVisible = true
         }
     }
     
@@ -76,13 +78,20 @@ class MainWindowController: NSWindowController {
 }
 
 extension MainWindowController: NSWindowDelegate {
+    func windowDidEnterFullScreen(_ notification: Notification) {
+        NSApplication.shared.presentationOptions.insert(NSApplication.PresentationOptions.autoHideToolbar)
+    }
+    
     func windowWillEnterFullScreen(_ notification: Notification) {
+        NSApplication.shared.presentationOptions.insert(NSApplication.PresentationOptions.autoHideToolbar)
+
         window?.toolbar?.isVisible = false
     }
     
     func windowDidExitFullScreen(_ notification: Notification) {
         window?.toolbar?.isVisible = true
     }
+    
 }
 
 

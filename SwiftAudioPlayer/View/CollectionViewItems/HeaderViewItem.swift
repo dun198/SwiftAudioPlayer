@@ -34,7 +34,5 @@ class HeaderViewItem: NSCollectionViewItem {
         view.addSubview(titleLabel)
         titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-    }
-    
-    
+    }    
 }

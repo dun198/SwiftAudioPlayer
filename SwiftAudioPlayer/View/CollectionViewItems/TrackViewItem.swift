@@ -29,10 +29,14 @@ class TrackViewItem: NSCollectionViewItem {
     
     var track: Track? = nil {
         didSet {
-            print("setting up track")
             guard let track = track else { return }
-            trackTitleLabel.stringValue = "\(track.artist!) - \(track.title!)"
-            durationLabel.stringValue = track.duration
+            if let artist = track.artist, let title = track.title {
+                trackTitleLabel.stringValue = "\(artist) - \(title)"
+            } else {
+                trackTitleLabel.stringValue = "\(track.filename)"
+            }
+            
+            durationLabel.stringValue = track.duration ?? ""
         }
     }
     
@@ -41,7 +45,7 @@ class TrackViewItem: NSCollectionViewItem {
         stack.orientation = .horizontal
         stack.alignment = .centerY
         stack.spacing = 4
-        stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+        stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 4)
         stack.setClippingResistancePriority(.required, for: .horizontal)
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -67,7 +71,7 @@ class TrackViewItem: NSCollectionViewItem {
     let durationLabel: Label = {
         let label = Label()
         label.stringValue = "03:20"
-        label.font = NSFont.systemFont(ofSize: 12)
+        label.font = NSFont.monospacedDigitSystemFont(ofSize: 10, weight: NSFont.Weight.regular)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.alignment = .center
         return label
@@ -84,6 +88,12 @@ class TrackViewItem: NSCollectionViewItem {
         label.widthAnchor.constraint(equalToConstant: 24).isActive = true
         return label
     }()
+    
+    override var isSelected: Bool {
+        didSet {
+            changeView(forSelectedState: isSelected)
+        }
+    }
     
     override func loadView() {
         self.view = NSView()
@@ -106,6 +116,21 @@ class TrackViewItem: NSCollectionViewItem {
         centerViews.forEach { stackView.addView($0, in: .center) }
         trailingViews.forEach { stackView.addView($0, in: .trailing) }
     }
-    
+
+    private func changeView(forSelectedState isSelected: Bool) {
+        if isSelected {
+            view.wantsLayer = true
+            view.layer?.backgroundColor = NSColor.selectedTextBackgroundColor.cgColor
+            view.layer?.cornerRadius = 4
+            trackTitleLabel.textColor = NSColor.selectedTextColor
+            durationLabel.textColor = NSColor.selectedTextColor
+        } else {
+            view.layer = nil
+            view.wantsLayer = false
+            let defaultLabel = Label()
+            trackTitleLabel.textColor = defaultLabel.textColor
+            durationLabel.textColor = defaultLabel.textColor
+        }
+    }
     
 }

@@ -9,6 +9,19 @@
 import Cocoa
 
 class Label: NSTextField {
+    
+//    override var stringValue: String {
+//        didSet {
+//            sizeToFit()
+//        }
+//    }
+//    
+//    override var font: NSFont? {
+//        didSet {
+//            sizeToFit()
+//        }
+//    }
+        
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         
@@ -20,12 +33,12 @@ class Label: NSTextField {
         autoresizesSubviews = true
         cell?.truncatesLastVisibleLine = true
         cell?.lineBreakMode = .byTruncatingMiddle
-        
-        setContentHuggingPriority(.required, for: .horizontal)
-        setContentHuggingPriority(.required, for: .vertical)
-        setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        
         translatesAutoresizingMaskIntoConstraints = false
+        
+//        setContentHuggingPriority(.defaultLow, for: .horizontal)
+//        setContentHuggingPriority(.defaultLow, for: .vertical)
+//        setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+//        setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
     }
     
     required init?(coder: NSCoder) {

@@ -8,13 +8,15 @@
 
 import Cocoa
 
-protocol ContentToolbarDelegate {
+protocol ToolbarDelegate {
     func toggleSidebar()
+    func addTracks()
+    func removeAllTracks()
 }
 
 class ToolbarView: NSView {
     
-    var delegate: ContentToolbarDelegate?
+    var delegate: ToolbarDelegate?
     
     let spacerForWindowButtons: NSView = {
         let view = NSView()
@@ -34,16 +36,26 @@ class ToolbarView: NSView {
         return stack
     }()
     
-    lazy var searchField: NSSearchField = {
-        let searchField = NSSearchField()
-        searchField.focusRingType = NSFocusRingType.none
-        searchField.controlSize = NSControl.ControlSize.regular
-        searchField.refusesFirstResponder = true
-        searchField.setContentHuggingPriority(.required, for: .horizontal)
-        searchField.translatesAutoresizingMaskIntoConstraints = false
-        searchField.widthAnchor.constraint(lessThanOrEqualToConstant: 144).isActive = true
-        searchField.delegate = self
-        return searchField
+//    lazy var searchField: NSSearchField = {
+//        let searchField = NSSearchField()
+//        searchField.focusRingType = NSFocusRingType.none
+//        searchField.controlSize = NSControl.ControlSize.regular
+//        searchField.refusesFirstResponder = true
+//        searchField.setContentHuggingPriority(.required, for: .horizontal)
+//        searchField.translatesAutoresizingMaskIntoConstraints = false
+//        searchField.widthAnchor.constraint(lessThanOrEqualToConstant: 144).isActive = true
+//        searchField.delegate = self
+//        return searchField
+//    }()
+    
+    lazy var toggleSearchBarButton: ImageButton = {
+        let image = NSImage(named: NSImage.Name.touchBarSearchTemplate)!
+        let button = ImageButton(image: image, width: 26, height: 26)
+        button.bezelStyle = NSButton.BezelStyle.texturedRounded
+        button.isBordered = true
+        button.target = self
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     lazy var toggleSidebarButton: ImageButton = {
@@ -57,9 +69,31 @@ class ToolbarView: NSView {
         return button
     }()
     
-    lazy var leadingViews: [NSView] = [spacerForWindowButtons, toggleSidebarButton]
+    lazy var addTracksButton: ImageButton = {
+        let image = NSImage(named: NSImage.Name.touchBarAddTemplate)!
+        let button = ImageButton(image: image, width: 26, height: 26)
+        button.bezelStyle = NSButton.BezelStyle.texturedRounded
+        button.isBordered = true
+        button.target = self
+        button.action = #selector(addTracks)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var removeAllTracksButton: ImageButton = {
+        let image = NSImage(named: NSImage.Name.touchBarDeleteTemplate)!
+        let button = ImageButton(image: image, width: 26, height: 26)
+        button.bezelStyle = NSButton.BezelStyle.texturedRounded
+        button.isBordered = true
+        button.target = self
+        button.action = #selector(removeAllTracks)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var leadingViews: [NSView] = [spacerForWindowButtons, toggleSidebarButton, addTracksButton, removeAllTracksButton]
     lazy var centerViews: [NSView] = []
-    lazy var trailingViews: [NSView] = [searchField]
+    lazy var trailingViews: [NSView] = [toggleSearchBarButton]
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -82,6 +116,16 @@ class ToolbarView: NSView {
     @objc private func toggleSidebar() {
         print("pressed toggleToolbarButton")
         delegate?.toggleSidebar()
+    }
+    
+    @objc private func addTracks() {
+        print("pressed addTracksButton")
+        delegate?.addTracks()
+    }
+    
+    @objc private func removeAllTracks() {
+        print("pressed removeAllTracksButton")
+        delegate?.removeAllTracks()
     }
 }
 

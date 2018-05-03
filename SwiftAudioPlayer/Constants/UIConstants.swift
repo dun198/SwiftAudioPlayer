@@ -9,6 +9,8 @@
 import Foundation
 
 struct UIConstants {
-    static let sidebarMinWidth = 120
-    static let sidebarMaxWidth = 160
+    
+    
+    static let toolbarHeight = 40
+    
 }

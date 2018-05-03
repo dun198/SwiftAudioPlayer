@@ -21,19 +21,19 @@ class PlaybackControlsView: NSView {
     let stackView: NSStackView = {
         let stack = NSStackView()
         stack.orientation = .horizontal
-        stack.spacing = 0
-        stack.edgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        stack.spacing = 8
+        stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.setContentHuggingPriority(.required, for: .horizontal)
-        stack.setClippingResistancePriority(.required, for: .horizontal)
-        stack.setHuggingPriority(.defaultLow, for: .horizontal)
+//        stack.setContentHuggingPriority(NSLayoutConstraint.Priority.dragThatCannotResizeWindow, for: .horizontal)
+        stack.setClippingResistancePriority(.defaultLow, for: .horizontal)
+//        stack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return stack
     }()
     
     lazy var playPauseButton: ImageButton = {
         let image = NSImage(named: NSImage.Name.touchBarPlayTemplate)
         let scaling = NSImageScaling.scaleProportionallyUpOrDown
-        let button = ImageButton(image: image!, width: 48, height: 48, scaling: scaling)
+        let button = ImageButton(image: image!, width: 40, height: 40, scaling: scaling)
         button.target = self
         button.action = #selector(playPause)
         return button
@@ -56,18 +56,48 @@ class PlaybackControlsView: NSView {
     }()
     
     lazy var shuffleButton: ImageButton = {
-        let image = NSImage(named: NSImage.Name.touchBarRotateLeftTemplate)
-        let button = ImageButton(image: image!)
+        let image = NSImage(named: NSImage.Name.touchBarShareTemplate)
+        let button = ImageButton(image: image!, width: 24, height: 24)
         button.target = self
         return button
     }()
     
     lazy var repeatButton: ImageButton = {
         let image = NSImage(named: NSImage.Name.touchBarRefreshTemplate)
-        let button = ImageButton(image: image!)
+        let button = ImageButton(image: image!, width: 24, height: 24)
         button.target = self
         return button
     }()
+    
+    lazy var volumeButton: ImageButton = {
+        let image = NSImage(named: NSImage.Name.touchBarAudioOutputVolumeHighTemplate)
+        let button = ImageButton(image: image!, width: 24, height: 24)
+        button.target = self
+        return button
+    }()
+    
+    lazy var infoButton: ImageButton = {
+        let image = NSImage(named: NSImage.Name.touchBarGetInfoTemplate)
+        let button = ImageButton(image: image!, width: 24, height: 24)
+        button.target = self
+        return button
+    }()
+    
+    lazy var leadingViews: [NSView] = [
+        shuffleButton,
+        repeatButton,
+        SpacerView(minSize: 16, maxSize: 64)
+    ]
+    lazy var centerViews: [NSView] = [
+        prevButton,
+        playPauseButton,
+        nextButton
+    ]
+    lazy var trailingViews: [NSView] = [
+        SpacerView(minSize: 16, maxSize: 64),
+        volumeButton,
+        infoButton
+    ]
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -82,13 +112,18 @@ class PlaybackControlsView: NSView {
         addSubview(stackView)
         stackView.fill(to: self)
         
-        let leadingViews: [NSView] = []
-        let centerViews: [NSView] = [prevButton, playPauseButton, nextButton]
-        let trailingViews: [NSView] = []
-
-        leadingViews.forEach { stackView.addView($0, in: .leading) }
-        centerViews.forEach { stackView.addView($0, in: .center) }
-        trailingViews.forEach { stackView.addView($0, in: .trailing) }
+        leadingViews.forEach {
+            stackView.addView($0, in: .leading)
+            stackView.setVisibilityPriority(NSStackView.VisibilityPriority.detachOnlyIfNecessary, for: $0)
+        }
+        centerViews.forEach {
+            stackView.addView($0, in: .center)
+            stackView.setVisibilityPriority(NSStackView.VisibilityPriority.mustHold, for: $0)
+        }
+        trailingViews.forEach {
+            stackView.addView($0, in: .trailing)
+            stackView.setVisibilityPriority(NSStackView.VisibilityPriority.detachOnlyIfNecessary, for: $0)
+        }
     }
     
     @objc private func playPause() {

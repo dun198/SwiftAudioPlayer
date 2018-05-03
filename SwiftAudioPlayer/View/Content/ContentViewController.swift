@@ -8,7 +8,10 @@
 
 import Cocoa
 
-fileprivate let toolbarHeight: CGFloat = 40
+fileprivate let toolbarHeight: CGFloat = 36
+fileprivate let playerPanelPadding: CGFloat = 16
+
+fileprivate var tracks: [Track] = [Track]()
 
 extension NSUserInterfaceItemIdentifier {
     static let headerViewItem = NSUserInterfaceItemIdentifier("HeaderViewItem")
@@ -19,34 +22,16 @@ class ContentViewController: NSViewController {
     
     let backgroundEffectView: NSVisualEffectView = {
         let view = NSVisualEffectView()
-        view.material = NSVisualEffectView.Material.titlebar
-        view.state = .inactive
+        view.material = NSVisualEffectView.Material.appearanceBased
+        view.blendingMode = NSVisualEffectView.BlendingMode.behindWindow
+        view.state = NSVisualEffectView.State.inactive
         return view
     }()
     
-//    let scrollerBackgroundView: BackgroundView = {
-//        let view = BackgroundView()
-//        view.backgroundColor = NSColor.windowBackgroundColor
-//        return view
-//    }()
-    
-    var tracks: [Track] = [
-        Track(filename: "01 A New Sensation (feat. Chris #2)", duration: "3:45", title: "A New Sensation (feat. Chris #2)", artist: "The Prosecution", album: "Words with Destiny", genre: "ska punk"),
-        Track(filename: "02 The Last Shot", duration: "4:12", title: "The Last Shot", artist: "The Prosecution", album: "Words with Destiny", genre: "ska punk"),
-        Track(filename: "03 Words of Peace", duration: "2:59", title: "Words of Peace", artist: "The Prosecution", album: "Words with Destiny", genre: "ska punk")
-    ]
-    
-    func insertTestTracks(amount: Int) {
-        let testTrack: Track = Track(filename: "Filename", duration: "0:00", title: "Title", artist: "Artist", album: "Album", genre: "Genre")
-        for _ in 0..<amount {
-            tracks.append(testTrack)
-        }
-    }
-    
     lazy var flowLayout: CustomFlowLayout = {
         let layout = CustomFlowLayout()
-        layout.itemSize.height = 24
-        layout.sectionInset = NSEdgeInsets(top: toolbarHeight, left: 2, bottom: 72 + 8, right: 8)
+        layout.itemSize.height = 20
+        layout.sectionInset = NSEdgeInsets(top: toolbarHeight, left: 8, bottom: 80 + 16, right: 8)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
         return layout
@@ -59,6 +44,7 @@ class ContentViewController: NSViewController {
         cv.collectionViewLayout = flowLayout
         cv.backgroundColors = [.clear]
         cv.isSelectable = true
+        // register collectionView items
         cv.register(HeaderViewItem.self, forItemWithIdentifier: .headerViewItem)
         cv.register(TrackViewItem.self, forItemWithIdentifier: .trackViewItem)
         return cv
@@ -74,16 +60,6 @@ class ContentViewController: NSViewController {
         return sv
     }()
     
-//    let gradientView: NSView = {
-//        let view = NSView()
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = [CGColor.clear, CGColor.init(gray: 0.08, alpha: 1)]
-//        gradientLayer.locations = [0, 0.4]
-//        view.layer = gradientLayer
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-    
     lazy var toolbarView: ToolbarView = {
         let view = ToolbarView()
         view.delegate = self
@@ -91,11 +67,25 @@ class ContentViewController: NSViewController {
         return view
     }()
     
-    let playerBox: PlayerPanelView = {
-        let view = PlayerPanelView()
+    lazy var playerBox: PlayerPanel = {
+        let view = PlayerPanel()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+//    let topGradientView: NSView = {
+//        let view = GradientView()
+//        view.topGradientColor = NSColor.black
+//        view.topColorLocation = 1.4
+//        return view
+//    }()
+//
+//    let bottomGradientView: GradientView = {
+//        let view = GradientView()
+//        view.bottomGradientColor = NSColor.black
+//        view.bottomColorLocation = -0.4
+//        return view
+//    }()
     
     override func loadView() {
         self.view = NSView()
@@ -103,31 +93,27 @@ class ContentViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        insertTestTracks(amount: 100)
         setupViews()
+        loadFilesForHomeDirectory()
+    }
+    
+    private func loadFilesForHomeDirectory() {
+        let musicDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Music")
+        let playableFiles = TrackLoader.getPlayableFiles(in: [musicDirectory])
+        playableFiles.forEach { tracks.append(Track($0)) }
+        self.collectionView.reloadData()
     }
     
     fileprivate func setupViews() {
         view.addSubview(backgroundEffectView)
-//        view.addSubview(scrollerBackgroundView)
         view.addSubview(scrollView)
-//        view.addSubview(gradientView)
-        view.addSubview(toolbarView)
         view.addSubview(playerBox)
-        
+        view.addSubview(toolbarView)
+//        view.addSubview(topGradientView, positioned: NSWindow.OrderingMode.above, relativeTo: scrollView)
+//        view.addSubview(bottomGradientView, positioned: NSWindow.OrderingMode.above, relativeTo: scrollView)
+
         backgroundEffectView.fill(to: self.view)
-        
-//        scrollerBackgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        scrollerBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//        scrollerBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        scrollerBackgroundView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        
         scrollView.fill(to: self.view)
-        
-//        gradientView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        gradientView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        gradientView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        gradientView.heightAnchor.constraint(equalToConstant: toolbarHeight).isActive = true
         
         toolbarView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         toolbarView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -135,9 +121,19 @@ class ContentViewController: NSViewController {
         toolbarView.heightAnchor.constraint(equalToConstant: toolbarHeight).isActive = true
         
         playerBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        playerBox.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).isActive = true
-        playerBox.leftAnchor.constraint(greaterThanOrEqualTo: view.leftAnchor, constant: 8).isActive = true
-        playerBox.topAnchor.constraint(greaterThanOrEqualTo: toolbarView.bottomAnchor, constant: 0).isActive = true
+        playerBox.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -playerPanelPadding).isActive = true
+        playerBox.leftAnchor.constraint(equalTo: view.leftAnchor, constant: playerPanelPadding).isActive = true
+        playerBox.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 8 + toolbarHeight).isActive = true
+
+//        topGradientView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        topGradientView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        topGradientView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        topGradientView.heightAnchor.constraint(equalToConstant: toolbarHeight).isActive = true
+//
+//        bottomGradientView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        bottomGradientView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        bottomGradientView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//        bottomGradientView.heightAnchor.constraint(equalToConstant: toolbarHeight).isActive = true
     }
 }
 
@@ -159,7 +155,11 @@ extension ContentViewController: NSCollectionViewDataSource {
 }
 
 extension ContentViewController: NSCollectionViewDelegate {
-    
+    func collectionView(_ collectionView: NSCollectionView, didChangeItemsAt indexPaths: Set<IndexPath>, to highlightState: NSCollectionViewItem.HighlightState) {
+        if highlightState == NSCollectionViewItem.HighlightState.forSelection {
+//            print("selected cell ", indexPaths)
+        }
+    }
 }
 
 extension ContentViewController: NSCollectionViewDelegateFlowLayout {
@@ -168,9 +168,22 @@ extension ContentViewController: NSCollectionViewDelegateFlowLayout {
     }
 }
 
-extension ContentViewController: ContentToolbarDelegate {
+extension ContentViewController: ToolbarDelegate {
     func toggleSidebar() {
         guard let splitVC = parent as? MainSplitViewController else { return }
         splitVC.toggleSidebar(nil)
+    }
+    
+    func addTracks() {
+        TrackLoader.openFileOrFolder(title: "Open File or Folder", canChooseDir: true) { (selectedURLs) in
+            let playableFiles = TrackLoader.getPlayableFiles(in: selectedURLs)
+            playableFiles.forEach { tracks.append(Track($0)) }
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func removeAllTracks() {
+        tracks.removeAll()
+        self.collectionView.reloadData()
     }
 }

@@ -8,6 +8,14 @@
 
 import Cocoa
 
+fileprivate let sidebarMinWidth: CGFloat = 150
+fileprivate let sidebarMaxWidth: CGFloat = 250
+
+fileprivate let contentMinWidth: CGFloat = 250
+
+fileprivate let infoBarMinWidth: CGFloat = 200
+fileprivate let infoBarMaxWidth: CGFloat = 250
+
 class MainSplitViewController: NSSplitViewController {
 
     let player = Player()
@@ -17,16 +25,27 @@ class MainSplitViewController: NSSplitViewController {
         return vc
     }()
     
+    let sidebarVC: SidebarViewController = {
+        let vc = SidebarViewController()
+        return vc
+    }()
+    
     let infoBarVC: SidebarViewController = {
         let vc = SidebarViewController()
         return vc
     }()
     
+    lazy var contentSplitItem: NSSplitViewItem = {
+        let item = NSSplitViewItem(viewController: contentVC)
+        item.minimumThickness = contentMinWidth
+        return item
+    }()
+    
     lazy var sidebarSplitItem: CollapsibleSplitItem = {
-        let vc = SidebarViewController()
-        let item = CollapsibleSplitItem(sidebarWithViewController: vc)
+        let item = CollapsibleSplitItem(sidebarWithViewController: sidebarVC)
+        item.minimumThickness = sidebarMinWidth
+        item.maximumThickness = sidebarMaxWidth
         item.delegate = contentVC.toolbarView
-        item.maximumThickness = 250
         return item
     }()
     
@@ -53,7 +72,7 @@ class MainSplitViewController: NSSplitViewController {
 
     private func setupSplitView() {
         addSplitViewItem(sidebarSplitItem)
-        addSplitViewItem(NSSplitViewItem(viewController: contentVC))
+        addSplitViewItem(contentSplitItem)
 //        splitView.dividerStyle = NSSplitView.DividerStyle.init(rawValue: 0)!
     }
     
