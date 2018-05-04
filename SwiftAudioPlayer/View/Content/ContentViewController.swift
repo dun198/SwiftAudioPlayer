@@ -7,9 +7,12 @@
 //
 
 import Cocoa
+import AVFoundation
 
 fileprivate let toolbarHeight: CGFloat = 36
 fileprivate let playerPanelPadding: CGFloat = 16
+
+fileprivate let showHideInterfaceThreshold: CGFloat = 5
 
 fileprivate var tracks: [Track] = [Track]()
 
@@ -19,6 +22,8 @@ extension NSUserInterfaceItemIdentifier {
 }
 
 class ContentViewController: NSViewController {
+    
+    let player = Player()
     
     let backgroundEffectView: NSVisualEffectView = {
         let view = NSVisualEffectView()
@@ -50,13 +55,14 @@ class ContentViewController: NSViewController {
         return cv
     }()
     
-    lazy var scrollView: NSScrollView = {
-        let sv = NSScrollView()
+    lazy var scrollView: CollectionScrollView = {
+        let sv = CollectionScrollView()
         sv.documentView = collectionView
         sv.translatesAutoresizingMaskIntoConstraints = false
         // hide vertical scroller
         sv.hasVerticalScroller = true
         sv.verticalScroller?.alphaValue = 0
+        sv.delegate = self
         return sv
     }()
     
@@ -67,8 +73,8 @@ class ContentViewController: NSViewController {
         return view
     }()
     
-    lazy var playerBox: PlayerPanel = {
-        let view = PlayerPanel()
+    lazy var playerBox: PlayerControlsView = {
+        let view = PlayerControlsView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -93,8 +99,59 @@ class ContentViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViews()
         loadFilesForHomeDirectory()
+        
+//        setupObserver()
+        
+        // add tracking area
+        view.addTrackingArea(NSTrackingArea(rect: view.bounds, options: [.activeAlways, .inVisibleRect, .mouseMoved, .mouseEnteredAndExited], owner: self, userInfo: nil))
+    }
+    
+//    private func setupObserver() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(scrollViewDidScroll), name: NSScrollView.willStartLiveScrollNotification, object: self.scrollView)
+//    }
+    
+//    @objc func scrollViewDidScroll() {
+//        fadeControls()
+//    }
+    
+    override func mouseMoved(with event: NSEvent) {
+        super.mouseMoved(with: event)
+        let yVelocity = abs(event.deltaY)
+        let xVelocity = abs(event.deltaX)
+        if yVelocity >= showHideInterfaceThreshold || xVelocity >= showHideInterfaceThreshold * 2{
+            showControls()
+        }
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        super.mouseExited(with: event)
+        fadeControls()
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        super.mouseEntered(with: event)
+        showControls()
+    }
+    
+    private func showControls() {
+        NSAnimationContext.runAnimationGroup({ (context) in
+            context.duration = 0.4
+            context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            self.playerBox.animator().alphaValue = 1
+            self.toolbarView.animator().alphaValue = 1
+        })
+    }
+    
+    private func fadeControls() {
+        NSAnimationContext.runAnimationGroup({ (context) in
+            context.duration = 0.4
+            context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            self.playerBox.animator().alphaValue = 0.2
+            self.toolbarView.animator().alphaValue = 0.2
+        })
     }
     
     private func loadFilesForHomeDirectory() {
@@ -104,7 +161,7 @@ class ContentViewController: NSViewController {
         self.collectionView.reloadData()
     }
     
-    fileprivate func setupViews() {
+    private func setupViews() {
         view.addSubview(backgroundEffectView)
         view.addSubview(scrollView)
         view.addSubview(playerBox)
@@ -150,6 +207,7 @@ extension ContentViewController: NSCollectionViewDataSource {
         let cell = collectionView.makeItem(withIdentifier: .trackViewItem, for: indexPath) as! TrackViewItem
         cell.track = tracks[indexPath.item]
         cell.trackNumberLabel.stringValue = "\(indexPath.item) ."
+        cell.delegate = self
         return cell
     }
 }
@@ -185,5 +243,24 @@ extension ContentViewController: ToolbarDelegate {
     func removeAllTracks() {
         tracks.removeAll()
         self.collectionView.reloadData()
+    }
+}
+
+extension ContentViewController: TrackItemDelegate {
+    func trackItemDoubleAction(for track: Track?) {
+        guard let track = track else { return }
+        player.play(track)
+    }
+}
+
+extension ContentViewController: CollectionScrollViewDelegate {
+    func collectionViewWillScroll(with event: NSEvent) {        
+        let yVelocity = abs(event.scrollingDeltaY)
+        if yVelocity >= showHideInterfaceThreshold {
+            fadeControls()
+        }
+    }
+    
+    func collectionViewDidScroll(with event: NSEvent) {
     }
 }

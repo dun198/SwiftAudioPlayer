@@ -11,12 +11,11 @@ import AVFoundation
 
 private extension Player {
     enum PlayerState {
-        case playing(AVPlayerItem)
-        case paused(AVPlayerItem)
+        case playing(Track)
+        case paused(Track)
         case idle
     }
 }
-
 
 class Player: NSObject {
     static let shared = Player()
@@ -30,8 +29,8 @@ class Player: NSObject {
         print("state did change")
     }
     
-    private func startPlayback(with item: AVPlayerItem) {
-        player.replaceCurrentItem(with: item)
+    private func startPlayback(with track: Track) {
+        player.replaceCurrentItem(with: AVPlayerItem(url: track.file))
         player.play()
     }
     
@@ -41,11 +40,9 @@ class Player: NSObject {
     
     // MARK: - Public API
     
-    //private var currentTrack = Track(filename: "Test", duration: "300")
-    
-    func play(_ item: AVPlayerItem) {
-        playerState = .playing(item)
-        startPlayback(with: item)
+    func play(_ track: Track) {
+        playerState = .playing(track)
+        startPlayback(with: track)
     }
     
     func pause() {
@@ -55,14 +52,9 @@ class Player: NSObject {
             // could be considered a programming error, but since
             // it doesn't do any harm, we simply break here.
             break
-        case .playing(let item):
-            playerState = .paused(item)
+        case .playing(let track):
+            playerState = .paused(track)
             pausePlayback()
         }
     }
-    
-    func some() {
-        
-    }
-    
 }

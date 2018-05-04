@@ -11,13 +11,12 @@ import Cocoa
 fileprivate let supportedAudioExt: [String] = [
     "mp3",
     "wav",
-    "aiff"
+    "aiff",
+    "m4a"
 ]
 
 class TrackLoader: NSObject {
-    
-    static let shared = TrackLoader()
-    
+        
     override init() {
         super.init()
     }
@@ -27,21 +26,39 @@ class TrackLoader: NSObject {
      - Returns: Whether user dismissed the panel by clicking OK.
      */
     static func openFileOrFolder(title: String, dir: URL? = nil, canChooseDir: Bool, ok: @escaping ([URL]) -> Void) {
+        
         let panel = NSOpenPanel()
-        panel.title = title
         panel.canCreateDirectories = false
         panel.canChooseFiles = true
-        panel.canChooseDirectories = canChooseDir
         panel.resolvesAliases = true
         panel.allowsMultipleSelection = true
+        panel.title = title
+        panel.canChooseDirectories = canChooseDir
+
         if let dir = dir {
             panel.directoryURL = dir
         }
-        panel.begin() { result in
-            if result == .OK {
-                ok(panel.urls)
-            }
+            
+            // modal sheet
+//            guard let window = NSApplication.shared.mainWindow else { return }
+//            panel.beginSheetModal(for: window) { result in
+//                if result == .OK {
+//                    ok(panel.urls)
+//                }
+//            }
+            
+        // separate modal panel
+        let result = panel.runModal()
+        if result == .OK {
+            ok(panel.urls)
         }
+        
+        // separate panel
+//        panel.begin() { result in
+//            if result == .OK {
+//                ok(panel.urls)
+//            }
+//        }
     }
     
     static func getPlayableFiles(in urls: [URL]) -> [URL] {

@@ -11,6 +11,7 @@ import Cocoa
 protocol ProgressBarDelegate {
     func updateDurationLabel()
     func updateCurrentPositionLabel()
+    func updateSliderPosition()
     func seek()
 }
 

@@ -1,5 +1,5 @@
 //
-//  PlayerPanel.swift
+//  PlayerControlsView.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 29.04.18.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PlayerPanel: NSView {
+class PlayerControlsView: NSView {
     
     // background effect view
     let backgroundEffectView: NSVisualEffectView = {
@@ -26,7 +26,7 @@ class PlayerPanel: NSView {
     // player controls
     lazy var playerControlsView: PlaybackControlsView = {
         let view = PlaybackControlsView()
-        view.isHidden = true
+//        view.isHidden = true
 //        view.alphaValue = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = PlaybackControlsViewController()
@@ -74,30 +74,30 @@ class PlayerPanel: NSView {
 
         backgroundEffectView.addSubview(progressView)
         backgroundEffectView.addSubview(playerControlsView)
-        backgroundEffectView.addSubview(nowPlayingView)
+//        backgroundEffectView.addSubview(nowPlayingView)
         
         playerControlsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
         playerControlsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
-        playerControlsView.topAnchor.constraint(equalTo: topAnchor, constant: 4).isActive = true
-        playerControlsView.bottomAnchor.constraint(equalTo: progressView.topAnchor, constant: -4).isActive = true
+        playerControlsView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
+        playerControlsView.bottomAnchor.constraint(equalTo: progressView.topAnchor, constant: -0).isActive = true
         
         progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
         progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
         progressView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
         
-        nowPlayingView.centerYAnchor.constraint(equalTo: playerControlsView.centerYAnchor, constant: 0).isActive = true
-        nowPlayingView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true        
+//        nowPlayingView.centerYAnchor.constraint(equalTo: playerControlsView.centerYAnchor, constant: 0).isActive = true
+//        nowPlayingView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
-    override func mouseEntered(with event: NSEvent) {
-        print("mouseEntered()")
-        nowPlayingView.isHidden = true
-        playerControlsView.isHidden = false
-    }
-    
-    override func mouseExited(with event: NSEvent) {
-        print("mouseExited()")
-        nowPlayingView.isHidden = false
-        playerControlsView.isHidden = true
-    }
+//    override func mouseEntered(with event: NSEvent) {
+//        print("mouseEntered()")
+//        nowPlayingView.isHidden = true
+//        playerControlsView.isHidden = false
+//    }
+//
+//    override func mouseExited(with event: NSEvent) {
+//        print("mouseExited()")
+//        nowPlayingView.isHidden = false
+//        playerControlsView.isHidden = true
+//    }
 }

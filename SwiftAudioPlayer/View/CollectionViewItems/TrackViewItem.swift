@@ -8,24 +8,13 @@
 
 import Cocoa
 
-protocol DoubleActionDelegate where Self:NSView {
-    var doubleAction: Selector? { get set }
-    var doubleActionTarget: Any? { get set }
-    //func mouseDown(with event: NSEvent)
-}
-
-extension DoubleActionDelegate where Self:NSView {
-    func mouseDown(with event: NSEvent) {
-        if let doubleAction = doubleAction , event.clickCount == 2 {
-            NSApp.sendAction(doubleAction, to: doubleActionTarget, from: self)
-        }
-        else {
-            self.mouseDown(with: event)
-        }
-    }
+protocol TrackItemDelegate {
+    func trackItemDoubleAction(for track: Track?)
 }
 
 class TrackViewItem: NSCollectionViewItem {
+    
+    var delegate: TrackItemDelegate?
     
     var track: Track? = nil {
         didSet {
@@ -133,4 +122,13 @@ class TrackViewItem: NSCollectionViewItem {
         }
     }
     
+    override func mouseDown(with event: NSEvent) {
+        
+        if event.clickCount > 1 {
+            print("double clicked")
+            delegate?.trackItemDoubleAction(for: track)
+        } else {
+            super.mouseDown(with: event)
+        }
+    }
 }

@@ -24,9 +24,7 @@ class PlaybackControlsView: NSView {
         stack.spacing = 8
         stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
         stack.translatesAutoresizingMaskIntoConstraints = false
-//        stack.setContentHuggingPriority(NSLayoutConstraint.Priority.dragThatCannotResizeWindow, for: .horizontal)
         stack.setClippingResistancePriority(.defaultLow, for: .horizontal)
-//        stack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return stack
     }()
     

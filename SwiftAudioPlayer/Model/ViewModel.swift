@@ -28,7 +28,7 @@ protocol ViewModelProtocol {
 
 }
 
-class ViewModel: NSObject, ViewModelProtocol {
+struct ViewModel:  ViewModelProtocol {
 
     let uiState: Dynamic<UIState>
     let colorScheme: Dynamic<ColorScheme>
@@ -43,9 +43,8 @@ class ViewModel: NSObject, ViewModelProtocol {
         print("colorScheme changed to \(colorScheme)")
     }
 
-    override init() {
+    init() {
         self.uiState = Dynamic(.narrow)
         self.colorScheme = Dynamic(.dark)
-        super.init()
     }
 }

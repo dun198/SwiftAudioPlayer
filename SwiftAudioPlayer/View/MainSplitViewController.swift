@@ -85,15 +85,14 @@ class MainSplitViewController: NSSplitViewController {
     }
 }
 
-class CustomSidebarSplitViewItem: NSSplitViewItem {
-    
-    convenience init(withViewController viewController: NSViewController) {
-        self.init(viewController: viewController)
-        self.maximumThickness = 200
-        self.minimumThickness = 200
-        self.canCollapse = true
-        self.isSpringLoaded = true
-        self.collapseBehavior = NSSplitViewItem.CollapseBehavior.preferResizingSiblingsWithFixedSplitView
-        self.holdingPriority = NSLayoutConstraint.Priority.init(rawValue: 10)
-    }
-}
+//class CustomSidebarSplitViewItem: NSSplitViewItem {
+//    convenience init(withViewController viewController: NSViewController) {
+//        self.init(viewController: viewController)
+//        self.maximumThickness = 200
+//        self.minimumThickness = 200
+//        self.canCollapse = true
+//        self.isSpringLoaded = true
+//        self.collapseBehavior = NSSplitViewItem.CollapseBehavior.preferResizingSiblingsWithFixedSplitView
+//        self.holdingPriority = NSLayoutConstraint.Priority.init(rawValue: 10)
+//    }
+//}
