@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    var pathExtension: String {
-        return (self as NSString).pathExtension
-    }
+  var pathExtension: String {
+    return (self as NSString).pathExtension
+  }
 }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -466,68 +465,6 @@
                 <customObject id="deg-DG-eaZ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="694"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="u8t-c1-Ycw">
-            <objects>
-                <viewController id="cq2-w1-CTk" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="fSj-6V-yKy">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <visualEffectView wantsLayer="YES" blendingMode="withinWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="YER-yU-5yD">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                            </visualEffectView>
-                            <box fixedFrame="YES" boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="KCm-tq-1Ac">
-                                <rect key="frame" x="60" y="40" width="177" height="114"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <view key="contentView" ambiguous="YES" id="Qut-2v-0vJ">
-                                    <rect key="frame" x="1" y="1" width="175" height="112"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <color key="fillColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </box>
-                            <box boxType="custom" borderType="line" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="oH2-C1-jjq">
-                                <rect key="frame" x="137" y="93" width="177" height="114"/>
-                                <view key="contentView" id="ej9-8A-pQm">
-                                    <rect key="frame" x="1" y="1" width="175" height="112"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <visualEffectView wantsLayer="YES" appearanceType="vibrantDark" blendingMode="withinWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="2fG-Ls-fWP">
-                                            <rect key="frame" x="0.0" y="0.0" width="175" height="112"/>
-                                        </visualEffectView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="2fG-Ls-fWP" firstAttribute="top" secondItem="ej9-8A-pQm" secondAttribute="top" id="HRB-lW-fzF"/>
-                                        <constraint firstAttribute="bottom" secondItem="2fG-Ls-fWP" secondAttribute="bottom" id="Ohj-At-tug"/>
-                                        <constraint firstItem="2fG-Ls-fWP" firstAttribute="leading" secondItem="ej9-8A-pQm" secondAttribute="leading" id="aEc-4Z-o6z"/>
-                                        <constraint firstAttribute="trailing" secondItem="2fG-Ls-fWP" secondAttribute="trailing" id="aJF-8g-i6B"/>
-                                    </constraints>
-                                </view>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="114" id="D6Y-ht-DSr"/>
-                                    <constraint firstAttribute="width" constant="177" id="Se4-fJ-CQv"/>
-                                </constraints>
-                                <shadow key="shadow" blurRadius="5">
-                                    <size key="offset" width="1" height="1"/>
-                                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </shadow>
-                                <color key="fillColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </box>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="YER-yU-5yD" firstAttribute="top" secondItem="fSj-6V-yKy" secondAttribute="top" id="8he-Yg-9Zd"/>
-                            <constraint firstItem="oH2-C1-jjq" firstAttribute="centerY" secondItem="fSj-6V-yKy" secondAttribute="centerY" id="LTY-WS-jgv"/>
-                            <constraint firstItem="oH2-C1-jjq" firstAttribute="centerX" secondItem="fSj-6V-yKy" secondAttribute="centerX" id="OS2-nQ-Q8U"/>
-                            <constraint firstItem="YER-yU-5yD" firstAttribute="leading" secondItem="fSj-6V-yKy" secondAttribute="leading" id="RAR-HL-Otk"/>
-                            <constraint firstAttribute="bottom" secondItem="YER-yU-5yD" secondAttribute="bottom" id="Scj-4G-GQJ"/>
-                            <constraint firstAttribute="trailing" secondItem="YER-yU-5yD" secondAttribute="trailing" id="ptm-nB-2ic"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <customObject id="7Dt-dx-jMT" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="616" y="152"/>
         </scene>
     </scenes>
 </document>

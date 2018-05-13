@@ -9,11 +9,11 @@
 import Foundation
 
 extension URL {
-    private enum MusicFileExtension: String {
-        case mp3
-    }
-    
-    internal var isMusicFile: Bool {
-        return MusicFileExtension(rawValue: pathExtension) != nil
-    }
+  private enum MusicFileExtension: String {
+    case mp3
+  }
+  
+  internal var isMusicFile: Bool {
+    return MusicFileExtension(rawValue: pathExtension) != nil
+  }
 }

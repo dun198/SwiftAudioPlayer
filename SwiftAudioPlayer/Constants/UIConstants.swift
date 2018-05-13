@@ -9,8 +9,5 @@
 import Foundation
 
 struct UIConstants {
-    
-    
-    static let toolbarHeight = 40
-    
+  static let toolbarHeight = 40
 }
