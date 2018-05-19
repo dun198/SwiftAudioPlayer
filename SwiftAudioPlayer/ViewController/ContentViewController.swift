@@ -11,7 +11,7 @@ import AVFoundation
 import AVKit
 
 // MARK: Constants
-fileprivate let shouldLoadMusicDirectory = true
+fileprivate let shouldLoadMusicDirectory = false
 
 // MARK: UI Constants
 fileprivate let toolbarHeight: CGFloat = 36
