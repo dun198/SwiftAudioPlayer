@@ -8,13 +8,13 @@
 
 import Cocoa
 
-fileprivate let sidebarMinWidth: CGFloat = 150
-fileprivate let sidebarMaxWidth: CGFloat = 250
+fileprivate let sidebarMinWidth: CGFloat = 200
+fileprivate let sidebarMaxWidth: CGFloat = 200
 
 fileprivate let contentMinWidth: CGFloat = 250
 
 fileprivate let infoBarMinWidth: CGFloat = 200
-fileprivate let infoBarMaxWidth: CGFloat = 250
+fileprivate let infoBarMaxWidth: CGFloat = 200
 
 class MainSplitViewController: NSSplitViewController {
   

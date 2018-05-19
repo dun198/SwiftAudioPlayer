@@ -18,13 +18,13 @@ fileprivate let toolbarHeight: CGFloat = 36
 
 fileprivate let playerControlsPaddingSide: CGFloat = 8
 fileprivate let playerControlsPaddingBottom: CGFloat = 8
-fileprivate let playerControlsMaxWidth: CGFloat = 450
+fileprivate let playerControlsMaxWidth: CGFloat = 464
 
 fileprivate let nowPlayingMaxWidth: CGFloat = 500
 fileprivate let nowPlayingPaddingTop: CGFloat = toolbarHeight + 8
 fileprivate let nowPlayingPaddingBottom: CGFloat = 8
 
-fileprivate let flowLayoutBottomInset: CGFloat = 80 + 16
+fileprivate let flowLayoutBottomInset: CGFloat = 80 + 54
 fileprivate let flowLayoutTopInset: CGFloat = toolbarHeight
 
 fileprivate let showHideInterfaceThreshold: CGFloat = 5

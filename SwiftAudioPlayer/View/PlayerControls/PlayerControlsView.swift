@@ -54,6 +54,9 @@ class PlayerControlsView: RoundedEffectView {
     progressView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
   }
   
+  override func mouseDown(with event: NSEvent) {
+  }
+  
   @objc func didChangePlayerStateToPlaying(track: Track) {
     print("playing: \(track.filename)")
   }

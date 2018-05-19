@@ -113,6 +113,9 @@ class ToolbarView: NSView {
     trailingViews.forEach { stackView.addView($0, in: .trailing) }
   }
   
+  override func mouseDown(with event: NSEvent) {
+  }
+  
   @objc private func toggleSidebar() {
     print("pressed toggleToolbarButton")
     delegate?.toggleSidebar()

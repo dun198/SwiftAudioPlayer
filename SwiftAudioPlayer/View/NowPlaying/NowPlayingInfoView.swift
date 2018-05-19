@@ -9,7 +9,7 @@
 import Cocoa
 
 fileprivate let spacing: CGFloat = 4
-fileprivate let cornerRadius: CGFloat = 0
+fileprivate let cornerRadius: CGFloat = 2
 
 class NowPlayingInfoView: NSView {
   
@@ -71,6 +71,9 @@ class NowPlayingInfoView: NSView {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     setupViews()
+  }
+  
+  override func mouseDown(with event: NSEvent) {
   }
   
   required init?(coder decoder: NSCoder) {
