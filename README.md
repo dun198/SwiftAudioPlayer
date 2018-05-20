@@ -1,5 +1,7 @@
 # SwiftAudioPlayer
 
+Purely written in code with the latest Swift version.
+
 ![Screenshot](SwiftAudioPlayer.png)
 
 <img src="SwiftAudioPlayer_2.png" width="333">
