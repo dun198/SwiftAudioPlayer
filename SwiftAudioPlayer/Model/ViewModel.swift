@@ -15,10 +15,11 @@ enum UIState {
 }
 
 enum ColorScheme: String {
+  case system = "System"
   case dark = "Dark"
   case light = "Light"
   
-  static let allValues = [dark, light]
+  static let allValues = [system, dark, light]
 }
 
 protocol ViewModelProtocol {
@@ -47,6 +48,6 @@ struct ViewModel:  ViewModelProtocol {
   
   init() {
     self.uiState = Dynamic(.narrow)
-    self.colorScheme = Dynamic(.dark)
+    self.colorScheme = Dynamic(.system)
   }
 }

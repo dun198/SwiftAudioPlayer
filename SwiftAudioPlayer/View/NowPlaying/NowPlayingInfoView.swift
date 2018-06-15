@@ -8,8 +8,8 @@
 
 import Cocoa
 
-fileprivate let spacing: CGFloat = 4
-fileprivate let cornerRadius: CGFloat = 2
+fileprivate let spacing: CGFloat = 8
+fileprivate let cornerRadius: CGFloat = 4
 
 class NowPlayingInfoView: NSView {
   

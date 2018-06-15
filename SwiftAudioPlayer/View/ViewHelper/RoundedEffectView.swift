@@ -28,9 +28,13 @@ class RoundedEffectView: NSVisualEffectView {
   func setupView() {
     translatesAutoresizingMaskIntoConstraints = false
     blendingMode = .withinWindow
-    material = .appearanceBased
+    if #available(OSX 10.14, *) {
+      material = .headerView
+    } else {
+      material = .appearanceBased
+    }
     wantsLayer = true
-    layer?.backgroundColor = CGColor(gray: 1, alpha: 0.2)
+    //layer?.backgroundColor = CGColor(gray: 1, alpha: 0.2)
     layer?.borderColor = CGColor(gray: 0, alpha: 0.1)
     layer?.borderWidth = 0.25
     state = .active

@@ -13,7 +13,6 @@ class Label: NSTextField {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     
-    appearance = NSAppearance(named: NSAppearance.Name.aqua)
     isEditable = false
     isBordered = false
     isBezeled = false
@@ -23,6 +22,7 @@ class Label: NSTextField {
     cell?.truncatesLastVisibleLine = true
     cell?.lineBreakMode = .byTruncatingMiddle
     translatesAutoresizingMaskIntoConstraints = false
+    textColor = .labelColor
     
     //        setContentHuggingPriority(.defaultLow, for: .horizontal)
     //        setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -33,4 +33,6 @@ class Label: NSTextField {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  
 }

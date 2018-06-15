@@ -49,7 +49,7 @@ class ToolbarView: NSView {
   //    }()
   
   lazy var toggleSearchBarButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarSearchTemplate)!
+    let image = NSImage(named: NSImage.touchBarSearchTemplateName)!
     let button = ImageButton(image: image, width: 26, height: 26)
     button.bezelStyle = NSButton.BezelStyle.texturedRounded
     button.isBordered = true
@@ -59,7 +59,7 @@ class ToolbarView: NSView {
   }()
   
   lazy var toggleSidebarButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarSidebarTemplate)!
+    let image = NSImage(named: NSImage.touchBarSidebarTemplateName)!
     let button = ImageButton(image: image, width: 26, height: 26)
     button.bezelStyle = NSButton.BezelStyle.texturedRounded
     button.isBordered = true
@@ -70,7 +70,7 @@ class ToolbarView: NSView {
   }()
   
   lazy var addTracksButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarAddTemplate)!
+    let image = NSImage(named: NSImage.touchBarAddTemplateName)!
     let button = ImageButton(image: image, width: 26, height: 26)
     button.bezelStyle = NSButton.BezelStyle.texturedRounded
     button.isBordered = true
@@ -81,7 +81,7 @@ class ToolbarView: NSView {
   }()
   
   lazy var removeAllTracksButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarDeleteTemplate)!
+    let image = NSImage(named: NSImage.touchBarDeleteTemplateName)!
     let button = ImageButton(image: image, width: 26, height: 26)
     button.bezelStyle = NSButton.BezelStyle.texturedRounded
     button.isBordered = true

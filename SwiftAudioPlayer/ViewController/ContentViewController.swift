@@ -11,21 +11,21 @@ import AVFoundation
 import AVKit
 
 // MARK: Constants
-fileprivate let shouldLoadMusicDirectory = false
+fileprivate let shouldLoadMusicDirectory = true
 
 // MARK: UI Constants
 fileprivate let toolbarHeight: CGFloat = 36
 
-fileprivate let playerControlsPaddingSide: CGFloat = 8
-fileprivate let playerControlsPaddingBottom: CGFloat = 8
+fileprivate let playerControlsPaddingSide: CGFloat = 12
+fileprivate let playerControlsPaddingBottom: CGFloat = 12
 fileprivate let playerControlsMaxWidth: CGFloat = 464
 
 fileprivate let nowPlayingMaxWidth: CGFloat = 500
 fileprivate let nowPlayingPaddingTop: CGFloat = toolbarHeight + 8
 fileprivate let nowPlayingPaddingBottom: CGFloat = 8
 
-fileprivate let flowLayoutBottomInset: CGFloat = 80 + 54
-fileprivate let flowLayoutTopInset: CGFloat = toolbarHeight
+fileprivate let flowLayoutBottomInset: CGFloat = 80 + 66
+fileprivate let flowLayoutTopInset: CGFloat = toolbarHeight + 8
 
 fileprivate let showHideInterfaceThreshold: CGFloat = 5
 fileprivate let showHideInterfaceAnimationDuration: TimeInterval = 0.4
@@ -42,6 +42,14 @@ class ContentViewController: NSViewController {
   private let player = Player.shared
   private var tracks: [Track] = [Track]()
   
+  lazy var fadingControls: [NSView] = {
+    var views: [NSView] = [toolbarView, playerControlsView, nowPlayingView]
+    if let toolbar = NSApp.mainWindow?.toolbar {
+      toolbar.visibleItems?.compactMap{$0.view}.forEach{views.append($0)}
+    }
+    return views
+  }()
+  
   lazy var flowLayout: SingleColumnFlowLayout = {
     let layout = SingleColumnFlowLayout()
     layout.itemSize.height = 20
@@ -56,7 +64,10 @@ class ContentViewController: NSViewController {
     cv.dataSource = self
     cv.delegate = self
     cv.collectionViewLayout = flowLayout
-    cv.backgroundColors = [.clear]
+    if #available(OSX 10.14, *) {
+    } else {
+      cv.backgroundColors = [.clear]
+    }
     cv.isSelectable = true
     // register collectionView items
     cv.register(ContentHeaderItem.self, forItemWithIdentifier: .headerViewItem)
@@ -105,7 +116,7 @@ class ContentViewController: NSViewController {
     super.viewDidLoad()
     setupViews()
     setupObserver()
-    setupTrackingAreas()
+//    setupTrackingAreas()
     
     if shouldLoadMusicDirectory {
       loadFilesForHomeDirectory()
@@ -114,24 +125,24 @@ class ContentViewController: NSViewController {
   
   private func setupViews() {
     view.addSubview(scrollView)
-    view.addSubview(toolbarView)
+//    view.addSubview(toolbarView)
     view.addSubview(playerControlsView)
     view.addSubview(nowPlayingView)
     
     scrollView.fill(to: self.view)
     
-    toolbarView.leadingAnchor
-      .constraint(equalTo: view.leadingAnchor)
-      .isActive = true
-    toolbarView.trailingAnchor
-      .constraint(equalTo: view.trailingAnchor)
-      .isActive = true
-    toolbarView.topAnchor
-      .constraint(equalTo: view.topAnchor)
-      .isActive = true
-    toolbarView.heightAnchor
-      .constraint(equalToConstant: toolbarHeight)
-      .isActive = true
+//    toolbarView.leadingAnchor
+//      .constraint(equalTo: view.leadingAnchor)
+//      .isActive = true
+//    toolbarView.trailingAnchor
+//      .constraint(equalTo: view.trailingAnchor)
+//      .isActive = true
+//    toolbarView.topAnchor
+//      .constraint(equalTo: view.topAnchor)
+//      .isActive = true
+//    toolbarView.heightAnchor
+//      .constraint(equalToConstant: toolbarHeight)
+//      .isActive = true
     
     playerControlsView.bottomAnchor
       .constraint(equalTo: view.bottomAnchor, constant: -playerControlsPaddingBottom)
@@ -171,24 +182,22 @@ class ContentViewController: NSViewController {
   
   private func setupTrackingAreas() {
     // add tracking area
-    view.addTrackingArea(NSTrackingArea(rect: view.bounds, options: [.activeAlways, .inVisibleRect, .mouseMoved, .mouseEnteredAndExited], owner: self, userInfo: nil))
+    view.addTrackingArea(NSTrackingArea(rect: view.visibleRect, options: [.activeAlways, .mouseMoved, .mouseEnteredAndExited, .inVisibleRect], owner: self, userInfo: nil))
   }
   
-  private func showControls() {
-    let controls = [toolbarView, playerControlsView, nowPlayingView]
-    setViewState(to: .visible, for: controls)
+  func showControls() {
+    setViewState(to: .visible, for: fadingControls)
   }
   
-  private func fadeControls() {
-    let controls = [toolbarView, playerControlsView, nowPlayingView]
-    setViewState(to: .hidden, for: controls)
+  func fadeControls() {
+    setViewState(to: .hidden, for: fadingControls)
   }
   
   private func setViewState(to state: Visibility, for views: [NSView]) {
-    let alphaValue: CGFloat = state == .visible ? 1 : 0.2
+    let alphaValue: CGFloat = state == .visible ? 0.99 : 0.2
     NSAnimationContext.runAnimationGroup({ (context) in
       context.duration = showHideInterfaceAnimationDuration
-      context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+      context.timingFunction = CAMediaTimingFunction(name: convertToCAMediaTimingFunctionName(convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeOut)))
       for view in views {
         view.animator().alphaValue = alphaValue
       }
@@ -348,4 +357,14 @@ extension ContentViewController: PlaybackControlsDelegate {
   @IBAction func prev(sender: Any) {
     print("pressed prev")
   }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFunctionName(_ input: String) -> CAMediaTimingFunctionName {
+	return CAMediaTimingFunctionName(rawValue: input)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAMediaTimingFunctionName(_ input: CAMediaTimingFunctionName) -> String {
+	return input.rawValue
 }

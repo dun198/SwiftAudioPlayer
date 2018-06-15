@@ -20,7 +20,7 @@ class PlaybackControlsView: NSStackView {
   var playbackControlsDelegate: PlaybackControlsDelegate?
   
   lazy var playPauseButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarPlayTemplate)
+    let image = NSImage(named: NSImage.touchBarPlayTemplateName)
     let scaling = NSImageScaling.scaleProportionallyUpOrDown
     let button = ImageButton(image: image!, width: 40, height: 40, scaling: scaling)
     button.target = self
@@ -29,7 +29,7 @@ class PlaybackControlsView: NSStackView {
   }()
   
   lazy var prevButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarSkipBackTemplate)
+    let image = NSImage(named: NSImage.touchBarSkipBackTemplateName)
     let button = ImageButton(image: image!)
     button.target = self
     button.action = #selector(handlePrev)
@@ -37,7 +37,7 @@ class PlaybackControlsView: NSStackView {
   }()
   
   lazy var nextButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarSkipAheadTemplate)
+    let image = NSImage(named: NSImage.touchBarSkipAheadTemplateName)
     let button = ImageButton(image: image!)
     button.target = self
     button.action = #selector(handleNext)
@@ -45,28 +45,28 @@ class PlaybackControlsView: NSStackView {
   }()
   
   lazy var shuffleButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarShareTemplate)
+    let image = NSImage(named: NSImage.touchBarShareTemplateName)
     let button = ImageButton(image: image!, width: 24, height: 24)
     button.target = self
     return button
   }()
   
   lazy var repeatButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarRefreshTemplate)
+    let image = NSImage(named: NSImage.touchBarRefreshTemplateName)
     let button = ImageButton(image: image!, width: 24, height: 24)
     button.target = self
     return button
   }()
   
   lazy var volumeButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarAudioOutputVolumeHighTemplate)
+    let image = NSImage(named: NSImage.touchBarAudioOutputVolumeHighTemplateName)
     let button = ImageButton(image: image!, width: 24, height: 24)
     button.target = self
     return button
   }()
   
   lazy var infoButton: ImageButton = {
-    let image = NSImage(named: NSImage.Name.touchBarGetInfoTemplate)
+    let image = NSImage(named: NSImage.touchBarGetInfoTemplateName)
     let button = ImageButton(image: image!, width: 24, height: 24)
     button.target = self
     return button
@@ -141,11 +141,11 @@ class PlaybackControlsView: NSStackView {
   }
   
   @objc private func playbackDidStart() {
-    playPauseButton.image = NSImage(named: NSImage.Name.touchBarPauseTemplate)
+    playPauseButton.image = NSImage(named: NSImage.touchBarPauseTemplateName)
   }
   
   @objc private func playbackDidPauseOrStop() {
-    playPauseButton.image = NSImage(named: NSImage.Name.touchBarPlayTemplate)
+    playPauseButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
   }
   
   @objc private func handlePlayPause() {

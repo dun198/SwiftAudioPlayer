@@ -33,7 +33,6 @@ class ProgressBarView: NSView {
   
   let currentPositionLabel: Label = {
     let label = Label()
-    label.textColor = NSColor.controlTextColor
     label.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: NSControl.ControlSize.mini))
     label.stringValue = "00:00"
     return label
@@ -41,7 +40,6 @@ class ProgressBarView: NSView {
   
   let durationLabel: Label = {
     let label = Label()
-    label.textColor = NSColor.controlTextColor
     label.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: NSControl.ControlSize.mini))
     label.stringValue = "00:00"
     return label
@@ -96,7 +94,7 @@ class ProgressBarView: NSView {
     isInSeekMode = true
     defer { isInSeekMode = false }
     guard let duration = player.currentTrack?.duration else { return }
-    let totalSeconds = CMTimeGetSeconds(duration)
+    let totalSeconds = duration.getSeconds()
     let seekValue = Float64(progressSlider.floatValue) * totalSeconds
     let seekTime = CMTime(value: Int64(seekValue), timescale: 1)
     player.seek(to: seekTime)

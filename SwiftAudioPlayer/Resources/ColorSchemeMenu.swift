@@ -10,7 +10,7 @@ import Cocoa
 
 class ColorSchemeMenu: NSMenu {
   
-  var colorScheme: ColorScheme = ColorScheme.dark {
+  var colorScheme: ColorScheme = ColorScheme.system {
     didSet {
       print("did set color scheme to \(colorScheme.rawValue)")
       guard let windowController = NSApp.mainWindow?.windowController as? MainWindowController else { return }

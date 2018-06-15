@@ -59,6 +59,7 @@ class TrackItem: NSCollectionViewItem {
   let durationLabel: Label = {
     let label = Label()
     label.stringValue = "03:20"
+    label.textColor = .secondaryLabelColor
     label.font = NSFont.monospacedDigitSystemFont(ofSize: 10, weight: NSFont.Weight.regular)
     label.setContentCompressionResistancePriority(.required, for: .horizontal)
     label.alignment = .center
@@ -69,7 +70,7 @@ class TrackItem: NSCollectionViewItem {
     let label = Label()
     label.stringValue = ""
     label.font = NSFont.systemFont(ofSize: 8)
-    label.textColor = .gray
+    label.textColor = .secondaryLabelColor
     label.setContentCompressionResistancePriority(.required, for: .horizontal)
     label.alignment = .right
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +85,12 @@ class TrackItem: NSCollectionViewItem {
   }
   
   override func loadView() {
+//    let box = NSBox()
+//    box.boxType = .custom
+//    box.titlePosition = .noTitle
+//    box.borderType = .noBorder
+//    box.cornerRadius = 4
+//    box.fillColor = .clear
     self.view = NSView()
   }
   
@@ -108,16 +115,19 @@ class TrackItem: NSCollectionViewItem {
   private func changeView(forSelectedState isSelected: Bool) {
     if isSelected {
       view.wantsLayer = true
-      view.layer?.backgroundColor = NSColor.selectedTextBackgroundColor.cgColor
+      if #available(OSX 10.14, *) {
+        view.layer?.backgroundColor = NSColor.unemphasizedSelectedTextBackgroundColor.cgColor
+      } else {
+        view.layer?.backgroundColor = NSColor.selectedTextBackgroundColor.cgColor
+      }
       view.layer?.cornerRadius = 4
-      trackTitleLabel.textColor = NSColor.selectedTextColor
-      durationLabel.textColor = NSColor.selectedTextColor
+//      trackTitleLabel.textColor = NSColor.selectedTextColor
+//      durationLabel.textColor = NSColor.selectedTextColor
     } else {
       view.layer = nil
       view.wantsLayer = false
-      let defaultLabel = Label()
-      trackTitleLabel.textColor = defaultLabel.textColor
-      durationLabel.textColor = defaultLabel.textColor
+//      trackTitleLabel.textColor = .labelColor
+//      durationLabel.textColor = .secondaryLabelColor
     }
   }
   

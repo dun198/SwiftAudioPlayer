@@ -8,16 +8,23 @@
 
 import Cocoa
 
-fileprivate let sidebarMinWidth: CGFloat = 200
-fileprivate let sidebarMaxWidth: CGFloat = 200
+fileprivate let sidebarMinWidth: CGFloat = 150
+fileprivate let sidebarMaxWidth: CGFloat = 250
 
 fileprivate let contentMinWidth: CGFloat = 250
 
 fileprivate let infoBarMinWidth: CGFloat = 200
 fileprivate let infoBarMaxWidth: CGFloat = 200
 
+fileprivate let showHideInterfaceThreshold: CGFloat = 5
+
+protocol SidebarDelegate {
+  func sidebarDidToggle()
+}
+
 class MainSplitViewController: NSSplitViewController {
   
+  var sidebarDelegate: SidebarDelegate?
   let player = Player()
   
   let contentVC: ContentViewController = {
@@ -53,6 +60,13 @@ class MainSplitViewController: NSSplitViewController {
     super.viewDidLoad()
     view.wantsLayer = false
     setupSplitView()
+    
+    view.addTrackingArea(NSTrackingArea(rect: NSScreen.main!.frame, options: [.activeAlways, .mouseMoved, .mouseEnteredAndExited], owner: self, userInfo: nil))
+  }
+  
+  override func toggleSidebar(_ sender: Any?) {
+    super.toggleSidebar(sender)
+    sidebarDelegate?.sidebarDidToggle()
   }
   
 //  func toggleSidebar(_ sender: Any?, withCompletionHandler completion:@escaping () -> Void) {
@@ -65,6 +79,26 @@ class MainSplitViewController: NSSplitViewController {
     addSplitViewItem(sidebarSplitItem)
     addSplitViewItem(contentSplitItem)
   }
+  
+  override func mouseExited(with event: NSEvent) {
+    super.mouseExited(with: event)
+    contentVC.fadeControls()
+  }
+  
+  override func mouseEntered(with event: NSEvent) {
+    super.mouseEntered(with: event)
+    contentVC.showControls()
+  }
+  
+  override func mouseMoved(with event: NSEvent) {
+    super.mouseMoved(with: event)
+    let yVelocity = abs(event.deltaY)
+    let xVelocity = abs(event.deltaX)
+    if yVelocity >= showHideInterfaceThreshold || xVelocity >= showHideInterfaceThreshold * 2{
+      contentVC.showControls()
+    }
+  }
+
 }
 
 //class CustomSidebarSplitViewItem: NSSplitViewItem {

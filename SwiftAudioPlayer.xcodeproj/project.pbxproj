@@ -17,7 +17,6 @@
 		D22CDD1C1FE2729100D988B6 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDD1B1FE2729100D988B6 /* UIConstants.swift */; };
 		D2699A37209E6AB000D24659 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2699A36209E6AB000D24659 /* MainWindowController.swift */; };
 		D2699A39209E6EC000D24659 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2699A38209E6EC000D24659 /* MainMenu.xib */; };
-		D2699A3E209E8B2100D24659 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2699A3D209E8B2100D24659 /* Colors.swift */; };
 		D280AD29207116CF00692345 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D280AD28207116CF00692345 /* Player.swift */; };
 		D280AD2B2071174400692345 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D280AD2A2071174400692345 /* FileManager.swift */; };
 		D297E87C20714A4E00FE4929 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D297E87B20714A4E00FE4929 /* SidebarViewController.swift */; };
@@ -74,7 +73,6 @@
 		D22CDD1B1FE2729100D988B6 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		D2699A36209E6AB000D24659 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		D2699A38209E6EC000D24659 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		D2699A3D209E8B2100D24659 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		D280AD28207116CF00692345 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		D280AD2A2071174400692345 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		D297E87B20714A4E00FE4929 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 			children = (
 				D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */,
 				D29C53F82098E11100B83B84 /* Constants */,
-				D2699A3F209E8BBB00D24659 /* Look */,
 				D26D69A4206A73B000BD1577 /* Model */,
 				D2699A45209E8DAD00D24659 /* Resources */,
 				D2699A40209E8C0200D24659 /* ViewController */,
@@ -159,14 +156,6 @@
 				D22CDD011FE1DDBD00D988B6 /* SwiftAudioPlayer.entitlements */,
 			);
 			path = SwiftAudioPlayer;
-			sourceTree = "<group>";
-		};
-		D2699A3F209E8BBB00D24659 /* Look */ = {
-			isa = PBXGroup;
-			children = (
-				D2699A3D209E8B2100D24659 /* Colors.swift */,
-			);
-			path = Look;
 			sourceTree = "<group>";
 		};
 		D2699A40209E8C0200D24659 /* ViewController */ = {
@@ -349,10 +338,11 @@
 				TargetAttributes = {
 					D22CDCF31FE1DDBD00D988B6 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -415,7 +405,6 @@
 				D29C53DB20952F4300B83B84 /* PlayerControlsView.swift in Sources */,
 				D29C53CD2094494000B83B84 /* ContentViewController.swift in Sources */,
 				D29C53FA2098E24000B83B84 /* URL.swift in Sources */,
-				D2699A3E209E8B2100D24659 /* Colors.swift in Sources */,
 				D22CDD181FE215E200D988B6 /* ViewModel.swift in Sources */,
 				D2E157BC209CB0CD00E56B5C /* NowPlayingInfoView.swift in Sources */,
 				D280AD29207116CF00692345 /* Player.swift in Sources */,
@@ -578,7 +567,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SwiftAudioPlayer/SwiftAudioPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VWP2ERD75S;
@@ -587,7 +575,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.SwiftAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -595,7 +583,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SwiftAudioPlayer/SwiftAudioPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VWP2ERD75S;
@@ -604,7 +591,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = dunkeeel.SwiftAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

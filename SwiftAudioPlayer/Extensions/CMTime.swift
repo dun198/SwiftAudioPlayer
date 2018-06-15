@@ -10,7 +10,7 @@ import AVFoundation
 
 extension CMTime {
   var durationText:String {
-    let totalSeconds = CMTimeGetSeconds(self)
+    let totalSeconds = self.getSeconds()
     let hours:Int = Int(totalSeconds / 3600)
     let minutes:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 3600) / 60)
     let seconds:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
