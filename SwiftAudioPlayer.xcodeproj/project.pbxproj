@@ -19,6 +19,7 @@
 		D2699A39209E6EC000D24659 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2699A38209E6EC000D24659 /* MainMenu.xib */; };
 		D280AD29207116CF00692345 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D280AD28207116CF00692345 /* Player.swift */; };
 		D280AD2B2071174400692345 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D280AD2A2071174400692345 /* FileManager.swift */; };
+		D295C67220DA3CD50033836C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295C67120DA3CD50033836C /* Preferences.swift */; };
 		D297E87C20714A4E00FE4929 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D297E87B20714A4E00FE4929 /* SidebarViewController.swift */; };
 		D29C53C02094255200B83B84 /* OldNowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53BF2094255200B83B84 /* OldNowPlayingView.swift */; };
 		D29C53C22094318D00B83B84 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53C12094318D00B83B84 /* Label.swift */; };
@@ -75,6 +76,7 @@
 		D2699A38209E6EC000D24659 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		D280AD28207116CF00692345 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		D280AD2A2071174400692345 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		D295C67120DA3CD50033836C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		D297E87B20714A4E00FE4929 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		D29C53BF2094255200B83B84 /* OldNowPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldNowPlayingView.swift; sourceTree = "<group>"; };
 		D29C53C12094318D00B83B84 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */,
+				D295C67020DA3CB60033836C /* Preferences */,
 				D29C53F82098E11100B83B84 /* Constants */,
 				D26D69A4206A73B000BD1577 /* Model */,
 				D2699A45209E8DAD00D24659 /* Resources */,
@@ -213,6 +216,14 @@
 				D2E157AA209C960500E56B5C /* Enums.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		D295C67020DA3CB60033836C /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				D295C67120DA3CD50033836C /* Preferences.swift */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		D29C53D0209450B800B83B84 /* Extensions */ = {
@@ -435,6 +446,7 @@
 				D2E157B6209C9FF900E56B5C /* GenreItem.swift in Sources */,
 				D29C53C22094318D00B83B84 /* Label.swift in Sources */,
 				D280AD2B2071174400692345 /* FileManager.swift in Sources */,
+				D295C67220DA3CD50033836C /* Preferences.swift in Sources */,
 				D2E157BE209CB15C00E56B5C /* RoundedEffectViewLabel.swift in Sources */,
 				D224D7B72069AECE00CA51C3 /* Track.swift in Sources */,
 				D2F0987C209A719A005B2A22 /* TrackLoader.swift in Sources */,

@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }()
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    setUserDefaults()
     windowController.loadWindow()
   }
   
@@ -35,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
   
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-    return true
+    return UserDefaults.standard.bool(forKey: Preferences.Key.quitAfterWindowClosed.rawValue)
   }
   
   func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
@@ -43,4 +44,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     dockMenu.addItem(NSMenuItem(title: "Title", action: nil, keyEquivalent: ""))
     return dockMenu
   }
+  
+  private func setUserDefaults() {
+    UserDefaults.standard.register(defaults: [String : Any](uniqueKeysWithValues: Preferences.defaultPreference.map { ($0.0.rawValue, $0.1) }))
+  }
+
 }
