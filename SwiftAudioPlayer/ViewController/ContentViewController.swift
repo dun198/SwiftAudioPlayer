@@ -280,22 +280,30 @@ extension ContentViewController: NSCollectionViewDelegate {
   func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: IndexPath, dropOperation: NSCollectionView.DropOperation) -> Bool {
     print("drop indexPath: ", indexPath)
 
-    var correctionFactor = 0
+    collectionView.deselectAll(nil)
+    var newSelectionIndexes = Set<IndexPath>()
     
     collectionView.animator().performBatchUpdates({
       for i in 0 ..< itemsForDraggingSession.count {
-        let draggingIndexPath = itemsForDraggingSession.removeFirst()
-  //      if draggingIndexPath.item < indexPath.item {
-  //        correctionFactor -= 1
-  //      } else if draggingIndexPath.item >= indexPath.item {
-  //        correctionFactor += 1
-  //      }
-          tracks.swapAt(draggingIndexPath.item, indexPath.item)
-  //      collectionView.animator().moveItem(at: draggingIndexPath,
-  //                                         to: IndexPath(item: indexPath.item + correctionFactor, section: 0))
+        let dragIndexPath = itemsForDraggingSession.removeFirst()
+
+        let dragIndex = dragIndexPath.item
+        let dropIndex = indexPath.item + i
+        let dropOffset = dragIndex >= dropIndex ? 0 : -1
+        
+        let track = tracks[dragIndex]
+        tracks.remove(at: dragIndex)
+        tracks.insert(track, at: dropIndex + dropOffset)
+        
+        let dropIndexPath = IndexPath(item: dropIndex + dropOffset, section: 0)
+        collectionView.animator().moveItem(at: dragIndexPath, to: dropIndexPath)
+        newSelectionIndexes.insert(dropIndexPath)
       }
-    }, completionHandler: nil)
-    collectionView.reloadData()
+    }, completionHandler: { success in
+      collectionView.reloadData()
+      collectionView.selectItems(at: newSelectionIndexes, scrollPosition: NSCollectionView.ScrollPosition.centeredHorizontally)
+    })
+    
     return true
   }
   
@@ -379,8 +387,6 @@ extension ContentViewController: TrackItemDelegate {
   
   private func updateNowPlayingInfo(for track: Track) {
     nowPlayingView.track = track
-//    nowPlayingView.title = track.title
-//    nowPlayingView.artist = track.artist
     guard let duration = track.duration else { return }
     let durationLabel = playerControlsView.progressView.durationLabel
     durationLabel.stringValue = duration.durationText
