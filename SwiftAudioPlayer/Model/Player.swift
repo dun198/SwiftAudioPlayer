@@ -90,6 +90,10 @@ class Player: NSObject {
     }
   }
   
+  var currentTime: CMTime? {
+    return player.currentItem?.currentTime()
+  }
+  
   var isPlaying: Bool {
     switch playerState {
     case .playing(_):

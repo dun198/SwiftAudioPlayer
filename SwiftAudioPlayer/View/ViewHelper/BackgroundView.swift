@@ -16,6 +16,12 @@ class BackgroundView: NSView {
     }
   }
   
+  var cornerRadius: CGFloat? {
+    didSet {
+      updateLayer()
+    }
+  }
+  
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     setupView()
@@ -32,8 +38,8 @@ class BackgroundView: NSView {
   
   override func updateLayer() {
     super.updateLayer()
-    guard let backgroundColor = backgroundColor?.cgColor else { return }
-    layer?.backgroundColor = backgroundColor
+    layer?.backgroundColor = backgroundColor?.cgColor ?? CGColor.clear
+    layer?.cornerRadius = cornerRadius ?? 0
   }
   
 }

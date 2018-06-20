@@ -52,7 +52,6 @@ class MainSplitViewController: NSSplitViewController {
     let item = CollapsibleSplitItem(sidebarWithViewController: sidebarVC)
     item.minimumThickness = sidebarMinWidth
     item.maximumThickness = sidebarMaxWidth
-    item.delegate = contentVC.toolbarView
     return item
   }()
   
@@ -68,12 +67,6 @@ class MainSplitViewController: NSSplitViewController {
     super.toggleSidebar(sender)
     sidebarDelegate?.sidebarDidToggle()
   }
-  
-//  func toggleSidebar(_ sender: Any?, withCompletionHandler completion:@escaping () -> Void) {
-//    toggleSidebar(sender)
-//    view.setNeedsDisplay(view.frame)
-//    completion()
-//  }
   
   private func setupSplitView() {
     addSplitViewItem(sidebarSplitItem)
@@ -98,17 +91,4 @@ class MainSplitViewController: NSSplitViewController {
       contentVC.showControls()
     }
   }
-
 }
-
-//class CustomSidebarSplitViewItem: NSSplitViewItem {
-//    convenience init(withViewController viewController: NSViewController) {
-//        self.init(viewController: viewController)
-//        self.maximumThickness = 200
-//        self.minimumThickness = 200
-//        self.canCollapse = true
-//        self.isSpringLoaded = true
-//        self.collapseBehavior = .useConstraints
-//        self.holdingPriority = .defaultLow
-//    }
-//}

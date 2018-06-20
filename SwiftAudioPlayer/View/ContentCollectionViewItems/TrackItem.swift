@@ -91,7 +91,7 @@ class TrackItem: NSCollectionViewItem {
 //    box.borderType = .noBorder
 //    box.cornerRadius = 4
 //    box.fillColor = .clear
-    self.view = NSView()
+    self.view = BackgroundView()
   }
   
   override func viewDidLoad() {
@@ -113,19 +113,27 @@ class TrackItem: NSCollectionViewItem {
   }
   
   private func changeView(forSelectedState isSelected: Bool) {
+    guard let view = view as? BackgroundView else { return }
     if isSelected {
-      view.wantsLayer = true
       if #available(OSX 10.14, *) {
-        view.layer?.backgroundColor = NSColor.unemphasizedSelectedTextBackgroundColor.cgColor
+        view.backgroundColor = NSColor.unemphasizedSelectedTextBackgroundColor
+//        view.layer?.backgroundColor = NSColor.unemphasizedSelectedTextBackgroundColor.cgColor
       } else {
-        view.layer?.backgroundColor = NSColor.selectedTextBackgroundColor.cgColor
+        view.wantsLayer = true
+        view.backgroundColor = NSColor.selectedTextBackgroundColor
+//        view.layer?.backgroundColor = NSColor.selectedTextBackgroundColor.cgColor
       }
       view.layer?.cornerRadius = 4
 //      trackTitleLabel.textColor = NSColor.selectedTextColor
 //      durationLabel.textColor = NSColor.selectedTextColor
     } else {
-      view.layer = nil
-      view.wantsLayer = false
+      if #available(OSX 10.14, *) {
+        view.backgroundColor = nil
+        view.cornerRadius = nil
+      } else {
+        view.layer = nil
+        view.wantsLayer = false
+      }
 //      trackTitleLabel.textColor = .labelColor
 //      durationLabel.textColor = .secondaryLabelColor
     }

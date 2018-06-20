@@ -27,7 +27,7 @@ class ProgressBarView: NSView {
     let slider = NSSlider()
     slider.controlSize = NSControl.ControlSize.mini
     slider.target = self
-    slider.action = #selector(handleSeek)
+    slider.action = #selector(handleSliderChange)
     return slider
   }()
   
@@ -80,7 +80,7 @@ class ProgressBarView: NSView {
   
   private func setupObserver() {
     let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-    
+
     player.addPeriodicObserver(forInterval: interval) {
       [weak self] time in
       guard let strongSelf = self, !strongSelf.isInSeekMode else { return }
@@ -90,13 +90,19 @@ class ProgressBarView: NSView {
     }
   }
   
-  @objc func handleSeek() {
+  private func seekToSliderPosition() {
     isInSeekMode = true
-    defer { isInSeekMode = false }
+    defer {
+      isInSeekMode = false
+    }
     guard let duration = player.currentTrack?.duration else { return }
-    let totalSeconds = duration.getSeconds()
+    let totalSeconds = duration.seconds
     let seekValue = Float64(progressSlider.floatValue) * totalSeconds
     let seekTime = CMTime(value: Int64(seekValue), timescale: 1)
     player.seek(to: seekTime)
+  }
+  
+  @objc private func handleSliderChange() {
+    seekToSliderPosition()
   }
 }

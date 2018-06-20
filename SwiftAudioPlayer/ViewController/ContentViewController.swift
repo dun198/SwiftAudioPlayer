@@ -10,6 +10,8 @@ import Cocoa
 import AVFoundation
 import AVKit
 
+fileprivate let REORDER_TRACKS_PASTEBOARD_TYPE = "com.dunkeeel.SwiftAudioPlayer.TrackItem"
+
 // MARK: Constants
 fileprivate let shouldLoadMusicDirectory = true
 
@@ -32,8 +34,8 @@ fileprivate let showHideInterfaceAnimationDuration: TimeInterval = 0.4
 
 // MARK: CollectionViewItem Identifiers
 extension NSUserInterfaceItemIdentifier {
-  static let headerViewItem = NSUserInterfaceItemIdentifier("HeaderViewItem")
-  static let trackViewItem = NSUserInterfaceItemIdentifier("TrackViewItem")
+  static let playlistHeaderItem = NSUserInterfaceItemIdentifier("PlaylistHeaderItem")
+  static let playlistTrackItem = NSUserInterfaceItemIdentifier("PlaylistTrackItem")
 }
 
 // MARK: - ContentViewController
@@ -41,9 +43,10 @@ class ContentViewController: NSViewController {
   
   private let player = Player.shared
   private var tracks: [Track] = [Track]()
-  
+  private var itemsForDraggingSession: Set<IndexPath> = []
+
   lazy var fadingControls: [NSView] = {
-    var views: [NSView] = [toolbarView, playerControlsView, nowPlayingView]
+    var views: [NSView] = [playerControlsView, nowPlayingView]
     if let toolbar = NSApp.mainWindow?.toolbar {
       toolbar.visibleItems?.compactMap{$0.view}.forEach{views.append($0)}
     }
@@ -52,7 +55,7 @@ class ContentViewController: NSViewController {
   
   lazy var flowLayout: SingleColumnFlowLayout = {
     let layout = SingleColumnFlowLayout()
-    layout.itemSize.height = 20
+    layout.itemSize.height = 21
     layout.sectionInset = NSEdgeInsets(top: flowLayoutTopInset, left: 8, bottom: flowLayoutBottomInset, right: 8)
     layout.minimumInteritemSpacing = 8
     layout.minimumLineSpacing = 8
@@ -69,9 +72,13 @@ class ContentViewController: NSViewController {
       cv.backgroundColors = [.clear]
     }
     cv.isSelectable = true
+    cv.allowsMultipleSelection = true
+    cv.registerForDraggedTypes([NSPasteboard.PasteboardType(REORDER_TRACKS_PASTEBOARD_TYPE)])
+    cv.setDraggingSourceOperationMask(.move, forLocal: true)
+    
     // register collectionView items
-    cv.register(ContentHeaderItem.self, forItemWithIdentifier: .headerViewItem)
-    cv.register(TrackItem.self, forItemWithIdentifier: .trackViewItem)
+    cv.register(ContentHeaderItem.self, forItemWithIdentifier: .playlistHeaderItem)
+    cv.register(TrackItem.self, forItemWithIdentifier: .playlistTrackItem)
     return cv
   }()
   
@@ -84,13 +91,6 @@ class ContentViewController: NSViewController {
     sv.verticalScroller?.alphaValue = 0
     sv.delegate = self
     return sv
-  }()
-  
-  lazy var toolbarView: ToolbarView = {
-    let view = ToolbarView()
-    view.delegate = self
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
   }()
   
   lazy var playerControlsView: PlayerControlsView = {
@@ -125,24 +125,10 @@ class ContentViewController: NSViewController {
   
   private func setupViews() {
     view.addSubview(scrollView)
-//    view.addSubview(toolbarView)
     view.addSubview(playerControlsView)
     view.addSubview(nowPlayingView)
     
     scrollView.fill(to: self.view)
-    
-//    toolbarView.leadingAnchor
-//      .constraint(equalTo: view.leadingAnchor)
-//      .isActive = true
-//    toolbarView.trailingAnchor
-//      .constraint(equalTo: view.trailingAnchor)
-//      .isActive = true
-//    toolbarView.topAnchor
-//      .constraint(equalTo: view.topAnchor)
-//      .isActive = true
-//    toolbarView.heightAnchor
-//      .constraint(equalToConstant: toolbarHeight)
-//      .isActive = true
     
     playerControlsView.bottomAnchor
       .constraint(equalTo: view.bottomAnchor, constant: -playerControlsPaddingBottom)
@@ -197,7 +183,7 @@ class ContentViewController: NSViewController {
     let alphaValue: CGFloat = state == .visible ? 0.99 : 0.2
     NSAnimationContext.runAnimationGroup({ (context) in
       context.duration = showHideInterfaceAnimationDuration
-      context.timingFunction = CAMediaTimingFunction(name: convertToCAMediaTimingFunctionName(convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeOut)))
+      context.timingFunction = CAMediaTimingFunction(name: .easeOut)
       for view in views {
         view.animator().alphaValue = alphaValue
       }
@@ -257,7 +243,7 @@ extension ContentViewController: NSCollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let cell = collectionView.makeItem(withIdentifier: .trackViewItem, for: indexPath) as! TrackItem
+    let cell = collectionView.makeItem(withIdentifier: .playlistTrackItem, for: indexPath) as! TrackItem
     cell.track = tracks[indexPath.item]
     cell.trackNumberLabel.stringValue = "\(indexPath.item) ."
     cell.delegate = self
@@ -272,6 +258,83 @@ extension ContentViewController: NSCollectionViewDelegate {
     if highlightState == NSCollectionViewItem.HighlightState.forSelection {
       //            print("selected cell ", indexPaths)
     }
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, validateDrop draggingInfo: NSDraggingInfo, proposedIndexPath proposedDropIndexPath: AutoreleasingUnsafeMutablePointer<NSIndexPath>, dropOperation proposedDropOperation: UnsafeMutablePointer<NSCollectionView.DropOperation>) -> NSDragOperation {
+    guard let draggingTypes = draggingInfo.draggingPasteboard.types else {
+      print("invalid drop")
+      return []
+    }
+
+    if draggingTypes.contains(NSPasteboard.PasteboardType(REORDER_TRACKS_PASTEBOARD_TYPE)) {
+      if proposedDropOperation.pointee == NSCollectionView.DropOperation.on {
+        proposedDropOperation.pointee = NSCollectionView.DropOperation.before
+      }
+      return NSDragOperation.move
+    }
+    
+    print("invalid drop")
+    return []
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: IndexPath, dropOperation: NSCollectionView.DropOperation) -> Bool {
+    print("drop indexPath: ", indexPath)
+
+    var correctionFactor = 0
+    
+    collectionView.animator().performBatchUpdates({
+      for i in 0 ..< itemsForDraggingSession.count {
+        let draggingIndexPath = itemsForDraggingSession.removeFirst()
+  //      if draggingIndexPath.item < indexPath.item {
+  //        correctionFactor -= 1
+  //      } else if draggingIndexPath.item >= indexPath.item {
+  //        correctionFactor += 1
+  //      }
+          tracks.swapAt(draggingIndexPath.item, indexPath.item)
+  //      collectionView.animator().moveItem(at: draggingIndexPath,
+  //                                         to: IndexPath(item: indexPath.item + correctionFactor, section: 0))
+      }
+    }, completionHandler: nil)
+    collectionView.reloadData()
+    return true
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, index: Int, dropOperation: NSCollectionView.DropOperation) -> Bool {
+    print("drop")
+    for i in 0..<itemsForDraggingSession.count {
+      print(i)
+    }
+    
+    for draggedItemIndexPath in itemsForDraggingSession {
+      print( draggedItemIndexPath)
+      collectionView.animator().moveItem(at: draggedItemIndexPath, to: (index <= draggedItemIndexPath.item) ? IndexPath(item: index, section: 0) : (IndexPath(item: index - 1, section: 0)))
+    }
+    return true
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt indexPath: IndexPath) -> NSPasteboardWriting? {
+    print("write items to pasteboard")
+    let pbItem = NSPasteboardItem()
+    if let trackItem = tracks[indexPath.item] as Track? {
+      pbItem.setString(trackItem.file.absoluteString, forType: NSPasteboard.PasteboardType(REORDER_TRACKS_PASTEBOARD_TYPE))
+      return pbItem;
+    }
+    return nil
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forItemsAt indexPaths: Set<IndexPath>) {
+    print("beginn dragging session with:")
+    itemsForDraggingSession = indexPaths
+    print(itemsForDraggingSession)
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession, endedAt screenPoint: NSPoint, dragOperation operation: NSDragOperation) {
+    print("ended dragging session")
+    itemsForDraggingSession = []
+  }
+  
+  func collectionView(_ collectionView: NSCollectionView, canDragItemsAt indexPaths: Set<IndexPath>, with event: NSEvent) -> Bool {
+    return true
   }
 }
 
@@ -357,14 +420,4 @@ extension ContentViewController: PlaybackControlsDelegate {
   @IBAction func prev(sender: Any) {
     print("pressed prev")
   }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToCAMediaTimingFunctionName(_ input: String) -> CAMediaTimingFunctionName {
-	return CAMediaTimingFunctionName(rawValue: input)
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromCAMediaTimingFunctionName(_ input: CAMediaTimingFunctionName) -> String {
-	return input.rawValue
 }

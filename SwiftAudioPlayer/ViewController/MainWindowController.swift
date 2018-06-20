@@ -47,7 +47,7 @@ class MainWindowController: NSWindowController {
   
   var toolbarItemIdentifiers: [NSToolbarItem.Identifier] {
     var identifiers = toolbarItems.compactMap { $0.identifier }
-    let standardIdentifiers: [NSToolbarItem.Identifier] = [.flexibleSpace, .space, .toggleSidebar]
+    let standardIdentifiers: [NSToolbarItem.Identifier] = [.flexibleSpace, .space]
     identifiers.insert(contentsOf: standardIdentifiers, at: 0)
     return identifiers
   }
@@ -91,21 +91,25 @@ class MainWindowController: NSWindowController {
   
   private func setupToolbar() {
     guard let toolbar = window?.toolbar else { return }
+    print(toolbar.configuration.debugDescription)
+    toolbar.autosavesConfiguration = true
     toolbar.showsBaselineSeparator = false
     toolbar.allowsUserCustomization = true
     toolbar.isVisible = true
     toolbar.delegate = self
     
-    toolbar.insertItem(withItemIdentifier: .sidebar, at: 0)
-    toolbar.insertItem(withItemIdentifier: .flexibleSpace, at: 1)
-    toolbar.insertItem(withItemIdentifier: .addTracks, at: 2)
-    toolbar.insertItem(withItemIdentifier: .clearPlaylist, at: 3)
-    toolbar.insertItem(withItemIdentifier: .flexibleSpace, at: 4)
-    toolbar.insertItem(withItemIdentifier: .search, at: 5)
     
-    if let firstItem = toolbar.items.first, let splitView = (contentViewController as? NSSplitViewController)?.splitView {
-      firstItem.perform(Selector(("setTrackedSplitView:")), with: splitView)
+    if let items = toolbar.visibleItems, items.isEmpty {
+      toolbar.insertItem(withItemIdentifier: .sidebar, at: 0)
+      toolbar.insertItem(withItemIdentifier: .flexibleSpace, at: 1)
+      toolbar.insertItem(withItemIdentifier: .addTracks, at: 2)
+      toolbar.insertItem(withItemIdentifier: .clearPlaylist, at: 3)
+      toolbar.insertItem(withItemIdentifier: .flexibleSpace, at: 4)
+      toolbar.insertItem(withItemIdentifier: .search, at: 5)
+    } else {
     }
+    print(toolbar.configuration.debugDescription)
+
   }
   
   private func setColorScheme(to colorScheme: ColorScheme) {
@@ -247,12 +251,11 @@ extension MainWindowController {
   @objc private func handleAddTracks() {
     print("pressed addTracksButton")
     splitViewController.contentVC.addTracks()
-//    delegate?.addTracks()
   }
   
   @objc private func handleClearPlaylist() {
     print("pressed clearPlaylistButton")
-//    delegate?.removeAllTracks()
+    splitViewController.contentVC.removeAllTracks()
   }
   
   @objc private func handleSearch() {
