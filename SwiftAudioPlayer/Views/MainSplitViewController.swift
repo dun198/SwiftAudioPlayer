@@ -25,7 +25,6 @@ protocol SidebarDelegate {
 class MainSplitViewController: NSSplitViewController {
   
   var sidebarDelegate: SidebarDelegate?
-  let player = Player()
   
   let contentVC: ContentViewController = {
     let vc = ContentViewController()
@@ -48,8 +47,8 @@ class MainSplitViewController: NSSplitViewController {
     return item
   }()
   
-  lazy var sidebarSplitItem: CollapsibleSplitItem = {
-    let item = CollapsibleSplitItem(sidebarWithViewController: sidebarVC)
+  lazy var sidebarSplitItem: NSSplitViewItem = {
+    let item = NSSplitViewItem(sidebarWithViewController: sidebarVC)
     item.minimumThickness = sidebarMinWidth
     item.maximumThickness = sidebarMaxWidth
     return item
@@ -75,6 +74,8 @@ class MainSplitViewController: NSSplitViewController {
   
   override func mouseExited(with event: NSEvent) {
     super.mouseExited(with: event)
+    guard let window = self.view.window,
+      !window.styleMask.contains(.fullScreen) else { return }
     contentVC.fadeControls()
   }
   

@@ -23,14 +23,7 @@ class PlayerControlsView: RoundedEffectView {
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  
-  // now playing info
-  lazy var nowPlayingView: OldNowPlayingView = {
-    let view = OldNowPlayingView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  
+    
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     setupViews()

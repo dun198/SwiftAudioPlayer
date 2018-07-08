@@ -30,14 +30,14 @@ class ColorSchemeMenu: NSMenu {
   
   private func setupMenu() {
     for theme in ColorScheme.allValues {
-      let menuItem = NSMenuItem(title: theme.rawValue, action: #selector(setColorScheme(_:)), keyEquivalent: "")
+      let menuItem = NSMenuItem(title: theme.rawValue, action: #selector(handleSetColorScheme(_:)), keyEquivalent: "")
       menuItem.target = self
       menuItem.isEnabled = menuItem.title == colorScheme.rawValue
       self.addItem(menuItem)
     }
   }
   
-  @objc private func setColorScheme(_ sender: NSMenuItem?) {
+  @objc private func handleSetColorScheme(_ sender: NSMenuItem?) {
     colorScheme = ColorScheme(rawValue: sender?.title ?? colorScheme.rawValue) ?? colorScheme
   }
 }

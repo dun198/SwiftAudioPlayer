@@ -9,11 +9,12 @@
 import Cocoa
 import AVFoundation
 import AVKit
+import MediaPlayer
 
 fileprivate let REORDER_TRACKS_PASTEBOARD_TYPE = "com.dunkeeel.SwiftAudioPlayer.TrackItem"
 
 // MARK: Constants
-fileprivate let shouldLoadMusicDirectory = true
+fileprivate let shouldLoadMusicDirectory = false
 
 // MARK: UI Constants
 fileprivate let toolbarHeight: CGFloat = 36
@@ -42,11 +43,12 @@ extension NSUserInterfaceItemIdentifier {
 class ContentViewController: NSViewController {
   
   private let player = Player.shared
+  private let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
   private var tracks: [Track] = [Track]()
   private var itemsForDraggingSession: Set<IndexPath> = []
-
+  
   lazy var fadingControls: [NSView] = {
-    var views: [NSView] = [playerControlsView, nowPlayingView]
+    var views: [NSView] = [playerControlsView, nowPlayingInfoView]
     if let toolbar = NSApp.mainWindow?.toolbar {
       toolbar.visibleItems?.compactMap{$0.view}.forEach{views.append($0)}
     }
@@ -101,9 +103,15 @@ class ContentViewController: NSViewController {
     return view
   }()
   
-  lazy var nowPlayingView: NowPlayingInfoView = {
+  lazy var nowPlayingInfoView: NowPlayingInfoView = {
     let view = NowPlayingInfoView()
     view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
+  let toolbarBackgroundView: ToolbarBackgroundView = {
+    let view = ToolbarBackgroundView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -119,14 +127,15 @@ class ContentViewController: NSViewController {
 //    setupTrackingAreas()
     
     if shouldLoadMusicDirectory {
-      loadFilesForHomeDirectory()
+      loadFilesFromMusicDirectory()
     }
   }
   
   private func setupViews() {
     view.addSubview(scrollView)
     view.addSubview(playerControlsView)
-    view.addSubview(nowPlayingView)
+    view.addSubview(nowPlayingInfoView)
+    view.addSubview(toolbarBackgroundView)
     
     scrollView.fill(to: self.view)
     
@@ -144,20 +153,33 @@ class ContentViewController: NSViewController {
     playerControlsWidthConstraint.priority = NSLayoutConstraint.Priority.defaultLow
     playerControlsWidthConstraint.isActive = true
     
-    nowPlayingView.rightAnchor
+    nowPlayingInfoView.rightAnchor
       .constraint(equalTo: playerControlsView.rightAnchor)
       .isActive = true
-    nowPlayingView.leftAnchor
+    nowPlayingInfoView.leftAnchor
       .constraint(greaterThanOrEqualTo: view.leftAnchor, constant: playerControlsPaddingSide)
       .isActive = true
-    nowPlayingView.bottomAnchor
+    nowPlayingInfoView.bottomAnchor
       .constraint(equalTo: playerControlsView.topAnchor, constant: -nowPlayingPaddingBottom)
       .isActive = true
-    nowPlayingView.topAnchor
+    nowPlayingInfoView.topAnchor
       .constraint(greaterThanOrEqualTo: view.topAnchor, constant: nowPlayingPaddingTop)
       .isActive = true
-    nowPlayingView.widthAnchor
+    nowPlayingInfoView.widthAnchor
       .constraint(lessThanOrEqualToConstant: nowPlayingMaxWidth)
+      .isActive = true
+    
+    toolbarBackgroundView.leftAnchor
+      .constraint(equalTo: view.leftAnchor)
+      .isActive = true
+    toolbarBackgroundView.rightAnchor
+      .constraint(equalTo: view.rightAnchor)
+      .isActive = true
+    toolbarBackgroundView.topAnchor
+      .constraint(equalTo: view.topAnchor)
+      .isActive = true
+    toolbarBackgroundView.heightAnchor
+      .constraint(equalToConstant: toolbarHeight + 1)
       .isActive = true
   }
   
@@ -180,7 +202,7 @@ class ContentViewController: NSViewController {
   }
   
   private func setViewState(to state: Visibility, for views: [NSView]) {
-    let alphaValue: CGFloat = state == .visible ? 0.99 : 0.2
+    let alphaValue: CGFloat = state == .visible ? 1 : 0.2
     NSAnimationContext.runAnimationGroup({ (context) in
       context.duration = showHideInterfaceAnimationDuration
       context.timingFunction = CAMediaTimingFunction(name: .easeOut)
@@ -190,7 +212,7 @@ class ContentViewController: NSViewController {
     })
   }
   
-  private func loadFilesForHomeDirectory() {
+  private func loadFilesFromMusicDirectory() {
     let musicDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Music")
     let playableFiles = TrackLoader.getPlayableFiles(in: [musicDirectory])
     playableFiles.forEach { tracks.append(Track($0)) }
@@ -355,7 +377,7 @@ extension ContentViewController: NSCollectionViewDelegateFlowLayout {
 }
 
 // MARK: - ToolbarDelegate
-extension ContentViewController: ToolbarDelegate {
+extension ContentViewController {
   
   func toggleSidebar() {
     guard let splitVC = parent as? MainSplitViewController else { return }
@@ -363,8 +385,7 @@ extension ContentViewController: ToolbarDelegate {
   }
   
   func addTracks() {
-    TrackLoader.openFileOrFolder(title: "Open File or Folder", canChooseDir: true) { (selectedURLs) in
-      let playableFiles = TrackLoader.getPlayableFiles(in: selectedURLs)
+    TrackLoader.loadFilesOrDirectory(title: "Open File or Folder", canChooseDir: true) { (playableFiles) in
       playableFiles.forEach { self.tracks.append(Track($0)) }
       self.collectionView.reloadData()
     }
@@ -386,7 +407,6 @@ extension ContentViewController: TrackItemDelegate {
   }
   
   private func updateNowPlayingInfo(for track: Track) {
-    nowPlayingView.track = track
     guard let duration = track.duration else { return }
     let durationLabel = playerControlsView.progressView.durationLabel
     durationLabel.stringValue = duration.durationText
@@ -407,7 +427,7 @@ extension ContentViewController: CollectionScrollViewDelegate {
   }
 }
 
-// MARK: - PlayerControlsDelegate
+// MARK: - PlaybackControlsDelegate
 extension ContentViewController: PlaybackControlsDelegate {
   
   @IBAction func playPause(sender: Any) {
@@ -420,10 +440,22 @@ extension ContentViewController: PlaybackControlsDelegate {
   }
   
   @IBAction func next(sender: Any) {
-    print("pressed next")
+    guard let currentTrack = player.currentTrack else { return }
+    guard let nextTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: 1) else { return }
+    print(nextTrackIndex)
+    guard nextTrackIndex < tracks.count else { return }
+    let nextTrack = tracks[nextTrackIndex]
+    player.play(nextTrack)
   }
   
   @IBAction func prev(sender: Any) {
-    print("pressed prev")
+    guard let currentTrack = player.currentTrack else { return }
+    guard let prevTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: -1) else { return }
+    print(prevTrackIndex)
+    guard prevTrackIndex >= 0 else { return }
+    let prevTrack = tracks[prevTrackIndex]
+    player.play(prevTrack)
   }
+  
+  
 }

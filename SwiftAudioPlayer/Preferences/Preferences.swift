@@ -23,7 +23,7 @@ struct Preferences {
   
   // MARK: - Defaults
   
-  static let defaultPreference: [Preferences.Key: Any] = [
+  static let defaultPreferences: [Preferences.Key: Any] = [
     .quitAfterWindowClosed: false
   ]
 }

@@ -25,7 +25,7 @@ class TrackLoader: NSObject {
    Pop up an open panel.
    - Returns: Whether user dismissed the panel by clicking OK.
    */
-  static func openFileOrFolder(title: String, dir: URL? = nil, canChooseDir: Bool, ok: @escaping ([URL]) -> Void) {
+  static func loadFilesOrDirectory(title: String, dir: URL? = nil, canChooseDir: Bool, ok: @escaping ([URL]) -> Void) {
     
     let panel = NSOpenPanel()
     panel.canCreateDirectories = false
@@ -34,6 +34,9 @@ class TrackLoader: NSObject {
     panel.allowsMultipleSelection = true
     panel.title = title
     panel.canChooseDirectories = canChooseDir
+    // Only allow Audio Files and Folders
+    panel.allowedFileTypes = [String(kUTTypeFolder), String(kUTTypeAudio)]
+    panel.showsHiddenFiles = false
     
     if let dir = dir {
       panel.directoryURL = dir
@@ -42,23 +45,9 @@ class TrackLoader: NSObject {
     // separate modal panel
     let result = panel.runModal()
     if result == .OK {
-      ok(panel.urls)
+      let playableFiles = getPlayableFiles(in: panel.urls)
+      ok(playableFiles)
     }
-    
-    // modal sheet
-//    guard let window = NSApplication.shared.mainWindow else { return }
-//    panel.beginSheetModal(for: window) { result in
-//      if result == .OK {
-//        ok(panel.urls)
-//      }
-//    }
-    
-    // separate panel
-//    panel.begin() { result in
-//      if result == .OK {
-//        ok(panel.urls)
-//      }
-//    }
   }
   
   static func getPlayableFiles(in urls: [URL]) -> [URL] {

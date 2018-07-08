@@ -13,13 +13,7 @@ fileprivate let cornerRadius: CGFloat = 4
 
 class NowPlayingInfoView: NSView {
   
-//  var delegate: NowPlayingDelegate?
-  
-  var track: Track? {
-    didSet {
-      updateNowPlayingInfo(for: track)
-    }
-  }
+  private let notificationCenter = NotificationCenter.default
   
   var title: String? {
     didSet {
@@ -40,9 +34,6 @@ class NowPlayingInfoView: NSView {
     stack.spacing = spacing
     stack.edgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
     stack.translatesAutoresizingMaskIntoConstraints = false
-//    stack.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-//    stack.setClippingResistancePriority(.defaultLow, for: .horizontal)
-//    stack.setClippingResistancePriority(.required, for: .vertical)
     return stack
   }()
   
@@ -50,9 +41,6 @@ class NowPlayingInfoView: NSView {
     let view = RoundedEffectViewLabel()
     view.cornerRadius = cornerRadius
     view.label.usesSingleLineMode = true
-//    view.label.usesSingleLineMode = false
-//    view.label.cell?.lineBreakMode = .byWordWrapping
-//    view.label.maximumNumberOfLines = 2
     view.isHidden = true
     return view
   }()
@@ -61,9 +49,6 @@ class NowPlayingInfoView: NSView {
     let view = RoundedEffectViewLabel()
     view.cornerRadius = cornerRadius
     view.label.usesSingleLineMode = true
-//    view.label.usesSingleLineMode = false
-//    view.label.cell?.lineBreakMode = .byWordWrapping
-//    view.label.maximumNumberOfLines = 2
     view.isHidden = true
     return view
   }()
@@ -71,8 +56,10 @@ class NowPlayingInfoView: NSView {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     setupViews()
+    setupObserver()
   }
   
+  // avoid click through
   override func mouseDown(with event: NSEvent) {
   }
   
@@ -85,6 +72,27 @@ class NowPlayingInfoView: NSView {
     stackView.fill(to: self)
     stackView.addArrangedSubview(artistView)
     stackView.addArrangedSubview(titleView)
+  }
+  
+  private func setupObserver() {
+    notificationCenter.addObserver(self,
+                                   selector: #selector(handlePlaybackStarted(_:)),
+                                   name: .playbackStarted,
+                                   object: nil
+    )
+    notificationCenter.addObserver(self,
+                                   selector: #selector(handlePlaybackStopped(_:)),
+                                   name: .playbackStopped,
+                                   object: nil
+    )
+  }
+  
+  @objc private func handlePlaybackStarted(_ notification: NSNotification) {
+    updateNowPlayingInfo(for: notification.object as? Track)
+  }
+  
+  @objc private func handlePlaybackStopped(_ notification: NSNotification) {
+    updateNowPlayingInfo(for: notification.object as? Track)
   }
   
   private func updateNowPlayingInfo(for track: Track?) {

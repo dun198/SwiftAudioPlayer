@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public enum ToolbarItems: String {
+fileprivate enum ToolbarItems: String {
   case toggleSidebar
   case addTracks
   case clearPlaylist
@@ -81,23 +81,18 @@ class MainWindowController: NSWindowController {
     window.titlebarAppearsTransparent = true
     window.isMovableByWindowBackground = true
     window.styleMask.insert([.fullSizeContentView])
-//    window.appearance = NSAppearance(named: .vibrantDark)
     window.toolbar = NSToolbar(identifier: NSToolbar.Identifier.init("MainToolbar"))
     window.makeKeyAndOrderFront(nil)
     window.contentView?.addTrackingArea(NSTrackingArea(rect: NSRect(x: window.frame.maxX, y: window.frame.minY, width: window.frame.width, height: 48), options: [.activeAlways, .mouseEnteredAndExited, .mouseMoved], owner: self, userInfo: nil))
-    
-//    NSApp.presentationOptions = [.fullScreen, .autoHideToolbar, .autoHideMenuBar, .hideDock]
   }
   
   private func setupToolbar() {
     guard let toolbar = window?.toolbar else { return }
-    print(toolbar.configuration.debugDescription)
     toolbar.autosavesConfiguration = true
     toolbar.showsBaselineSeparator = false
     toolbar.allowsUserCustomization = true
     toolbar.isVisible = true
     toolbar.delegate = self
-    
     
     if let items = toolbar.visibleItems, items.isEmpty {
       toolbar.insertItem(withItemIdentifier: .sidebar, at: 0)
@@ -106,10 +101,7 @@ class MainWindowController: NSWindowController {
       toolbar.insertItem(withItemIdentifier: .clearPlaylist, at: 3)
       toolbar.insertItem(withItemIdentifier: .flexibleSpace, at: 4)
       toolbar.insertItem(withItemIdentifier: .search, at: 5)
-    } else {
     }
-    print(toolbar.configuration.debugDescription)
-
   }
   
   private func setColorScheme(to colorScheme: ColorScheme) {
@@ -124,7 +116,6 @@ class MainWindowController: NSWindowController {
     }
     self.window?.appearance = appearance
   }
-  
 }
 
 extension MainWindowController: NSToolbarDelegate {
@@ -157,10 +148,8 @@ extension MainWindowController: NSToolbarDelegate {
     button.bezelStyle = .texturedRounded
     button.target = self
     button.action = item.selector
-    button.alphaValue = 0.99
     
     toolbarItem.view = button
-    
     return toolbarItem
   }
   

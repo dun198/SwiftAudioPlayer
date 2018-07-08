@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import MediaPlayer
 
 protocol PlaybackControlsDelegate {
   func playPause(sender: Any)
@@ -16,6 +17,7 @@ protocol PlaybackControlsDelegate {
 
 class PlaybackControlsView: NSStackView {
   
+  private let remoteCommandCenter = MPRemoteCommandCenter.shared()
   let notificationCenter = NotificationCenter.default
   var playbackControlsDelegate: PlaybackControlsDelegate?
   
@@ -124,27 +126,27 @@ class PlaybackControlsView: NSStackView {
   
   private func setupObserver() {
     notificationCenter.addObserver(self,
-                                   selector: #selector(playbackDidStart),
+                                   selector: #selector(handlePlaybackStarted),
                                    name: .playbackStarted,
                                    object: nil
     )
     notificationCenter.addObserver(self,
-                                   selector: #selector(playbackDidPauseOrStop),
+                                   selector: #selector(handlePlaybackPausedOrStopped),
                                    name: .playbackPaused,
                                    object: nil
     )
     notificationCenter.addObserver(self,
-                                   selector: #selector(playbackDidPauseOrStop),
+                                   selector: #selector(handlePlaybackPausedOrStopped),
                                    name: .playbackStopped,
                                    object: nil
     )
   }
   
-  @objc private func playbackDidStart() {
+  @objc private func handlePlaybackStarted() {
     playPauseButton.image = NSImage(named: NSImage.touchBarPauseTemplateName)
   }
   
-  @objc private func playbackDidPauseOrStop() {
+  @objc private func handlePlaybackPausedOrStopped() {
     playPauseButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
   }
   

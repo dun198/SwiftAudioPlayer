@@ -1,5 +1,5 @@
 //
-//  Player.swift
+//  TrackPlaybackManager.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 01.04.18.
@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import MediaPlayer
 
 private extension Player {
   enum PlayerState {
@@ -28,27 +29,29 @@ private extension Player {
   }
 }
 
-private extension Player {
-  func stateDidChange() {
-    switch playerState {
-    case .idle:
-      notificationCenter.post(name: .playbackStopped, object: nil)
-    case .playing(let track):
-      notificationCenter.post(name: .playbackStarted, object: track)
-    case .paused(let track):
-      notificationCenter.post(name: .playbackPaused, object: track)
-    }
-  }
-}
-
 class Player: NSObject {
   static let shared = Player()
   
-  private let notificationCenter: NotificationCenter
+  private let notificationCenter: NotificationCenter!
   private let player = AVPlayer()
-  private var playerState = PlayerState.idle {
-    didSet{
-      stateDidChange()
+  
+  private var timeObserverToken: Any?
+  
+  @objc dynamic var percentProgress: Float = 0
+  @objc dynamic var duration: Float = 0
+  @objc dynamic var playbackPosition: Float = 0
+  
+  private var playerState: PlayerState = .idle {
+    didSet {
+      print(playerState.description)
+      switch playerState {
+      case .idle:
+        notificationCenter.post(name: .playbackStopped, object: nil)
+      case .playing(let track):
+        notificationCenter.post(name: .playbackStarted, object: track)
+      case .paused(let track):
+        notificationCenter.post(name: .playbackPaused, object: track)
+      }
     }
   }
   

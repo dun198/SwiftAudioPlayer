@@ -11,13 +11,11 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   
-  let windowController: MainWindowController = {
-    let wc = MainWindowController()
-    return wc
-  }()
+  var windowController: MainWindowController!
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     setUserDefaults()
+    windowController = MainWindowController()
     windowController.loadWindow()
   }
   
@@ -46,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
   
   private func setUserDefaults() {
-    UserDefaults.standard.register(defaults: [String : Any](uniqueKeysWithValues: Preferences.defaultPreference.map { ($0.0.rawValue, $0.1) }))
+    UserDefaults.standard.register(defaults: [String : Any](uniqueKeysWithValues: Preferences.defaultPreferences.map { ($0.0.rawValue, $0.1) }))
   }
 
 }

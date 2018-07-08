@@ -10,14 +10,22 @@ import Foundation
 
 extension Notification.Name {
   static var playbackStarted: Notification.Name {
-    return .init(rawValue: "Player.playbackStarted")
+    return .init("playbackStartedNotification")
   }
   
   static var playbackPaused: Notification.Name {
-    return .init(rawValue: "Player.playbackPaused")
+    return .init("playbackPausedNotification")
   }
   
   static var playbackStopped: Notification.Name {
-    return .init(rawValue: "Player.playbackStopped")
+    return .init("playbackStoppedNotification")
+  }
+  
+  static var currentTrackChanged: Notification.Name {
+    return .init("currentTrackChangedNotification")
+  }
+  
+  static var playerStateChanged: Notification.Name {
+    return .init("playerStateChangedNotification")
   }
 }
