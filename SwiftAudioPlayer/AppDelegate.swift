@@ -7,14 +7,25 @@
 //
 
 import Cocoa
+import AVFoundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   
   var windowController: MainWindowController!
   
+  /// The instance of `RemoteCommandManager` that the app uses for managing remote command events.
+  var remoteCommandManager: RemoteCommandManager!
+  
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     setUserDefaults()
+    
+    // Initializer the `RemoteCommandManager`.
+    remoteCommandManager = RemoteCommandManager()
+    
+    // Always enable playback commands in MPRemoteCommandCenter.
+    remoteCommandManager.activatePlaybackCommands(true)
+        
     windowController = MainWindowController()
     windowController.loadWindow()
   }

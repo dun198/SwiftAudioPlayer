@@ -85,12 +85,6 @@ class TrackItem: NSCollectionViewItem {
   }
   
   override func loadView() {
-//    let box = NSBox()
-//    box.boxType = .custom
-//    box.titlePosition = .noTitle
-//    box.borderType = .noBorder
-//    box.cornerRadius = 4
-//    box.fillColor = .clear
     self.view = BackgroundView()
   }
   
@@ -117,15 +111,11 @@ class TrackItem: NSCollectionViewItem {
     if isSelected {
       if #available(OSX 10.14, *) {
         view.backgroundColor = NSColor.unemphasizedSelectedTextBackgroundColor
-//        view.layer?.backgroundColor = NSColor.unemphasizedSelectedTextBackgroundColor.cgColor
       } else {
         view.wantsLayer = true
         view.backgroundColor = NSColor.selectedTextBackgroundColor
-//        view.layer?.backgroundColor = NSColor.selectedTextBackgroundColor.cgColor
       }
       view.layer?.cornerRadius = 4
-//      trackTitleLabel.textColor = NSColor.selectedTextColor
-//      durationLabel.textColor = NSColor.selectedTextColor
     } else {
       if #available(OSX 10.14, *) {
         view.backgroundColor = nil
@@ -134,14 +124,11 @@ class TrackItem: NSCollectionViewItem {
         view.layer = nil
         view.wantsLayer = false
       }
-//      trackTitleLabel.textColor = .labelColor
-//      durationLabel.textColor = .secondaryLabelColor
     }
   }
   
   override func mouseDown(with event: NSEvent) {
     if event.clickCount > 1 {
-      print("double clicked")
       delegate?.trackItemDoubleAction(self)
     } else {
       super.mouseDown(with: event)

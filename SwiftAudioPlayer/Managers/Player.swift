@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 
-private extension Player {
+extension Player {
   enum PlayerState {
     case idle
     case playing(Track)
@@ -26,6 +26,15 @@ private extension Player {
         return "paused(\"\(track.filename)\")"
       }
     }
+    
+    var currentTrack: Track? {
+      switch self {
+      case .paused(let track), .playing(let track):
+        return track
+      case .idle:
+        return nil
+      }
+    }
   }
 }
 
@@ -35,13 +44,10 @@ class Player: NSObject {
   private let notificationCenter: NotificationCenter!
   private let player = AVPlayer()
   
-  private var timeObserverToken: Any?
-  
-  @objc dynamic var percentProgress: Float = 0
-  @objc dynamic var duration: Float = 0
-  @objc dynamic var playbackPosition: Float = 0
-  
-  private var playerState: PlayerState = .idle {
+  // Bindable Variables
+  private(set) var percentProgress: Dynamic<Double> = Dynamic(0)
+  private(set) var playbackPosition: Dynamic<Double> = Dynamic(0)
+  private(set) var playerState: PlayerState = .idle {
     didSet {
       print(playerState.description)
       switch playerState {
@@ -57,6 +63,19 @@ class Player: NSObject {
   
   init(notificationCenter: NotificationCenter = .default) {
     self.notificationCenter = notificationCenter
+    super.init()
+    setupObserver()
+  }
+  
+  private func setupObserver() {
+    // Add a periodic time observer to keep `percentProgress` and `playbackPosition` up to date.
+    let interval = CMTimeMakeWithSeconds(0.5 , preferredTimescale: Int32(NSEC_PER_SEC))
+    player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] time in
+        guard let duration = self?.currentTrack?.duration else { return }
+      
+        self?.playbackPosition.value = time.seconds
+        self?.percentProgress.value = time.seconds / duration.seconds
+      })
   }
   
   private func startPlayback(with track: Track) {
@@ -111,6 +130,11 @@ class Player: NSObject {
       playerState = .playing(track)
   }
   
+  func resume() {
+    guard let track = currentTrack else { return }
+    play(track)
+  }
+  
   func pause() {
     switch playerState {
     case .idle, .paused:
@@ -121,6 +145,14 @@ class Player: NSObject {
     case .playing(let track):
       playerState = .paused(track)
       pausePlayback()
+    }
+  }
+  
+  func togglePlayPause() {
+    if isPlaying {
+      pause()
+    } else {
+      resume()
     }
   }
   
@@ -140,11 +172,8 @@ class Player: NSObject {
     }
   }
   
-  func seek(to time: CMTime) {
+  func seek(to seekValue: Double) {
+    let time = CMTime(value: Int64(seekValue), timescale: 1)
     player.seek(to: time)
-  }
-  
-  func addPeriodicObserver(forInterval interval: CMTime, using closure: @escaping (CMTime) -> Void) {
-    player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: closure)
   }
 }

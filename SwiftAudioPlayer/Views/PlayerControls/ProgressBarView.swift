@@ -7,12 +7,10 @@
 //
 
 import Cocoa
-import AVFoundation
 
 class ProgressBarView: NSView {
   
   private let player = Player.shared
-  private(set) var isInSeekMode = false
   
   let stackView: NSStackView = {
     let stack = NSStackView()
@@ -52,7 +50,7 @@ class ProgressBarView: NSView {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     setupViews()
-    setupObserver()
+    setupBindings()
   }
   
   required init?(coder decoder: NSCoder) {
@@ -78,28 +76,22 @@ class ProgressBarView: NSView {
     }
   }
   
-  private func setupObserver() {
-    let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-
-    player.addPeriodicObserver(forInterval: interval) {
-      [weak self] time in
-      guard let strongSelf = self, !strongSelf.isInSeekMode else { return }
-      guard let duration = strongSelf.player.currentTrack?.duration else { return }
-      strongSelf.currentPositionLabel.stringValue = time.durationText
-      strongSelf.progressSlider.doubleValue = time.seconds/duration.seconds
+  private func setupBindings() {
+    player.percentProgress.bindAndFire { [weak self] (value) in
+      guard let strongSelf = self else { return }
+        strongSelf.progressSlider.doubleValue = value
+    }
+    player.playbackPosition.bindAndFire { [weak self] (value) in
+      guard let strongSelf = self else { return }
+      strongSelf.currentPositionLabel.stringValue = value.durationText
     }
   }
-  
+
   private func seekToSliderPosition() {
-    isInSeekMode = true
-    defer {
-      isInSeekMode = false
-    }
     guard let duration = player.currentTrack?.duration else { return }
     let totalSeconds = duration.seconds
-    let seekValue = Float64(progressSlider.floatValue) * totalSeconds
-    let seekTime = CMTime(value: Int64(seekValue), timescale: 1)
-    player.seek(to: seekTime)
+    let seekValue = progressSlider.doubleValue * totalSeconds
+    player.seek(to: seekValue)
   }
   
   @objc private func handleSliderChange() {

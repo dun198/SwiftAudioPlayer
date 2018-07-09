@@ -14,6 +14,8 @@
 		D22CDCFC1FE1DDBD00D988B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D22CDCFB1FE1DDBD00D988B6 /* Assets.xcassets */; };
 		D22CDD1A1FE2266D00D988B6 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDD191FE2266D00D988B6 /* Dynamic.swift */; };
 		D25E2C9C20F2850C00A92109 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22CDD171FE215E200D988B6 /* ViewModel.swift */; };
+		D25E2C9E20F2B1E600A92109 /* RemoteCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25E2C9D20F2B1E600A92109 /* RemoteCommandManager.swift */; };
+		D25E2CA020F2BC7400A92109 /* NowPlayingInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25E2C9F20F2BC7400A92109 /* NowPlayingInfoManager.swift */; };
 		D2699A37209E6AB000D24659 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2699A36209E6AB000D24659 /* MainWindowController.swift */; };
 		D2699A39209E6EC000D24659 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2699A38209E6EC000D24659 /* MainMenu.xib */; };
 		D280AD29207116CF00692345 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D280AD28207116CF00692345 /* Player.swift */; };
@@ -62,6 +64,8 @@
 		D22CDD011FE1DDBD00D988B6 /* SwiftAudioPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftAudioPlayer.entitlements; sourceTree = "<group>"; };
 		D22CDD171FE215E200D988B6 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		D22CDD191FE2266D00D988B6 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
+		D25E2C9D20F2B1E600A92109 /* RemoteCommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCommandManager.swift; sourceTree = "<group>"; };
+		D25E2C9F20F2BC7400A92109 /* NowPlayingInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingInfoManager.swift; sourceTree = "<group>"; };
 		D2699A36209E6AB000D24659 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		D2699A38209E6EC000D24659 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		D280AD28207116CF00692345 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 				D280AD28207116CF00692345 /* Player.swift */,
 				D2F0987B209A719A005B2A22 /* TrackLoader.swift */,
 				D2F09885209B6EFA005B2A22 /* TrackMetadataHandler.swift */,
+				D25E2C9D20F2B1E600A92109 /* RemoteCommandManager.swift */,
+				D25E2C9F20F2BC7400A92109 /* NowPlayingInfoManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -367,6 +373,7 @@
 				D280AD29207116CF00692345 /* Player.swift in Sources */,
 				D29C53E920965D2300B83B84 /* TrackItem.swift in Sources */,
 				D29C53D22094511C00B83B84 /* NSView.swift in Sources */,
+				D25E2C9E20F2B1E600A92109 /* RemoteCommandManager.swift in Sources */,
 				D29C53DD2095326B00B83B84 /* RoundedShadowedBox.swift in Sources */,
 				D29C53F3209764F100B83B84 /* CollapstibleSplitViewItem.swift in Sources */,
 				D2699A37209E6AB000D24659 /* MainWindowController.swift in Sources */,
@@ -387,6 +394,7 @@
 				D22CDCF81FE1DDBD00D988B6 /* AppDelegate.swift in Sources */,
 				D29C53C22094318D00B83B84 /* Label.swift in Sources */,
 				D280AD2B2071174400692345 /* FileManager.swift in Sources */,
+				D25E2CA020F2BC7400A92109 /* NowPlayingInfoManager.swift in Sources */,
 				D295C67220DA3CD50033836C /* Preferences.swift in Sources */,
 				D2E157BE209CB15C00E56B5C /* RoundedEffectViewLabel.swift in Sources */,
 				D224D7B72069AECE00CA51C3 /* Track.swift in Sources */,

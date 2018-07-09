@@ -9,7 +9,6 @@
 import Cocoa
 import AVFoundation
 import AVKit
-import MediaPlayer
 
 fileprivate let REORDER_TRACKS_PASTEBOARD_TYPE = "com.dunkeeel.SwiftAudioPlayer.TrackItem"
 
@@ -43,7 +42,6 @@ extension NSUserInterfaceItemIdentifier {
 class ContentViewController: NSViewController {
   
   private let player = Player.shared
-  private let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
   private var tracks: [Track] = [Track]()
   private var itemsForDraggingSession: Set<IndexPath> = []
   
@@ -135,7 +133,7 @@ class ContentViewController: NSViewController {
     view.addSubview(scrollView)
     view.addSubview(playerControlsView)
     view.addSubview(nowPlayingInfoView)
-    view.addSubview(toolbarBackgroundView)
+//    view.addSubview(toolbarBackgroundView)
     
     scrollView.fill(to: self.view)
     
@@ -169,18 +167,18 @@ class ContentViewController: NSViewController {
       .constraint(lessThanOrEqualToConstant: nowPlayingMaxWidth)
       .isActive = true
     
-    toolbarBackgroundView.leftAnchor
-      .constraint(equalTo: view.leftAnchor)
-      .isActive = true
-    toolbarBackgroundView.rightAnchor
-      .constraint(equalTo: view.rightAnchor)
-      .isActive = true
-    toolbarBackgroundView.topAnchor
-      .constraint(equalTo: view.topAnchor)
-      .isActive = true
-    toolbarBackgroundView.heightAnchor
-      .constraint(equalToConstant: toolbarHeight + 1)
-      .isActive = true
+//    toolbarBackgroundView.leftAnchor
+//      .constraint(equalTo: view.leftAnchor)
+//      .isActive = true
+//    toolbarBackgroundView.rightAnchor
+//      .constraint(equalTo: view.rightAnchor)
+//      .isActive = true
+//    toolbarBackgroundView.topAnchor
+//      .constraint(equalTo: view.topAnchor)
+//      .isActive = true
+//    toolbarBackgroundView.heightAnchor
+//      .constraint(equalToConstant: toolbarHeight + 1)
+//      .isActive = true
   }
   
   private func setupObserver() {
@@ -188,10 +186,10 @@ class ContentViewController: NSViewController {
     player.addObserver(self, forKeyPath: "currentItem", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
   }
   
-  private func setupTrackingAreas() {
-    // add tracking area
-    view.addTrackingArea(NSTrackingArea(rect: view.visibleRect, options: [.activeAlways, .mouseMoved, .mouseEnteredAndExited, .inVisibleRect], owner: self, userInfo: nil))
-  }
+//  private func setupTrackingAreas() {
+//    // add tracking area
+//    view.addTrackingArea(NSTrackingArea(rect: view.visibleRect, options: [.activeAlways, .mouseMoved, .mouseEnteredAndExited, .inVisibleRect], owner: self, userInfo: nil))
+//  }
   
   func showControls() {
     setViewState(to: .visible, for: fadingControls)
@@ -456,6 +454,4 @@ extension ContentViewController: PlaybackControlsDelegate {
     let prevTrack = tracks[prevTrackIndex]
     player.play(prevTrack)
   }
-  
-  
 }
