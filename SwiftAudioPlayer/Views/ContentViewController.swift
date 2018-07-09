@@ -245,7 +245,7 @@ class ContentViewController: NSViewController {
   
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "currentItem" {
-      guard let duration = player.currentTrack?.duration else { return }
+      guard let duration = player.currentTrack.value?.duration else { return }
       playerControlsView.progressView.durationLabel.stringValue = duration.durationText
     }
   }
@@ -383,9 +383,11 @@ extension ContentViewController {
   }
   
   func addTracks() {
-    TrackLoader.loadFilesOrDirectory(title: "Open File or Folder", canChooseDir: true) { (playableFiles) in
-      playableFiles.forEach { self.tracks.append(Track($0)) }
-      self.collectionView.reloadData()
+    TrackLoader.loadFilesOrDirectory(title: "Open File or Folder", canChooseDir: true) { [weak self] (playableFiles) in
+      DispatchQueue.main.async {
+        playableFiles.forEach { self?.tracks.append(Track($0)) }
+        self?.collectionView.reloadData()
+      }
     }
   }
   
@@ -401,13 +403,6 @@ extension ContentViewController: TrackItemDelegate {
   func trackItemDoubleAction(_ trackItem: TrackItem) {
     guard let track = trackItem.track else { return }
     player.play(track)
-    updateNowPlayingInfo(for: track)
-  }
-  
-  private func updateNowPlayingInfo(for track: Track) {
-    guard let duration = track.duration else { return }
-    let durationLabel = playerControlsView.progressView.durationLabel
-    durationLabel.stringValue = duration.durationText
   }
 }
 
@@ -428,17 +423,17 @@ extension ContentViewController: CollectionScrollViewDelegate {
 // MARK: - PlaybackControlsDelegate
 extension ContentViewController: PlaybackControlsDelegate {
   
-  @IBAction func playPause(sender: Any) {
+  @IBAction func playPause(sender: NSButton) {
     if player.isPlaying {
       player.pause()
     } else {
-      guard let track = player.currentTrack else { return }
+      guard let track = player.currentTrack.value else { return }
       player.play(track)
     }
   }
   
-  @IBAction func next(sender: Any) {
-    guard let currentTrack = player.currentTrack else { return }
+  @IBAction func next(sender: NSButton) {
+    guard let currentTrack = player.currentTrack.value else { return }
     guard let nextTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: 1) else { return }
     print(nextTrackIndex)
     guard nextTrackIndex < tracks.count else { return }
@@ -446,12 +441,16 @@ extension ContentViewController: PlaybackControlsDelegate {
     player.play(nextTrack)
   }
   
-  @IBAction func prev(sender: Any) {
-    guard let currentTrack = player.currentTrack else { return }
+  @IBAction func prev(sender: NSButton) {
+    guard let currentTrack = player.currentTrack.value else { return }
     guard let prevTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: -1) else { return }
     print(prevTrackIndex)
     guard prevTrackIndex >= 0 else { return }
     let prevTrack = tracks[prevTrackIndex]
     player.play(prevTrack)
+  }
+
+  @IBAction func showVolumeControl(sender: NSButton) {
+    self.present(VolumePopoverViewController(), asPopoverRelativeTo: sender.bounds, of: sender, preferredEdge: .minY, behavior: .transient)
   }
 }

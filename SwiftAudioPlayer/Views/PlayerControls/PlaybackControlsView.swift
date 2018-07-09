@@ -10,9 +10,10 @@ import Cocoa
 import MediaPlayer
 
 protocol PlaybackControlsDelegate {
-  func playPause(sender: Any)
-  func next(sender: Any)
-  func prev(sender: Any)
+  func playPause(sender: NSButton)
+  func next(sender: NSButton)
+  func prev(sender: NSButton)
+  func showVolumeControl(sender: NSButton)
 }
 
 class PlaybackControlsView: NSStackView {
@@ -64,6 +65,7 @@ class PlaybackControlsView: NSStackView {
     let image = NSImage(named: NSImage.touchBarAudioOutputVolumeHighTemplateName)
     let button = ImageButton(image: image!, width: 24, height: 24)
     button.target = self
+    button.action = #selector(handleShowVolumeControl(sender:))
     return button
   }()
   
@@ -148,6 +150,14 @@ class PlaybackControlsView: NSStackView {
   
   @objc private func handlePlaybackPausedOrStopped() {
     playPauseButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
+  }
+  
+  @objc private func handleShowVolumeControl(sender: NSButton) {
+    playbackControlsDelegate?.showVolumeControl(sender: volumeButton)
+  }
+  
+  @objc private func handleMuteVolume() {
+    print("mute")
   }
   
   @objc private func handlePlayPause() {

@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 
-extension Player {
+private extension Player {
   enum PlayerState {
     case idle
     case playing(Track)
@@ -26,15 +26,6 @@ extension Player {
         return "paused(\"\(track.filename)\")"
       }
     }
-    
-    var currentTrack: Track? {
-      switch self {
-      case .paused(let track), .playing(let track):
-        return track
-      case .idle:
-        return nil
-      }
-    }
   }
 }
 
@@ -44,12 +35,23 @@ class Player: NSObject {
   private let notificationCenter: NotificationCenter!
   private let player = AVPlayer()
   
-  // Bindable Variables
+  public var volume: Float! {
+    didSet {
+      player.volume = volume
+    }
+  }
+  
+  // Bindable Dynamic Variables
+  private(set) var currentTrack: Dynamic<Track?> = Dynamic(nil)
   private(set) var percentProgress: Dynamic<Double> = Dynamic(0)
   private(set) var playbackPosition: Dynamic<Double> = Dynamic(0)
-  private(set) var playerState: PlayerState = .idle {
+  
+  private var timeObserverToken: Any?
+  
+  private var playerState: PlayerState = .idle {
     didSet {
       print(playerState.description)
+      self.currentTrack.value = self.getCurrentTrack()
       switch playerState {
       case .idle:
         notificationCenter.post(name: .playbackStopped, object: nil)
@@ -63,23 +65,29 @@ class Player: NSObject {
   
   init(notificationCenter: NotificationCenter = .default) {
     self.notificationCenter = notificationCenter
+    self.volume = player.volume
     super.init()
     setupObserver()
+  }
+  
+  deinit {
+    timeObserverToken = nil
+    player.replaceCurrentItem(with: nil)
   }
   
   private func setupObserver() {
     // Add a periodic time observer to keep `percentProgress` and `playbackPosition` up to date.
     let interval = CMTimeMakeWithSeconds(0.5 , preferredTimescale: Int32(NSEC_PER_SEC))
-    player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] time in
-        guard let duration = self?.currentTrack?.duration else { return }
+    timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] time in
+      guard let duration = self?.currentTrack.value?.duration else { return }
       
         self?.playbackPosition.value = time.seconds
-        self?.percentProgress.value = time.seconds / duration.seconds
+        self?.percentProgress.value = time.seconds / duration
       })
   }
   
   private func startPlayback(with track: Track) {
-    if track != currentTrack {
+    if track != currentTrack.value {
       let item = AVPlayerItem(url: track.file)
       player.replaceCurrentItem(with: item)
     } else {
@@ -101,20 +109,16 @@ class Player: NSObject {
     player.replaceCurrentItem(with: nil)
   }
   
-  // MARK: - Public API
-  
-  var currentTrack: Track? {
+  private func getCurrentTrack() -> Track? {
     switch playerState {
-    case .paused(let track), .playing(let track):
+    case .playing(let track), .paused(let track):
       return track
     case .idle:
       return nil
     }
   }
   
-  var currentTime: CMTime? {
-    return player.currentItem?.currentTime()
-  }
+  // MARK: - Public API
   
   var isPlaying: Bool {
     switch playerState {
@@ -131,7 +135,7 @@ class Player: NSObject {
   }
   
   func resume() {
-    guard let track = currentTrack else { return }
+    guard let track = currentTrack.value else { return }
     play(track)
   }
   

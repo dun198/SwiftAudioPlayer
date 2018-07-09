@@ -42,7 +42,7 @@ class RemoteCommandManager: NSObject {
   }
   
   @objc func handlePlayCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    guard let track = player.currentTrack else { return .noSuchContent }
+    guard let track = player.currentTrack.value else { return .noSuchContent }
     player.play(track)
     return .success
   }
@@ -59,7 +59,7 @@ class RemoteCommandManager: NSObject {
   
   // MARK: Track Changing Command Handlers
   @objc func handleNextTrackCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    if player.currentTrack != nil {
+    if player.currentTrack.value != nil {
       print("send next track Notification")
       
       return .success

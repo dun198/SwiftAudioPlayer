@@ -45,8 +45,10 @@ class TrackLoader: NSObject {
     // separate modal panel
     let result = panel.runModal()
     if result == .OK {
-      let playableFiles = getPlayableFiles(in: panel.urls)
-      ok(playableFiles)
+      DispatchQueue.main.async {
+        let playableFiles = getPlayableFiles(in: panel.urls)
+        ok(playableFiles)
+      }
     }
   }
   

@@ -20,7 +20,7 @@ class Track: NSObject {
   let file: URL
   let filename: String
   
-  let duration: CMTime?
+  let duration: Double?
   
   // optional data
   let title: String?

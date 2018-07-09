@@ -78,19 +78,19 @@ class ProgressBarView: NSView {
   
   private func setupBindings() {
     player.percentProgress.bindAndFire { [weak self] (value) in
-      guard let strongSelf = self else { return }
-        strongSelf.progressSlider.doubleValue = value
+      self?.progressSlider.doubleValue = value
     }
     player.playbackPosition.bindAndFire { [weak self] (value) in
-      guard let strongSelf = self else { return }
-      strongSelf.currentPositionLabel.stringValue = value.durationText
+      self?.currentPositionLabel.stringValue = value.durationText
+    }
+    player.currentTrack.bindAndFire { [weak self] (value) in
+      self?.durationLabel.stringValue = value?.duration?.durationText ?? "--:--"
     }
   }
 
   private func seekToSliderPosition() {
-    guard let duration = player.currentTrack?.duration else { return }
-    let totalSeconds = duration.seconds
-    let seekValue = progressSlider.doubleValue * totalSeconds
+    guard let duration = player.currentTrack.value?.duration else { return }
+    let seekValue = progressSlider.doubleValue * duration
     player.seek(to: seekValue)
   }
   

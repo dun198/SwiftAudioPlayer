@@ -40,6 +40,7 @@
 		D2BA799A20991C46005EA687 /* SpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BA799920991C46005EA687 /* SpacerView.swift */; };
 		D2BA799C20993552005EA687 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BA799B20993552005EA687 /* GradientView.swift */; };
 		D2BB310E209F69E000AF42AE /* NSNotification+Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB310D209F69E000AF42AE /* NSNotification+Player.swift */; };
+		D2DE00E820F30B4500A84E3A /* VolumePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DE00E720F30B4500A84E3A /* VolumePopoverViewController.swift */; };
 		D2E157AB209C960500E56B5C /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E157AA209C960500E56B5C /* Convenience.swift */; };
 		D2E157BC209CB0CD00E56B5C /* NowPlayingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E157BB209CB0CD00E56B5C /* NowPlayingInfoView.swift */; };
 		D2E157BE209CB15C00E56B5C /* RoundedEffectViewLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E157BD209CB15C00E56B5C /* RoundedEffectViewLabel.swift */; };
@@ -90,6 +91,7 @@
 		D2BA799920991C46005EA687 /* SpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerView.swift; sourceTree = "<group>"; };
 		D2BA799B20993552005EA687 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		D2BB310D209F69E000AF42AE /* NSNotification+Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Player.swift"; sourceTree = "<group>"; };
+		D2DE00E720F30B4500A84E3A /* VolumePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumePopoverViewController.swift; sourceTree = "<group>"; };
 		D2E157AA209C960500E56B5C /* Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
 		D2E157BB209CB0CD00E56B5C /* NowPlayingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingInfoView.swift; sourceTree = "<group>"; };
 		D2E157BD209CB15C00E56B5C /* RoundedEffectViewLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedEffectViewLabel.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				D29C53DA20952F4300B83B84 /* PlayerControlsView.swift */,
 				D29C53CE20944DC700B83B84 /* PlaybackControlsView.swift */,
 				D29C53D32094A8CF00B83B84 /* ProgressBarView.swift */,
+				D2DE00E720F30B4500A84E3A /* VolumePopoverViewController.swift */,
 			);
 			path = PlayerControls;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				D2F0988D209BBFBD005B2A22 /* CollectionScrollView.swift in Sources */,
 				D29C53CF20944DC700B83B84 /* PlaybackControlsView.swift in Sources */,
 				D2F09882209A9A72005B2A22 /* CALayer.swift in Sources */,
+				D2DE00E820F30B4500A84E3A /* VolumePopoverViewController.swift in Sources */,
 				D2FADA4C20EF76A900CC5E88 /* ToolbarBackgroundView.swift in Sources */,
 				D29C53E72096549A00B83B84 /* SingleColumnFlowLayout.swift in Sources */,
 				D21B323120A305320082C26C /* ColorSchemeMenu.swift in Sources */,
