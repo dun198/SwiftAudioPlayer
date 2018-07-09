@@ -38,6 +38,7 @@ class Player: NSObject {
   public var volume: Float! {
     didSet {
       player.volume = volume
+      UserDefaults.standard.set(volume, forKey: Preferences.Key.volume.rawValue)
     }
   }
   
@@ -65,7 +66,7 @@ class Player: NSObject {
   
   init(notificationCenter: NotificationCenter = .default) {
     self.notificationCenter = notificationCenter
-    self.volume = player.volume
+    self.volume = UserDefaults.standard.float(forKey: Preferences.Key.volume.rawValue)
     super.init()
     setupObserver()
   }

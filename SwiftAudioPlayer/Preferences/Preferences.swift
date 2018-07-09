@@ -21,6 +21,7 @@ struct Preferences {
     static let colorScheme = Key(rawValue: "colorScheme")
     static let fadeControlsWhenScrolling = Key(rawValue: "fadeControls")
     static let controlsVisibility = Key(rawValue: "controlsVisibility")
+    static let volume = Key(rawValue: "volume")
   }
   
   // MARK: - Defaults
@@ -29,6 +30,7 @@ struct Preferences {
     .quitAfterWindowClosed: false,
     .colorScheme: ColorScheme.system.rawValue,
     .fadeControlsWhenScrolling: true,
-    .controlsVisibility: 0.2
+    .controlsVisibility: 0.2,
+    .volume: 1.0
   ]
 }
