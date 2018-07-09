@@ -78,9 +78,11 @@ class ProgressBarView: NSView {
   
   private func setupBindings() {
     player.percentProgress.bindAndFire { [weak self] (value) in
+      guard let window = self?.window, window.occlusionState.contains(.visible) else { return }
       self?.progressSlider.doubleValue = value
     }
     player.playbackPosition.bindAndFire { [weak self] (value) in
+      guard let window = self?.window, window.occlusionState.contains(.visible) else { return }
       self?.currentPositionLabel.stringValue = value.durationText
     }
     player.currentTrack.bindAndFire { [weak self] (value) in

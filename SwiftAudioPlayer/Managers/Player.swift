@@ -81,7 +81,6 @@ class Player: NSObject {
     let interval = CMTimeMakeWithSeconds(0.5 , preferredTimescale: Int32(NSEC_PER_SEC))
     timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] time in
       guard let duration = self?.currentTrack.value?.duration else { return }
-      
         self?.playbackPosition.value = time.seconds
         self?.percentProgress.value = time.seconds / duration
       })
