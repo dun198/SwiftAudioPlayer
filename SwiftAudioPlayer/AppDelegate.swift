@@ -57,5 +57,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   private func setUserDefaults() {
     UserDefaults.standard.register(defaults: [String : Any](uniqueKeysWithValues: Preferences.defaultPreferences.map { ($0.0.rawValue, $0.1) }))
   }
-
 }

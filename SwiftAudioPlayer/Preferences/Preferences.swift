@@ -18,12 +18,17 @@ struct Preferences {
     }
     
     static let quitAfterWindowClosed = Key(rawValue: "quitAfterWindowClosed")
+    static let colorScheme = Key(rawValue: "colorScheme")
+    static let fadeControlsWhenScrolling = Key(rawValue: "fadeControls")
+    static let controlsVisibility = Key(rawValue: "controlsVisibility")
   }
-  
   
   // MARK: - Defaults
   
   static let defaultPreferences: [Preferences.Key: Any] = [
-    .quitAfterWindowClosed: false
+    .quitAfterWindowClosed: false,
+    .colorScheme: ColorScheme.system.rawValue,
+    .fadeControlsWhenScrolling: true,
+    .controlsVisibility: 0.2
   ]
 }

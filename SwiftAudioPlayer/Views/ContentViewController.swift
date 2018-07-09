@@ -196,11 +196,12 @@ class ContentViewController: NSViewController {
   }
   
   func fadeControls() {
+    guard UserDefaults.standard.bool(forKey: Preferences.Key.fadeControlsWhenScrolling.rawValue) == true else { return }
     setViewState(to: .hidden, for: fadingControls)
   }
   
   private func setViewState(to state: Visibility, for views: [NSView]) {
-    let alphaValue: CGFloat = state == .visible ? 1 : 0.2
+    let alphaValue: CGFloat = state == .visible ? 1 : CGFloat(UserDefaults.standard.float(forKey: Preferences.Key.controlsVisibility.rawValue))
     NSAnimationContext.runAnimationGroup({ (context) in
       context.duration = showHideInterfaceAnimationDuration
       context.timingFunction = CAMediaTimingFunction(name: .easeOut)
@@ -215,13 +216,6 @@ class ContentViewController: NSViewController {
     let playableFiles = TrackLoader.getPlayableFiles(in: [musicDirectory])
     playableFiles.forEach { tracks.append(Track($0)) }
     self.collectionView.reloadData()
-  }
-  
-  private func setWindowButtonsState(to state: Visibility) {
-    guard let window = self.view.window else { return }
-    let windowButtons: [NSWindow.ButtonType] = [.closeButton, .miniaturizeButton, .zoomButton]
-    let alphaValue: CGFloat = state == .visible ? 1 : 0
-    windowButtons.forEach{ window.standardWindowButton($0)?.animator().alphaValue = alphaValue}
   }
   
   override func mouseMoved(with event: NSEvent) {
