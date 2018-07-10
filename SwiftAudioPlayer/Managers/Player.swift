@@ -129,6 +129,10 @@ class Player: NSObject {
     }
   }
   
+  var playbackRate: Float {
+    return player.rate
+  }
+  
   func play(_ track: Track) {
       startPlayback(with: track)
       playerState = .playing(track)

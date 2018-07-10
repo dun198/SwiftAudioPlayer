@@ -46,8 +46,8 @@ class NowPlayingInfoManager: NSObject {
   }
   
   @objc private func handlePlaybackStarted(_ notification: NSNotification) {
-    updateNowPlayingProgress(for: player.playbackPosition.value)
     nowPlayingInfoCenter.playbackState = .playing
+    updateNowPlayingProgress(for: player.playbackPosition.value)
   }
   
   @objc private func handlePlaybackPaused(_ notification: NSNotification) {
@@ -60,9 +60,10 @@ class NowPlayingInfoManager: NSObject {
   }
   
   @objc private func handleCurrentTrackChanged(_ notification: NSNotification) {
-    let track = notification.object as? Track
-    updateNowPlayingInfo(for: track)
-    updateNowPlayingProgress(for: .zero)
+    DispatchQueue.main.async {
+      let track = notification.object as? Track
+      self.updateNowPlayingInfo(for: track)
+    }
   }
   
   @objc private func handlePlayerSeeked(_ notification: NSNotification) {
@@ -101,7 +102,10 @@ class NowPlayingInfoManager: NSObject {
     nowPlayingInfo[MPMediaItemPropertyArtist] = artist
     nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
     nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration
-    
+    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.playbackPosition.value.seconds
+    nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = player.playbackRate
+    nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.playbackRate
+
     if #available(OSX 10.13.2, *) {
 //      nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
     } else {
