@@ -690,7 +690,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="U5H-Qv-AeZ">
                 <rect key="frame" x="0.0" y="0.0" width="380" height="161"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <gridView fixedFrame="YES" xPlacement="leading" yPlacement="bottom" rowAlignment="none" rowSpacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="zFI-qu-HcA">
                         <rect key="frame" x="35" y="20" width="311" height="121"/>
@@ -793,8 +793,8 @@
                                             <rect key="frame" x="61" y="0.0" width="96" height="19"/>
                                             <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="XdW-aJ-zMZ"/>
                                             <connections>
-                                                <binding destination="ScN-K2-ygi" name="enabled" keyPath="values.fadeControls" id="AYZ-p2-Xlc"/>
                                                 <binding destination="ScN-K2-ygi" name="value" keyPath="values.controlsVisibility" id="b5w-nP-Pg7"/>
+                                                <binding destination="ScN-K2-ygi" name="enabled" keyPath="values.fadeControls" id="AYZ-p2-Xlc"/>
                                             </connections>
                                         </slider>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gDr-gB-jpR">
@@ -828,22 +828,8 @@
                     </gridView>
                 </subviews>
             </view>
-            <connections>
-                <outlet property="delegate" destination="Lcq-Lo-U7r" id="1Ps-FU-5X0"/>
-            </connections>
             <point key="canvasLocation" x="92" y="344"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="ScN-K2-ygi"/>
-        <viewController id="Lcq-Lo-U7r" customClass="PreferencesViewController" customModule="SwiftAudioPlayer" customModuleProvider="target">
-            <connections>
-                <outlet property="colorSchemePopUp" destination="VdJ-u3-tP2" id="njz-yc-NXF"/>
-                <outlet property="controlsVisibilitySlider" destination="UwV-rb-EnC" id="MJS-Dg-int"/>
-                <outlet property="controlsVisibilityTextField" destination="gDr-gB-jpR" id="dAL-hB-Fs6"/>
-                <outlet property="fadeControlsCheckbox" destination="1GW-d4-6l4" id="zSS-6k-Xu0"/>
-                <outlet property="quitAfterWindowClosedCheckbox" destination="7Te-iM-NQ7" id="lBz-u1-aY6"/>
-                <outlet property="sourceItemView" destination="U5H-Qv-AeZ" id="NcI-tI-WId"/>
-                <outlet property="view" destination="U5H-Qv-AeZ" id="uF3-T3-Thw"/>
-            </connections>
-        </viewController>
     </objects>
 </document>
