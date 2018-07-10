@@ -16,19 +16,29 @@ class TrackItem: NSCollectionViewItem {
   
   var delegate: TrackItemDelegate?
   
-  var track: Track? = nil {
+  var track: Track? {
     didSet {
-      guard let track = track else { return }
-      if let artist = track.artist, let title = track.title {
-        trackTitleLabel.stringValue = "\(artist) - \(title)"
-      } else {
-        trackTitleLabel.stringValue = "\(track.filename)"
-      }
-      durationLabel.stringValue = track.duration?.durationText ?? ""
+      updateTrackItem()
     }
   }
   
-  let stackView: NSStackView = {
+  var index: Int? {
+    didSet {
+      trackNumberLabel.stringValue = "\(index ?? 0) ."
+    }
+  }
+  
+  private func updateTrackItem() {
+    guard let track = track else { return }
+    if let artist = track.artist, let title = track.title {
+      trackTitleLabel.stringValue = "\(artist) - \(title)"
+    } else {
+      trackTitleLabel.stringValue = "\(track.filename)"
+    }
+    durationLabel.stringValue = track.duration?.durationText ?? ""
+  }
+  
+  private let stackView: NSStackView = {
     let stack = NSStackView()
     stack.orientation = .horizontal
     stack.alignment = .centerY
@@ -39,7 +49,7 @@ class TrackItem: NSCollectionViewItem {
     return stack
   }()
   
-  let trackArtistLabel: Label = {
+  private let trackArtistLabel: Label = {
     let label = Label()
     label.stringValue = " Artist"
     label.font = NSFont.systemFont(ofSize: 12)
@@ -48,7 +58,7 @@ class TrackItem: NSCollectionViewItem {
     return label
   }()
   
-  let trackTitleLabel: Label = {
+  private let trackTitleLabel: Label = {
     let label = Label()
     label.stringValue = " Super Long and awesome Track Title"
     label.font = NSFont.systemFont(ofSize: 12)
@@ -56,7 +66,7 @@ class TrackItem: NSCollectionViewItem {
     return label
   }()
   
-  let durationLabel: Label = {
+  private let durationLabel: Label = {
     let label = Label()
     label.stringValue = "03:20"
     label.textColor = .secondaryLabelColor
@@ -66,7 +76,7 @@ class TrackItem: NSCollectionViewItem {
     return label
   }()
   
-  let trackNumberLabel: Label = {
+  private let trackNumberLabel: Label = {
     let label = Label()
     label.stringValue = ""
     label.font = NSFont.systemFont(ofSize: 8)

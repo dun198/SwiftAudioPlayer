@@ -77,7 +77,7 @@ class NowPlayingInfoManager: NSObject {
     guard track != displayingTrack else { return }
     
     print("updateNowPlayingInfo(for: \"\(track?.filename ?? "none")\")")
-    guard let currentTrack = track else {
+    guard let track = track else {
       nowPlayingInfoCenter.nowPlayingInfo = nil
       nowPlayingInfoCenter.playbackState = .stopped
       return
@@ -85,9 +85,10 @@ class NowPlayingInfoManager: NSObject {
     
     var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
     
-    let title = currentTrack.filename
-    let album = currentTrack.album ?? "Unknown"
-    let duration = currentTrack.duration ?? 0
+    let title = track.title ?? track.filename
+    let artist = track.artist ?? ""
+    let album = track.album ?? "Unknown"
+    let duration = track.duration ?? 0
 //    let artworkData = Data()
 //    let image = NSImage(data: artworkData) ?? NSImage()
 //    let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> NSImage in
@@ -95,6 +96,7 @@ class NowPlayingInfoManager: NSObject {
 //    })
     
     nowPlayingInfo[MPMediaItemPropertyTitle] = title
+    nowPlayingInfo[MPMediaItemPropertyArtist] = artist
     nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
     nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration
     nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.playbackPosition.value

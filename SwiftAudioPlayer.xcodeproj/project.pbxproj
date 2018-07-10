@@ -167,10 +167,9 @@
 				D22CDCF91FE1DDBD00D988B6 /* MainSplitViewController.swift */,
 				D29C53CC2094494000B83B84 /* ContentViewController.swift */,
 				D2DE00EC20F3A58C00A84E3A /* Sidebar */,
-				D2DE00EB20F3A56F00A84E3A /* Toolbar */,
 				D29C53E12095424E00B83B84 /* Playlist */,
-				D29C53D920952E9200B83B84 /* PlayerControls */,
-				D2E157BA209CB06900E56B5C /* NowPlayingInfo */,
+				D2DE00EB20F3A56F00A84E3A /* Toolbar */,
+				D29C53D920952E9200B83B84 /* PlayerPanel+NowPlaying */,
 				D29C53DE2095329B00B83B84 /* ViewHelper */,
 			);
 			path = Views;
@@ -227,15 +226,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D29C53D920952E9200B83B84 /* PlayerControls */ = {
+		D29C53D920952E9200B83B84 /* PlayerPanel+NowPlaying */ = {
 			isa = PBXGroup;
 			children = (
 				D29C53DA20952F4300B83B84 /* PlayerControlsView.swift */,
 				D29C53CE20944DC700B83B84 /* PlaybackControlsView.swift */,
 				D29C53D32094A8CF00B83B84 /* ProgressBarView.swift */,
 				D2DE00E720F30B4500A84E3A /* VolumePopoverViewController.swift */,
+				D2E157BB209CB0CD00E56B5C /* NowPlayingInfoView.swift */,
 			);
-			path = PlayerControls;
+			path = "PlayerPanel+NowPlaying";
 			sourceTree = "<group>";
 		};
 		D29C53DE2095329B00B83B84 /* ViewHelper */ = {
@@ -280,14 +280,6 @@
 				D297E87B20714A4E00FE4929 /* SidebarViewController.swift */,
 			);
 			path = Sidebar;
-			sourceTree = "<group>";
-		};
-		D2E157BA209CB06900E56B5C /* NowPlayingInfo */ = {
-			isa = PBXGroup;
-			children = (
-				D2E157BB209CB0CD00E56B5C /* NowPlayingInfoView.swift */,
-			);
-			path = NowPlayingInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

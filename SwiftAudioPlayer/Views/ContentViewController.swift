@@ -225,7 +225,7 @@ extension ContentViewController: NSCollectionViewDataSource {
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let cell = collectionView.makeItem(withIdentifier: .playlistTrackItem, for: indexPath) as! TrackItem
     cell.track = tracks[indexPath.item]
-    cell.trackNumberLabel.stringValue = "\(indexPath.item) ."
+    cell.index = indexPath.item
     cell.delegate = self
     return cell
   }
