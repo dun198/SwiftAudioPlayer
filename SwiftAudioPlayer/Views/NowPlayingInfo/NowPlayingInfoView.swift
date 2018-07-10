@@ -59,10 +59,6 @@ class NowPlayingInfoView: NSView {
     setupObserver()
   }
   
-  // avoid click through
-  override func mouseDown(with event: NSEvent) {
-  }
-  
   required init?(coder decoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -76,23 +72,14 @@ class NowPlayingInfoView: NSView {
   
   private func setupObserver() {
     notificationCenter.addObserver(self,
-                                   selector: #selector(handlePlaybackStarted(_:)),
-                                   name: .playbackStarted,
-                                   object: nil
-    )
-    notificationCenter.addObserver(self,
-                                   selector: #selector(handlePlaybackStopped(_:)),
-                                   name: .playbackStopped,
+                                   selector: #selector(handleCurrentTrackChanged(_:)),
+                                   name: .currentTrackChanged,
                                    object: nil
     )
   }
   
-  @objc private func handlePlaybackStarted(_ notification: NSNotification) {
-    updateNowPlayingInfo(for: notification.object as? Track)
-  }
-  
-  @objc private func handlePlaybackStopped(_ notification: NSNotification) {
-    updateNowPlayingInfo(for: notification.object as? Track)
+  // avoid click through
+  override func mouseDown(with event: NSEvent) {
   }
   
   private func updateNowPlayingInfo(for track: Track?) {
@@ -118,5 +105,9 @@ class NowPlayingInfoView: NSView {
   private func hideNowPlayingInfo() {
     titleView.isHidden = true
     artistView.isHidden = true
+  }
+  
+  @objc private func handleCurrentTrackChanged(_ notification: NSNotification) {
+    updateNowPlayingInfo(for: notification.object as? Track)
   }
 }

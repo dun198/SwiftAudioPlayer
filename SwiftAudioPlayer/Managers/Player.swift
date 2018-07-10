@@ -43,14 +43,20 @@ class Player: NSObject {
   }
   
   // Bindable Dynamic Variables
-  private(set) var currentTrack: Dynamic<Track?> = Dynamic(nil)
   private(set) var percentProgress: Dynamic<Double> = Dynamic(0)
   private(set) var playbackPosition: Dynamic<Double> = Dynamic(0)
+  
+  private(set) var currentTrack: Track? = nil {
+    didSet {
+      notificationCenter.post(name: .currentTrackChanged, object: currentTrack)
+    }
+  }
   
   private var timeObserverToken: Any?
   
   private var playerState: PlayerState = .idle {
     didSet {
+      notificationCenter.post(name: .playerStateChanged, object: nil)
       switch playerState {
       case .idle:
         notificationCenter.post(name: .playbackStopped, object: nil)
@@ -78,17 +84,17 @@ class Player: NSObject {
     // Add a periodic time observer to keep `percentProgress` and `playbackPosition` up to date.
     let interval = CMTimeMakeWithSeconds(0.5 , preferredTimescale: Int32(NSEC_PER_SEC))
     timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] time in
-      guard let duration = self?.currentTrack.value?.duration else { return }
+      guard let duration = self?.currentTrack?.duration else { return }
         self?.playbackPosition.value = time.seconds
         self?.percentProgress.value = time.seconds / duration
       })
   }
   
   private func startPlayback(with track: Track) {
-    if track != currentTrack.value {
+    if track != currentTrack {
       let item = AVPlayerItem(url: track.file)
       player.replaceCurrentItem(with: item)
-      currentTrack.value = track
+      currentTrack = track
     } else {
       switch playerState{
       case .playing:
@@ -106,7 +112,7 @@ class Player: NSObject {
   
   private func stopPlayback() {
     player.replaceCurrentItem(with: nil)
-    currentTrack.value = nil
+    currentTrack = nil
   }
   
   // MARK: - Public API
@@ -126,7 +132,7 @@ class Player: NSObject {
   }
   
   func resume() {
-    guard let track = currentTrack.value else { return }
+    guard let track = currentTrack else { return }
     play(track)
   }
   

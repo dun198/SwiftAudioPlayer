@@ -87,13 +87,13 @@ class ProgressBarView: NSView {
       guard let window = self.window, window.occlusionState.contains(.visible) else { return }
       self.currentPositionLabel.stringValue = value.durationText
     }
-    player.currentTrack.bindAndFire { [unowned self] (track) in
-      self.durationLabel.stringValue = track?.duration?.durationText ?? "--:--"
-    }
+//    player.currentTrack.bindAndFire { [unowned self] (track) in
+//      self.durationLabel.stringValue = track?.duration?.durationText ?? "--:--"
+//    }
   }
 
   private func seekToSliderPosition(completion: () -> Void) {
-    guard let duration = player.currentTrack.value?.duration else { return }
+    guard let duration = player.currentTrack?.duration else { return }
     let seekValue = progressSlider.doubleValue * duration
     player.seek(to: seekValue)
   }

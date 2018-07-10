@@ -205,7 +205,7 @@ class ContentViewController: NSViewController {
   
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "currentItem" {
-      guard let duration = player.currentTrack.value?.duration else { return }
+      guard let duration = player.currentTrack?.duration else { return }
       playerControlsView.progressView.durationLabel.stringValue = duration.durationText
     }
   }
@@ -386,13 +386,13 @@ extension ContentViewController: PlaybackControlsDelegate {
     if player.isPlaying {
       player.pause()
     } else {
-      guard let track = player.currentTrack.value else { return }
+      guard let track = player.currentTrack else { return }
       player.play(track)
     }
   }
   
   @IBAction func next(sender: NSButton) {
-    guard let currentTrack = player.currentTrack.value else { return }
+    guard let currentTrack = player.currentTrack else { return }
     guard let nextTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: 1) else { return }
     guard nextTrackIndex < tracks.count else { return }
     let nextTrack = tracks[nextTrackIndex]
@@ -400,7 +400,7 @@ extension ContentViewController: PlaybackControlsDelegate {
   }
   
   @IBAction func prev(sender: NSButton) {
-    guard let currentTrack = player.currentTrack.value else { return }
+    guard let currentTrack = player.currentTrack else { return }
     guard let prevTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: -1) else { return }
     guard prevTrackIndex >= 0 else { return }
     let prevTrack = tracks[prevTrackIndex]

@@ -1,5 +1,5 @@
 //
-//  NSNotification.swift
+//  Notification+Player.swift
 //  SwiftAudioPlayer
 //
 //  Created by Tobias Dunkel on 06.05.18.
