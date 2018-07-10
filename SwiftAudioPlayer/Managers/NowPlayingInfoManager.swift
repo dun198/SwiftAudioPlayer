@@ -46,28 +46,31 @@ class NowPlayingInfoManager: NSObject {
   }
   
   @objc private func handlePlaybackStarted(_ notification: NSNotification) {
+    updateNowPlayingProgress(for: player.playbackPosition.value)
     nowPlayingInfoCenter.playbackState = .playing
-  }
-  
-  @objc private func handlePlaybackStopped(_ notification: NSNotification) {
-    nowPlayingInfoCenter.playbackState = .stopped
   }
   
   @objc private func handlePlaybackPaused(_ notification: NSNotification) {
     nowPlayingInfoCenter.playbackState = .paused
+    updateNowPlayingProgress(for: player.playbackPosition.value)
+  }
+  
+  @objc private func handlePlaybackStopped(_ notification: NSNotification) {
+    updateNowPlayingInfo(for: nil)
   }
   
   @objc private func handleCurrentTrackChanged(_ notification: NSNotification) {
     let track = notification.object as? Track
     updateNowPlayingInfo(for: track)
+    updateNowPlayingProgress(for: .zero)
   }
   
   @objc private func handlePlayerSeeked(_ notification: NSNotification) {
-    updateNowPlayingProgress(for: notification.object as? Double)
+    updateNowPlayingProgress(for: notification.object as? CMTime)
   }
   
-  private func updateNowPlayingProgress(for playbackPosition: Double?) {
-    guard let playbackPosition = playbackPosition else { return }
+  private func updateNowPlayingProgress(for time: CMTime?) {
+    guard let playbackPosition = time?.seconds else { return }
     var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
     nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playbackPosition
     nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
@@ -79,7 +82,6 @@ class NowPlayingInfoManager: NSObject {
     print("updateNowPlayingInfo(for: \"\(track?.filename ?? "none")\")")
     guard let track = track else {
       nowPlayingInfoCenter.nowPlayingInfo = nil
-      nowPlayingInfoCenter.playbackState = .stopped
       return
     }
     
@@ -99,7 +101,6 @@ class NowPlayingInfoManager: NSObject {
     nowPlayingInfo[MPMediaItemPropertyArtist] = artist
     nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
     nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration
-    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.playbackPosition.value
     
     if #available(OSX 10.13.2, *) {
 //      nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork

@@ -42,9 +42,12 @@ class Player: NSObject {
     }
   }
   
+  private var isSeekInProgress = false
+  private var chaseTime: CMTime = .zero
+  
   // Bindable Dynamic Variables
   private(set) var percentProgress: Dynamic<Double> = Dynamic(0)
-  private(set) var playbackPosition: Dynamic<Double> = Dynamic(0)
+  private(set) var playbackPosition: Dynamic<CMTime> = Dynamic(.zero)
   
   private(set) var currentTrack: Track? = nil {
     didSet {
@@ -82,10 +85,10 @@ class Player: NSObject {
   
   private func setupObserver() {
     // Add a periodic time observer to keep `percentProgress` and `playbackPosition` up to date.
-    let interval = CMTimeMakeWithSeconds(0.5 , preferredTimescale: Int32(NSEC_PER_SEC))
+    let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] time in
       guard let duration = self?.currentTrack?.duration else { return }
-        self?.playbackPosition.value = time.seconds
+        self?.playbackPosition.value = time
         self?.percentProgress.value = time.seconds / duration
       })
   }
@@ -181,9 +184,41 @@ class Player: NSObject {
     }
   }
   
-  func seek(to seekValue: Double) {
-    let time = CMTime(value: Int64(seekValue), timescale: 1)
-    player.seek(to: time)
-    notificationCenter.post(name: .playerSeeked, object: seekValue)
+  func seek(to seekTime: CMTime) {
+    pausePlayerAndSeekSmoothlyToTime(newChaseTime: seekTime)
+  }
+  
+  private func pausePlayerAndSeekSmoothlyToTime(newChaseTime:CMTime) {
+    player.pause()
+    if CMTimeCompare(newChaseTime, chaseTime) != 0
+    {
+      chaseTime = newChaseTime;
+      if !isSeekInProgress
+      {
+        actuallySeekToTime()
+      }
+    } else {
+      if isPlaying { player.play() }
+    }
+  }
+  
+  func actuallySeekToTime() {
+    isSeekInProgress = true
+    
+    let seekTimeInProgress = chaseTime
+    let tolerance: CMTime = .zero
+    
+    player.seek(to: seekTimeInProgress, toleranceBefore: tolerance,
+                toleranceAfter: tolerance) { [unowned self] (isFinished) in
+      if CMTimeCompare(seekTimeInProgress, self.chaseTime) == 0 {
+        self.isSeekInProgress = false
+        self.notificationCenter.post(name: .playerSeeked, object: seekTimeInProgress)
+        if self.isPlaying { self.player.play() }
+      }
+      else
+      {
+        self.actuallySeekToTime()
+      }
+    }
   }
 }

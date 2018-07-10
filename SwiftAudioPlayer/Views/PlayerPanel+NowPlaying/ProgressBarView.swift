@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import AVFoundation
 
 class ProgressBarView: NSView {
   
@@ -26,7 +27,7 @@ class ProgressBarView: NSView {
     let slider = NSSlider()
     slider.controlSize = NSControl.ControlSize.mini
     slider.target = self
-//    slider.sendAction(on: [.leftMouseDown, .leftMouseUp, .leftMouseDragged])
+    slider.sendAction(on: [.leftMouseDown, .leftMouseDragged])
     slider.action = #selector(handleSliderChange)
     return slider
   }()
@@ -92,14 +93,14 @@ class ProgressBarView: NSView {
 //    }
   }
 
-  private func seekToSliderPosition(completion: () -> Void) {
+  private func seekToSliderPosition() {
     guard let duration = player.currentTrack?.duration else { return }
     let seekValue = progressSlider.doubleValue * duration
-    player.seek(to: seekValue)
+    let seekTime = CMTime(seconds: seekValue, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    player.seek(to: seekTime)
   }
   
   @objc private func handleSliderChange() {
-    isInSeekMode = true
-    seekToSliderPosition(completion: { isInSeekMode = false })
+    seekToSliderPosition()
   }
 }
