@@ -41,7 +41,7 @@ class Player: NSObject {
     }
   }
   
-  private var isSeekInProgress = false
+  private(set) var isSeekInProgress = false
   private var chaseTime: CMTime = .zero
   
   // Bindable Dynamic Variables
