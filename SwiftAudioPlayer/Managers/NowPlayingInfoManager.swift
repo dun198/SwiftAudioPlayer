@@ -6,7 +6,6 @@
 //  Copyright © 2018 Tobias Dunkel. All rights reserved.
 //
 
-import Cocoa
 import MediaPlayer
 
 class NowPlayingInfoManager: NSObject {
@@ -91,7 +90,7 @@ class NowPlayingInfoManager: NSObject {
     let title = track.title ?? track.filename
     let artist = track.artist ?? ""
     let album = track.album ?? "Unknown"
-    let duration = track.duration.seconds
+    let duration = track.duration
     let rate = player.playbackRate
     
 //    let artworkData = Data()

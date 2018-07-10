@@ -6,7 +6,6 @@
 //  Copyright © 2018 Tobias Dunkel. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
 import MediaPlayer
 
@@ -89,7 +88,7 @@ class Player: NSObject {
     timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] time in
       guard let duration = self?.currentTrack?.duration else { return }
         self?.playbackPosition.value = time
-        self?.percentProgress.value = time.seconds / duration.seconds
+        self?.percentProgress.value = time.seconds / duration
       })
   }
   

@@ -6,7 +6,6 @@
 //  Copyright © 2018 Tobias Dunkel. All rights reserved.
 //
 
-import Foundation
 import MediaPlayer
 
 class RemoteCommandManager: NSObject {

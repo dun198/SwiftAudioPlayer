@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tobias Dunkel. All rights reserved.
 //
 
-import AVFoundation
+import Foundation
 
 /** this is the model which represents a track in the playlist
  */
@@ -18,7 +18,7 @@ class Track: NSObject {
   
   let file: URL
   let filename: String
-  let duration: CMTime
+  let duration: Double
   
   // optional data
   let title: String?

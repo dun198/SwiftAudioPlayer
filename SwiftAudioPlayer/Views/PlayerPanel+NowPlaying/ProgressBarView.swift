@@ -97,7 +97,7 @@ class ProgressBarView: NSView {
   
   private func seekToSliderPosition() {
     guard let duration = player.currentTrack?.duration else { return }
-    let seekValue = progressSlider.doubleValue * duration.seconds
+    let seekValue = progressSlider.doubleValue * duration
     let seekTime = CMTime(seconds: seekValue, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     player.seek(to: seekTime)
   }

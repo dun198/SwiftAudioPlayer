@@ -6,13 +6,12 @@
 //  Copyright © 2018 Tobias Dunkel. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
 
 struct TrackMetadata {
   var title: String?
   var artist: String?
-  var duration: CMTime = .zero
+  var duration: Double!
   var genre: String?
   var album: String?
 }
@@ -25,7 +24,7 @@ class TrackMetadataHandler {
     let commonMD = asset.commonMetadata
     var metadata = TrackMetadata()
     
-    metadata.duration = asset.duration
+    metadata.duration = asset.duration.seconds
     
     for item in commonMD {
       switch item.commonKey {
