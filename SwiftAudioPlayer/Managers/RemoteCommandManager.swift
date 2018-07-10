@@ -35,6 +35,39 @@ class RemoteCommandManager: NSObject {
     remoteCommandCenter.togglePlayPauseCommand.isEnabled = enable
   }
   
+  func toggleNextTrackCommand(_ enable: Bool) {
+    if enable {
+      remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handleNextTrackCommandEvent(_:)))
+    }
+    else {
+      remoteCommandCenter.nextTrackCommand.removeTarget(self, action: #selector(RemoteCommandManager.handleNextTrackCommandEvent(_:)))
+    }
+    
+    remoteCommandCenter.nextTrackCommand.isEnabled = enable
+  }
+  
+  func togglePreviousTrackCommand(_ enable: Bool) {
+    if enable {
+      remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePreviousTrackCommandEvent(_:)))
+    }
+    else {
+      remoteCommandCenter.previousTrackCommand.removeTarget(self, action: #selector(RemoteCommandManager.handlePreviousTrackCommandEvent(_:)))
+    }
+    
+    remoteCommandCenter.previousTrackCommand.isEnabled = enable
+  }
+  
+  func toggleChangePlaybackPositionCommand(_ enable: Bool) {
+    if enable {
+        remoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(RemoteCommandManager.handleChangePlaybackPositionCommandEvent(_:)))
+    }
+    else {
+        remoteCommandCenter.changePlaybackPositionCommand.removeTarget(self, action: #selector(RemoteCommandManager.handleChangePlaybackPositionCommandEvent(_:)))
+    }
+
+    remoteCommandCenter.changePlaybackPositionCommand.isEnabled = enable
+  }
+
   // MARK: Playback Command Handlers
   @objc func handlePauseCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
     player.pause()
@@ -56,12 +89,27 @@ class RemoteCommandManager: NSObject {
     player.togglePlayPause()
     return .success
   }
+
+  @objc func handleChangePlaybackPositionCommandEvent(_ event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
+    let seekTime = CMTimeMakeWithSeconds(event.positionTime, preferredTimescale: 1)
+    player.seek(to: seekTime.seconds)
+    return .success
+  }
   
   // MARK: Track Changing Command Handlers
   @objc func handleNextTrackCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
     if player.currentTrack.value != nil {
-      print("send next track Notification")
-      
+      player.next()
+      return .success
+    }
+    else {
+      return .noSuchContent
+    }
+  }
+  
+  @objc func handlePreviousTrackCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+    if player.currentTrack.value != nil {
+      player.previous()
       return .success
     }
     else {

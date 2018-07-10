@@ -51,8 +51,6 @@ class Player: NSObject {
   
   private var playerState: PlayerState = .idle {
     didSet {
-      print(playerState.description)
-      self.currentTrack.value = self.getCurrentTrack()
       switch playerState {
       case .idle:
         notificationCenter.post(name: .playbackStopped, object: nil)
@@ -90,6 +88,7 @@ class Player: NSObject {
     if track != currentTrack.value {
       let item = AVPlayerItem(url: track.file)
       player.replaceCurrentItem(with: item)
+      currentTrack.value = track
     } else {
       switch playerState{
       case .playing:
@@ -107,15 +106,7 @@ class Player: NSObject {
   
   private func stopPlayback() {
     player.replaceCurrentItem(with: nil)
-  }
-  
-  private func getCurrentTrack() -> Track? {
-    switch playerState {
-    case .playing(let track), .paused(let track):
-      return track
-    case .idle:
-      return nil
-    }
+    currentTrack.value = nil
   }
   
   // MARK: - Public API
@@ -165,6 +156,14 @@ class Player: NSObject {
     stopPlayback()
   }
   
+  func next() {
+    notificationCenter.post(name: .playNextTrack, object: nil)
+  }
+  
+  func previous() {
+    notificationCenter.post(name: .playPreviousTrack, object: nil)
+  }
+  
   func setTrack(_ track: Track) {
     switch playerState {
     case .playing:
@@ -179,5 +178,6 @@ class Player: NSObject {
   func seek(to seekValue: Double) {
     let time = CMTime(value: Int64(seekValue), timescale: 1)
     player.seek(to: time)
+    notificationCenter.post(name: .playerSeeked, object: seekValue)
   }
 }

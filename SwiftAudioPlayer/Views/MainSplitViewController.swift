@@ -73,15 +73,15 @@ class MainSplitViewController: NSSplitViewController {
   }
   
   override func mouseExited(with event: NSEvent) {
-    super.mouseExited(with: event)
     guard let window = self.view.window,
       !window.styleMask.contains(.fullScreen) else { return }
     contentVC.fadeControls()
+    super.mouseExited(with: event)
   }
   
   override func mouseEntered(with event: NSEvent) {
-    super.mouseEntered(with: event)
     contentVC.showControls()
+    super.mouseEntered(with: event)
   }
   
   override func mouseMoved(with event: NSEvent) {

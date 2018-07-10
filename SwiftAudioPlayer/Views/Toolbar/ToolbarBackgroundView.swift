@@ -15,7 +15,7 @@ class ToolbarBackgroundView: NSVisualEffectView {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     setupView()
-    setupTrackingArea()
+    addTrackingArea(NSTrackingArea(rect: self.frame, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil))
   }
   
   private func setupView() {
@@ -27,17 +27,15 @@ class ToolbarBackgroundView: NSVisualEffectView {
     }
   }
   
-  private func setupTrackingArea() {
-    addTrackingArea(NSTrackingArea(rect: frame, options: [.activeAlways, .mouseEnteredAndExited, .inVisibleRect], owner: self, userInfo: nil))
-  }
-  
-  override func mouseEntered(with event: NSEvent) {
-    print("entered")
-    blurFilter?.isEnabled = true
+  override func mouseDown(with event: NSEvent) {
   }
   
   override func mouseExited(with event: NSEvent) {
-    blurFilter?.isEnabled = false
+    isHidden = true
+  }
+  
+  override func mouseEntered(with event: NSEvent) {
+    isHidden = false
   }
   
   required init?(coder decoder: NSCoder) {

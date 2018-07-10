@@ -42,6 +42,7 @@ extension NSUserInterfaceItemIdentifier {
 class ContentViewController: NSViewController {
   
   private let player = Player.shared
+  private let notificationCenter = NotificationCenter.default
   private var tracks: [Track] = [Track]()
   private var itemsForDraggingSession: Set<IndexPath> = []
   
@@ -108,12 +109,6 @@ class ContentViewController: NSViewController {
     return view
   }()
   
-  let toolbarBackgroundView: ToolbarBackgroundView = {
-    let view = ToolbarBackgroundView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  
   override func loadView() {
     view = NSView()
   }
@@ -122,7 +117,6 @@ class ContentViewController: NSViewController {
     super.viewDidLoad()
     setupViews()
     setupObserver()
-//    setupTrackingAreas()
     
     if shouldLoadMusicDirectory {
       loadFilesFromMusicDirectory()
@@ -133,7 +127,6 @@ class ContentViewController: NSViewController {
     view.addSubview(scrollView)
     view.addSubview(playerControlsView)
     view.addSubview(nowPlayingInfoView)
-//    view.addSubview(toolbarBackgroundView)
     
     scrollView.fill(to: self.view)
     
@@ -166,30 +159,14 @@ class ContentViewController: NSViewController {
     nowPlayingInfoView.widthAnchor
       .constraint(lessThanOrEqualToConstant: nowPlayingMaxWidth)
       .isActive = true
-    
-//    toolbarBackgroundView.leftAnchor
-//      .constraint(equalTo: view.leftAnchor)
-//      .isActive = true
-//    toolbarBackgroundView.rightAnchor
-//      .constraint(equalTo: view.rightAnchor)
-//      .isActive = true
-//    toolbarBackgroundView.topAnchor
-//      .constraint(equalTo: view.topAnchor)
-//      .isActive = true
-//    toolbarBackgroundView.heightAnchor
-//      .constraint(equalToConstant: toolbarHeight + 1)
-//      .isActive = true
   }
   
   private func setupObserver() {
     // observe if video plays/pauses
     player.addObserver(self, forKeyPath: "currentItem", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
+    notificationCenter.addObserver(self, selector: #selector(next(sender:)), name: .playNextTrack, object: nil)
+    notificationCenter.addObserver(self, selector: #selector(prev(sender:)), name: .playPreviousTrack, object: nil)
   }
-  
-//  private func setupTrackingAreas() {
-//    // add tracking area
-//    view.addTrackingArea(NSTrackingArea(rect: view.visibleRect, options: [.activeAlways, .mouseMoved, .mouseEnteredAndExited, .inVisibleRect], owner: self, userInfo: nil))
-//  }
   
   func showControls() {
     setViewState(to: .visible, for: fadingControls)
@@ -218,23 +195,12 @@ class ContentViewController: NSViewController {
     self.collectionView.reloadData()
   }
   
-  override func mouseMoved(with event: NSEvent) {
-    super.mouseMoved(with: event)
-    let yVelocity = abs(event.deltaY)
-    let xVelocity = abs(event.deltaX)
-    if yVelocity >= showHideInterfaceThreshold || xVelocity >= showHideInterfaceThreshold * 2{
-      showControls()
-    }
-  }
-  
   override func mouseExited(with event: NSEvent) {
     super.mouseExited(with: event)
-    fadeControls()
   }
   
   override func mouseEntered(with event: NSEvent) {
     super.mouseEntered(with: event)
-    showControls()
   }
   
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -270,7 +236,6 @@ extension ContentViewController: NSCollectionViewDelegate {
   
   func collectionView(_ collectionView: NSCollectionView, didChangeItemsAt indexPaths: Set<IndexPath>, to highlightState: NSCollectionViewItem.HighlightState) {
     if highlightState == NSCollectionViewItem.HighlightState.forSelection {
-      //            print("selected cell ", indexPaths)
     }
   }
   
@@ -429,7 +394,6 @@ extension ContentViewController: PlaybackControlsDelegate {
   @IBAction func next(sender: NSButton) {
     guard let currentTrack = player.currentTrack.value else { return }
     guard let nextTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: 1) else { return }
-    print(nextTrackIndex)
     guard nextTrackIndex < tracks.count else { return }
     let nextTrack = tracks[nextTrackIndex]
     player.play(nextTrack)
@@ -438,7 +402,6 @@ extension ContentViewController: PlaybackControlsDelegate {
   @IBAction func prev(sender: NSButton) {
     guard let currentTrack = player.currentTrack.value else { return }
     guard let prevTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: -1) else { return }
-    print(prevTrackIndex)
     guard prevTrackIndex >= 0 else { return }
     let prevTrack = tracks[prevTrackIndex]
     player.play(prevTrack)

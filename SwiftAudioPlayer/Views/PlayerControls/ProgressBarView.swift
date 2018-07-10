@@ -11,6 +11,7 @@ import Cocoa
 class ProgressBarView: NSView {
   
   private let player = Player.shared
+  var isInSeekMode = false
   
   let stackView: NSStackView = {
     let stack = NSStackView()
@@ -25,6 +26,7 @@ class ProgressBarView: NSView {
     let slider = NSSlider()
     slider.controlSize = NSControl.ControlSize.mini
     slider.target = self
+//    slider.sendAction(on: [.leftMouseDown, .leftMouseUp, .leftMouseDragged])
     slider.action = #selector(handleSliderChange)
     return slider
   }()
@@ -77,26 +79,27 @@ class ProgressBarView: NSView {
   }
   
   private func setupBindings() {
-    player.percentProgress.bindAndFire { [weak self] (value) in
-      guard let window = self?.window, window.occlusionState.contains(.visible) else { return }
-      self?.progressSlider.doubleValue = value
+    player.percentProgress.bindAndFire { [unowned self] (value) in
+      guard let window = self.window, window.occlusionState.contains(.visible) else { return }
+      self.progressSlider.doubleValue = value
     }
-    player.playbackPosition.bindAndFire { [weak self] (value) in
-      guard let window = self?.window, window.occlusionState.contains(.visible) else { return }
-      self?.currentPositionLabel.stringValue = value.durationText
+    player.playbackPosition.bindAndFire { [unowned self] (value) in
+      guard let window = self.window, window.occlusionState.contains(.visible) else { return }
+      self.currentPositionLabel.stringValue = value.durationText
     }
-    player.currentTrack.bindAndFire { [weak self] (value) in
-      self?.durationLabel.stringValue = value?.duration?.durationText ?? "--:--"
+    player.currentTrack.bindAndFire { [unowned self] (track) in
+      self.durationLabel.stringValue = track?.duration?.durationText ?? "--:--"
     }
   }
 
-  private func seekToSliderPosition() {
+  private func seekToSliderPosition(completion: () -> Void) {
     guard let duration = player.currentTrack.value?.duration else { return }
     let seekValue = progressSlider.doubleValue * duration
     player.seek(to: seekValue)
   }
   
   @objc private func handleSliderChange() {
-    seekToSliderPosition()
+    isInSeekMode = true
+    seekToSliderPosition(completion: { isInSeekMode = false })
   }
 }

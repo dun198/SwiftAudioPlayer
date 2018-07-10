@@ -28,4 +28,16 @@ extension Notification.Name {
   static var playerStateChanged: Notification.Name {
     return .init("playerStateChangedNotification")
   }
+  
+  static var playerSeeked: Notification.Name {
+    return .init("playerSeeked")
+  }
+  
+  static var playNextTrack: Notification.Name {
+    return .init("playNextTrackNotification")
+  }
+  
+  static var playPreviousTrack: Notification.Name {
+    return .init("playPreviousTrackNotification")
+  }
 }

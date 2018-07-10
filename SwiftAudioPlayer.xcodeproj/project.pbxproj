@@ -165,8 +165,9 @@
 			isa = PBXGroup;
 			children = (
 				D22CDCF91FE1DDBD00D988B6 /* MainSplitViewController.swift */,
-				D297E87B20714A4E00FE4929 /* SidebarViewController.swift */,
 				D29C53CC2094494000B83B84 /* ContentViewController.swift */,
+				D2DE00EC20F3A58C00A84E3A /* Sidebar */,
+				D2DE00EB20F3A56F00A84E3A /* Toolbar */,
 				D29C53E12095424E00B83B84 /* Playlist */,
 				D29C53D920952E9200B83B84 /* PlayerControls */,
 				D2E157BA209CB06900E56B5C /* NowPlayingInfo */,
@@ -242,17 +243,16 @@
 			children = (
 				D2F0988C209BBFBD005B2A22 /* CollectionScrollView.swift */,
 				D29C53E62096549A00B83B84 /* SingleColumnFlowLayout.swift */,
+				D29C53F2209764F100B83B84 /* CollapstibleSplitViewItem.swift */,
 				D29C53F62098B34300B83B84 /* BackgroundView.swift */,
 				D29C53C12094318D00B83B84 /* Label.swift */,
+				D29C53DF2095330200B83B84 /* ImageButton.swift */,
+				D2BA799920991C46005EA687 /* SpacerView.swift */,
+				D2BA799B20993552005EA687 /* GradientView.swift */,
 				D29C53EA2096672700B83B84 /* RoundRectLabel.swift */,
 				D2F0987F209A976C005B2A22 /* RoundedEffectView.swift */,
 				D2E157BD209CB15C00E56B5C /* RoundedEffectViewLabel.swift */,
 				D29C53DC2095326B00B83B84 /* RoundedShadowedBox.swift */,
-				D29C53DF2095330200B83B84 /* ImageButton.swift */,
-				D29C53F2209764F100B83B84 /* CollapstibleSplitViewItem.swift */,
-				D2BA799920991C46005EA687 /* SpacerView.swift */,
-				D2BA799B20993552005EA687 /* GradientView.swift */,
-				D2FADA4B20EF76A900CC5E88 /* ToolbarBackgroundView.swift */,
 			);
 			path = ViewHelper;
 			sourceTree = "<group>";
@@ -264,6 +264,22 @@
 				D29C53E820965D2300B83B84 /* TrackItem.swift */,
 			);
 			path = Playlist;
+			sourceTree = "<group>";
+		};
+		D2DE00EB20F3A56F00A84E3A /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				D2FADA4B20EF76A900CC5E88 /* ToolbarBackgroundView.swift */,
+			);
+			path = Toolbar;
+			sourceTree = "<group>";
+		};
+		D2DE00EC20F3A58C00A84E3A /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				D297E87B20714A4E00FE4929 /* SidebarViewController.swift */,
+			);
+			path = Sidebar;
 			sourceTree = "<group>";
 		};
 		D2E157BA209CB06900E56B5C /* NowPlayingInfo */ = {
@@ -311,10 +327,10 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -534,12 +550,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SwiftAudioPlayer/SwiftAudioPlayer.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VWP2ERD75S;
-				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SwiftAudioPlayer/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
@@ -554,12 +568,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SwiftAudioPlayer/SwiftAudioPlayer.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VWP2ERD75S;
-				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SwiftAudioPlayer/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
