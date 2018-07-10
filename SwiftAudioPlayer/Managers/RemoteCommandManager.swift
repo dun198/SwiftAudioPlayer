@@ -14,58 +14,20 @@ class RemoteCommandManager: NSObject {
   fileprivate let remoteCommandCenter = MPRemoteCommandCenter.shared()
   fileprivate let player = Player.shared
   
-  func activatePlaybackCommands(_ enable: Bool) {
-    if enable {
-      remoteCommandCenter.playCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePlayCommandEvent(_:)))
-      remoteCommandCenter.pauseCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePauseCommandEvent(_:)))
-      remoteCommandCenter.stopCommand.addTarget(self, action: #selector(RemoteCommandManager.handleStopCommandEvent(_:)))
-      remoteCommandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(RemoteCommandManager.handleTogglePlayPauseCommandEvent(_:)))
-      
-    }
-    else {
-      remoteCommandCenter.playCommand.removeTarget(self, action: #selector(RemoteCommandManager.handlePlayCommandEvent(_:)))
-      remoteCommandCenter.pauseCommand.removeTarget(self, action: #selector(RemoteCommandManager.handlePauseCommandEvent(_:)))
-      remoteCommandCenter.stopCommand.removeTarget(self, action: #selector(RemoteCommandManager.handleStopCommandEvent(_:)))
-      remoteCommandCenter.togglePlayPauseCommand.removeTarget(self, action: #selector(RemoteCommandManager.handleTogglePlayPauseCommandEvent(_:)))
-    }
-    
-    remoteCommandCenter.playCommand.isEnabled = enable
-    remoteCommandCenter.pauseCommand.isEnabled = enable
-    remoteCommandCenter.stopCommand.isEnabled = enable
-    remoteCommandCenter.togglePlayPauseCommand.isEnabled = enable
+  override init() {
+    super.init()
+    setupCommands()
   }
   
-  func toggleNextTrackCommand(_ enable: Bool) {
-    if enable {
-      remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handleNextTrackCommandEvent(_:)))
-    }
-    else {
-      remoteCommandCenter.nextTrackCommand.removeTarget(self, action: #selector(RemoteCommandManager.handleNextTrackCommandEvent(_:)))
-    }
+  private func setupCommands() {
+    remoteCommandCenter.playCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePlayCommandEvent(_:)))
+    remoteCommandCenter.pauseCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePauseCommandEvent(_:)))
+    remoteCommandCenter.stopCommand.addTarget(self, action: #selector(RemoteCommandManager.handleStopCommandEvent(_:)))
+    remoteCommandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(RemoteCommandManager.handleTogglePlayPauseCommandEvent(_:)))
+    remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handleNextTrackCommandEvent(_:)))
+    remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePreviousTrackCommandEvent(_:)))
+    remoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(RemoteCommandManager.handleChangePlaybackPositionCommandEvent(_:)))
     
-    remoteCommandCenter.nextTrackCommand.isEnabled = enable
-  }
-  
-  func togglePreviousTrackCommand(_ enable: Bool) {
-    if enable {
-      remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePreviousTrackCommandEvent(_:)))
-    }
-    else {
-      remoteCommandCenter.previousTrackCommand.removeTarget(self, action: #selector(RemoteCommandManager.handlePreviousTrackCommandEvent(_:)))
-    }
-    
-    remoteCommandCenter.previousTrackCommand.isEnabled = enable
-  }
-  
-  func toggleChangePlaybackPositionCommand(_ enable: Bool) {
-    if enable {
-        remoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(RemoteCommandManager.handleChangePlaybackPositionCommandEvent(_:)))
-    }
-    else {
-        remoteCommandCenter.changePlaybackPositionCommand.removeTarget(self, action: #selector(RemoteCommandManager.handleChangePlaybackPositionCommandEvent(_:)))
-    }
-
-    remoteCommandCenter.changePlaybackPositionCommand.isEnabled = enable
   }
 
   // MARK: Playback Command Handlers
