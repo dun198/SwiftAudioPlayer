@@ -202,13 +202,6 @@ class ContentViewController: NSViewController {
   override func mouseEntered(with event: NSEvent) {
     super.mouseEntered(with: event)
   }
-  
-  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-    if keyPath == "currentItem" {
-      guard let duration = player.currentTrack?.duration else { return }
-      playerControlsView.progressView.durationLabel.stringValue = duration.durationText
-    }
-  }
 }
 
 // MARK: - NSCollectionViewDataSource

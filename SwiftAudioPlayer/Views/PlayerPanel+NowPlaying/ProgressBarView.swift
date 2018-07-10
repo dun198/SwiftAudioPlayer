@@ -12,9 +12,9 @@ import AVFoundation
 class ProgressBarView: NSView {
   
   private let player = Player.shared
-  var isInSeekMode = false
+  private let notificationCenter = NotificationCenter.default
   
-  let stackView: NSStackView = {
+  private let stackView: NSStackView = {
     let stack = NSStackView()
     stack.orientation = .horizontal
     stack.spacing = 8
@@ -23,7 +23,7 @@ class ProgressBarView: NSView {
     return stack
   }()
   
-  lazy var progressSlider: NSSlider = {
+  private lazy var progressSlider: NSSlider = {
     let slider = NSSlider()
     slider.controlSize = NSControl.ControlSize.mini
     slider.target = self
@@ -32,14 +32,14 @@ class ProgressBarView: NSView {
     return slider
   }()
   
-  let currentPositionLabel: Label = {
+  private let currentPositionLabel: Label = {
     let label = Label()
     label.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: NSControl.ControlSize.mini))
     label.stringValue = "00:00"
     return label
   }()
   
-  let durationLabel: Label = {
+  private let durationLabel: Label = {
     let label = Label()
     label.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: NSControl.ControlSize.mini))
     label.stringValue = "00:00"
@@ -54,6 +54,7 @@ class ProgressBarView: NSView {
     super.init(frame: frameRect)
     setupViews()
     setupBindings()
+    setupObserver()
   }
   
   required init?(coder decoder: NSCoder) {
@@ -88,19 +89,25 @@ class ProgressBarView: NSView {
       guard let window = self.window, window.occlusionState.contains(.visible) else { return }
       self.currentPositionLabel.stringValue = value.durationText
     }
-//    player.currentTrack.bindAndFire { [unowned self] (track) in
-//      self.durationLabel.stringValue = track?.duration?.durationText ?? "--:--"
-//    }
   }
 
+  private func setupObserver() {
+    notificationCenter.addObserver(self, selector: #selector(handleCurrentTrackChanged(_:)), name: .currentTrackChanged, object: nil)
+  }
+  
   private func seekToSliderPosition() {
     guard let duration = player.currentTrack?.duration else { return }
-    let seekValue = progressSlider.doubleValue * duration
+    let seekValue = progressSlider.doubleValue * duration.seconds
     let seekTime = CMTime(seconds: seekValue, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     player.seek(to: seekTime)
   }
   
   @objc private func handleSliderChange() {
     seekToSliderPosition()
+  }
+  
+  @objc private func handleCurrentTrackChanged(_ notification: NSNotification) {
+    guard let track = notification.object as? Track else { return }
+    durationLabel.stringValue = track.duration.durationText
   }
 }

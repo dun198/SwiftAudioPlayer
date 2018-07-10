@@ -13,14 +13,12 @@ import AVFoundation
 class Track: NSObject {
   
   static func == (lhs: Track, rhs: Track) -> Bool {
-    // TODO: should be changed to URL later
     return lhs.file == rhs.file
   }
   
   let file: URL
   let filename: String
-  
-  let duration: Double?
+  let duration: CMTime
   
   // optional data
   let title: String?
@@ -32,7 +30,7 @@ class Track: NSObject {
     self.file = file
     self.filename = file.deletingPathExtension().lastPathComponent
     
-    let metadata = TrackMetadataHandler.getMetadata(for: file)
+    let metadata = TrackMetadataHandler.getBasicMetadata(for: file)
     self.title = metadata.title
     self.artist = metadata.artist
     self.duration = metadata.duration

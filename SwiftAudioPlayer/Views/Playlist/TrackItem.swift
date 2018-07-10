@@ -35,7 +35,7 @@ class TrackItem: NSCollectionViewItem {
     } else {
       trackTitleLabel.stringValue = "\(track.filename)"
     }
-    durationLabel.stringValue = track.duration?.durationText ?? ""
+    durationLabel.stringValue = track.duration.durationText
   }
   
   private let stackView: NSStackView = {

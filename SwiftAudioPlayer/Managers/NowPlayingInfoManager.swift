@@ -91,7 +91,9 @@ class NowPlayingInfoManager: NSObject {
     let title = track.title ?? track.filename
     let artist = track.artist ?? ""
     let album = track.album ?? "Unknown"
-    let duration = track.duration ?? 0
+    let duration = track.duration.seconds
+    let rate = player.playbackRate
+    
 //    let artworkData = Data()
 //    let image = NSImage(data: artworkData) ?? NSImage()
 //    let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> NSImage in
@@ -102,9 +104,9 @@ class NowPlayingInfoManager: NSObject {
     nowPlayingInfo[MPMediaItemPropertyArtist] = artist
     nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
     nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration
-    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.playbackPosition.value.seconds
-    nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = player.playbackRate
-    nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.playbackRate
+    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0
+    nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = rate
+    nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = rate
 
     if #available(OSX 10.13.2, *) {
 //      nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork

@@ -12,20 +12,20 @@ import AVFoundation
 struct TrackMetadata {
   var title: String?
   var artist: String?
-  var duration: Double?
+  var duration: CMTime = .zero
   var genre: String?
   var album: String?
 }
 
 class TrackMetadataHandler {
   
-  static func getMetadata(for file: URL) -> TrackMetadata {
+  static func getBasicMetadata(for file: URL) -> TrackMetadata {
     
     let asset = AVURLAsset(url: file, options: nil)
     let commonMD = asset.commonMetadata
     var metadata = TrackMetadata()
     
-    metadata.duration = asset.duration.seconds
+    metadata.duration = asset.duration
     
     for item in commonMD {
       switch item.commonKey {
