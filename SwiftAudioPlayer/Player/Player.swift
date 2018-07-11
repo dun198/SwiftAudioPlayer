@@ -31,7 +31,9 @@ private extension Player {
 class Player: NSObject {
   static let shared = Player()
   
-  private let notificationCenter: NotificationCenter!
+  fileprivate let notificationCenter: NotificationCenter!
+  fileprivate let nowPlayingInfoCenter: MPNowPlayingInfoCenter!
+  
   private let player = AVPlayer()
   
   private(set) var isSeekInProgress = false
@@ -43,6 +45,7 @@ class Player: NSObject {
   
   private(set) var currentTrack: Track? = nil {
     didSet {
+      updateTrackMetadata()
       notificationCenter.post(name: .currentTrackChanged, object: currentTrack)
     }
   }
@@ -51,7 +54,8 @@ class Player: NSObject {
   
   private var playerState: PlayerState = .idle {
     didSet {
-      notificationCenter.post(name: .playerStateChanged, object: nil)
+      updatePlaybackMetadata()
+//      print("playerState changed to: \(playerState.description)")
       switch playerState {
       case .idle:
         notificationCenter.post(name: .playbackStopped, object: nil)
@@ -63,8 +67,9 @@ class Player: NSObject {
     }
   }
   
-  init(notificationCenter: NotificationCenter = .default) {
+  init(notificationCenter: NotificationCenter = .default, nowPlayingInfoCenter: MPNowPlayingInfoCenter = .default()) {
     self.notificationCenter = notificationCenter
+    self.nowPlayingInfoCenter = nowPlayingInfoCenter
     self.volume = UserDefaults.standard.float(forKey: Preferences.Key.volume.rawValue)
     super.init()
     setupObserver()
@@ -90,24 +95,22 @@ class Player: NSObject {
       let item = AVPlayerItem(url: track.file)
       player.replaceCurrentItem(with: item)
       currentTrack = track
-    } else {
-      switch playerState{
-      case .playing:
-        player.seek(to: CMTime(seconds: 0, preferredTimescale: CMTimeScale(NSEC_PER_SEC)))
-      case .idle, .paused:
-        break
-      }
+    } else if isPlaying {
+      player.seek(to: CMTime(seconds: 0, preferredTimescale: CMTimeScale(NSEC_PER_SEC)))
     }
     player.play()
+    playerState = .playing(track)
   }
   
-  private func pausePlayback() {
+  private func pausePlayback(with track: Track) {
     player.pause()
+    playerState = .paused(track)
   }
   
   private func stopPlayback() {
     player.replaceCurrentItem(with: nil)
     currentTrack = nil
+    playerState = .idle
   }
   
   // MARK: - Public API
@@ -119,9 +122,27 @@ class Player: NSObject {
     }
   }
   
-  var isPlaying: Bool {
+  public var isPlaying: Bool {
     switch playerState {
     case .playing(_):
+      return true
+    default:
+      return false
+    }
+  }
+  
+  public var isPaused: Bool {
+    switch playerState {
+    case .paused(_):
+      return true
+    default:
+      return false
+    }
+  }
+  
+  public var isStopped: Bool {
+    switch playerState {
+    case .paused(_):
       return true
     default:
       return false
@@ -134,7 +155,6 @@ class Player: NSObject {
   
   func play(_ track: Track) {
       startPlayback(with: track)
-      playerState = .playing(track)
   }
   
   func resume() {
@@ -150,8 +170,7 @@ class Player: NSObject {
       // it doesn't do any harm, we simply break here.
       break
     case .playing(let track):
-      playerState = .paused(track)
-      pausePlayback()
+      pausePlayback(with: track)
     }
   }
   
@@ -164,7 +183,6 @@ class Player: NSObject {
   }
   
   func stop() {
-    playerState = .idle
     stopPlayback()
   }
   
@@ -215,8 +233,9 @@ class Player: NSObject {
                 toleranceAfter: tolerance) { [unowned self] (isFinished) in
       if CMTimeCompare(seekTimeInProgress, self.chaseTime) == 0 {
         self.isSeekInProgress = false
-        self.notificationCenter.post(name: .playerPositionChanged, object: seekTimeInProgress)
         if self.isPlaying { self.player.play() }
+        self.updatePlaybackMetadata()
+        self.notificationCenter.post(name: .playerPositionChanged, object: seekTimeInProgress)
       }
       else
       {
@@ -224,4 +243,64 @@ class Player: NSObject {
       }
     }
   }
+}
+
+// MARK: - MPNowPlayingInforCenter Management
+extension Player {
+  
+  func updateTrackMetadata() {
+    guard let track = currentTrack else {
+      print("clearNowPlayingInfo")
+      nowPlayingInfoCenter.nowPlayingInfo = nil
+      nowPlayingInfoCenter.playbackState = .stopped
+      return
+    }
+    
+    print("updateTrackMetadata(for: \"\(track.filename)\")")
+    
+    var info = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
+    
+    //    let artworkData = Data()
+    //    let image = NSImage(data: artworkData) ?? NSImage()
+    //    let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> NSImage in
+    //      return image
+    //    })
+    
+    info[MPMediaItemPropertyTitle] = track.title ?? track.filename
+    info[MPMediaItemPropertyPlaybackDuration] = track.duration
+    info[MPMediaItemPropertyArtist] = track.artist ?? ""
+    info[MPMediaItemPropertyAlbumTitle] = track.album ?? ""
+    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(player.currentItem!.currentTime())
+    
+//    if #available(OSX 10.13.2, *) {
+//      nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+//    } else {
+//      // Fallback on earlier versions
+//    }
+    
+    DispatchQueue.main.async { [unowned self] in
+      self.nowPlayingInfoCenter.nowPlayingInfo = info
+    }
+  }
+  
+  func updatePlaybackMetadata() {
+    
+    print("updatePlaybackMetadata")
+    
+    var info = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
+    
+    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(player.currentItem!.currentTime())
+    info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = player.rate
+    info[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
+    
+    nowPlayingInfoCenter.nowPlayingInfo = info
+
+    if player.rate == 0.0 {
+      nowPlayingInfoCenter.playbackState = .paused
+    }
+    else {
+      nowPlayingInfoCenter.playbackState = .playing
+    }
+  }
+  
 }

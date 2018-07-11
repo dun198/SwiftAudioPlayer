@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
   var windowController: MainWindowController!
   var remoteCommandManager: RemoteCommandManager!
-  var nowPlayingInfoManager: NowPlayingInfoManager!
+//  var nowPlayingInfoManager: NowPlayingInfoManager!
   
   let player = Player.shared
   
@@ -23,8 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     remoteCommandManager = RemoteCommandManager()
     remoteCommandManager.delegate = player
     
-    nowPlayingInfoManager = NowPlayingInfoManager()
-    nowPlayingInfoManager.dataSource = player
+//    nowPlayingInfoManager = NowPlayingInfoManager()
+//    nowPlayingInfoManager.dataSource = player
     
     windowController = MainWindowController()
     windowController.loadWindow()
