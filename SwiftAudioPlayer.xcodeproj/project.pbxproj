@@ -22,8 +22,8 @@
 		D280AD2B2071174400692345 /* FileManager+MusicFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D280AD2A2071174400692345 /* FileManager+MusicFiles.swift */; };
 		D295C67220DA3CD50033836C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295C67120DA3CD50033836C /* Preferences.swift */; };
 		D297E87C20714A4E00FE4929 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D297E87B20714A4E00FE4929 /* SidebarViewController.swift */; };
-		D29C0CCD20F6355D00212A76 /* Player+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CCC20F6355D00212A76 /* Player+RemoteCommand.swift */; };
-		D29C0CCF20F6443600212A76 /* Player+NowPlayingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CCE20F6443600212A76 /* Player+NowPlayingInfo.swift */; };
+		D29C0CCD20F6355D00212A76 /* Player+RemoteCommandDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CCC20F6355D00212A76 /* Player+RemoteCommandDelegate.swift */; };
+		D29C0CCF20F6443600212A76 /* Player+NowPlayingInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CCE20F6443600212A76 /* Player+NowPlayingInfoDataSource.swift */; };
 		D29C0CD120F6517200212A76 /* NowPlayingInfoCenter+Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CD020F6517200212A76 /* NowPlayingInfoCenter+Track.swift */; };
 		D29C53C22094318D00B83B84 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53C12094318D00B83B84 /* Label.swift */; };
 		D29C53CD2094494000B83B84 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53CC2094494000B83B84 /* ContentViewController.swift */; };
@@ -76,8 +76,8 @@
 		D280AD2A2071174400692345 /* FileManager+MusicFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+MusicFiles.swift"; sourceTree = "<group>"; };
 		D295C67120DA3CD50033836C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		D297E87B20714A4E00FE4929 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
-		D29C0CCC20F6355D00212A76 /* Player+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+RemoteCommand.swift"; sourceTree = "<group>"; };
-		D29C0CCE20F6443600212A76 /* Player+NowPlayingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+NowPlayingInfo.swift"; sourceTree = "<group>"; };
+		D29C0CCC20F6355D00212A76 /* Player+RemoteCommandDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+RemoteCommandDelegate.swift"; sourceTree = "<group>"; };
+		D29C0CCE20F6443600212A76 /* Player+NowPlayingInfoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+NowPlayingInfoDataSource.swift"; sourceTree = "<group>"; };
 		D29C0CD020F6517200212A76 /* NowPlayingInfoCenter+Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NowPlayingInfoCenter+Track.swift"; sourceTree = "<group>"; };
 		D29C53C12094318D00B83B84 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		D29C53CC2094494000B83B84 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 				D2DE00EC20F3A58C00A84E3A /* Sidebar */,
 				D29C53E12095424E00B83B84 /* Playlist */,
 				D2DE00EB20F3A56F00A84E3A /* Toolbar */,
-				D29C53D920952E9200B83B84 /* PlayerPanel+NowPlaying */,
+				D29C53D920952E9200B83B84 /* PlayerPanel+NowPlayingInfo */,
 				D29C53DE2095329B00B83B84 /* ViewHelper */,
 			);
 			path = Views;
@@ -222,8 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				D280AD28207116CF00692345 /* Player.swift */,
-				D29C0CCC20F6355D00212A76 /* Player+RemoteCommand.swift */,
-				D29C0CCE20F6443600212A76 /* Player+NowPlayingInfo.swift */,
+				D29C0CCC20F6355D00212A76 /* Player+RemoteCommandDelegate.swift */,
+				D29C0CCE20F6443600212A76 /* Player+NowPlayingInfoDataSource.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -243,7 +243,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D29C53D920952E9200B83B84 /* PlayerPanel+NowPlaying */ = {
+		D29C53D920952E9200B83B84 /* PlayerPanel+NowPlayingInfo */ = {
 			isa = PBXGroup;
 			children = (
 				D29C53DA20952F4300B83B84 /* PlayerControlsView.swift */,
@@ -252,7 +252,7 @@
 				D2DE00E720F30B4500A84E3A /* VolumePopoverViewController.swift */,
 				D2E157BB209CB0CD00E56B5C /* NowPlayingInfoView.swift */,
 			);
-			path = "PlayerPanel+NowPlaying";
+			path = "PlayerPanel+NowPlayingInfo";
 			sourceTree = "<group>";
 		};
 		D29C53DE2095329B00B83B84 /* ViewHelper */ = {
@@ -403,12 +403,12 @@
 				D2E157BC209CB0CD00E56B5C /* NowPlayingInfoView.swift in Sources */,
 				D280AD29207116CF00692345 /* Player.swift in Sources */,
 				D29C53E920965D2300B83B84 /* TrackItem.swift in Sources */,
-				D29C0CCF20F6443600212A76 /* Player+NowPlayingInfo.swift in Sources */,
+				D29C0CCF20F6443600212A76 /* Player+NowPlayingInfoDataSource.swift in Sources */,
 				D29C53D22094511C00B83B84 /* NSView+Constraints.swift in Sources */,
 				D25E2C9E20F2B1E600A92109 /* RemoteCommandManager.swift in Sources */,
 				D29C53DD2095326B00B83B84 /* RoundedShadowedBox.swift in Sources */,
 				D29C53F3209764F100B83B84 /* CollapstibleSplitViewItem.swift in Sources */,
-				D29C0CCD20F6355D00212A76 /* Player+RemoteCommand.swift in Sources */,
+				D29C0CCD20F6355D00212A76 /* Player+RemoteCommandDelegate.swift in Sources */,
 				D2699A37209E6AB000D24659 /* MainWindowController.swift in Sources */,
 				D297E87C20714A4E00FE4929 /* SidebarViewController.swift in Sources */,
 				D2F0987E209A79C6005B2A22 /* String+PathExtension.swift in Sources */,

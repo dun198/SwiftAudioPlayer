@@ -58,7 +58,7 @@ class RemoteCommandManager: NSObject {
   }
 
   @objc func handleChangePlaybackPositionCommandEvent(_ event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-    let seekTime = CMTimeMakeWithSeconds(event.positionTime, preferredTimescale: 1)
+    let seekTime = CMTime(seconds: event.positionTime, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     return delegate?.remoteCommandManager(self, didChangePlaybackPosition: seekTime) ?? .commandFailed
   }
   

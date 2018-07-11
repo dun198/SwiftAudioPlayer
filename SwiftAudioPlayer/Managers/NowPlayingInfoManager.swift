@@ -31,58 +31,35 @@ class NowPlayingInfoManager: NSObject {
   
   private func setupObserver() {
     notificationCenter.addObserver(self,
-                                   selector: #selector(handlePlaybackStarted(_:)),
-                                   name: .playbackStarted,
-                                   object: nil)
-    notificationCenter.addObserver(self,
-                                   selector: #selector(handlePlaybackStopped(_:)),
-                                   name: .playbackStopped,
-                                   object: nil)
-    notificationCenter.addObserver(self,
-                                   selector: #selector(handlePlaybackPaused(_:)),
-                                   name: .playbackPaused,
-                                   object: nil)
-    notificationCenter.addObserver(self,
                                    selector: #selector(handlePlayerPositionChanged(_:)),
                                    name: .playerPositionChanged,
                                    object: nil)
     notificationCenter.addObserver(self,
-                                   selector: #selector(handleCurrentTrackChanged(_:)),
-                                   name: .currentTrackChanged,
+                                   selector: #selector(handlePlayerStateChanged(_:)),
+                                   name: .playerStateChanged,
                                    object: nil)
   }
   
-  @objc private func handlePlaybackStarted(_ notification: NSNotification) {
-    nowPlayingInfoCenter.playbackState = .playing
-    guard let dataSource = dataSource else { return }
-    let elapsed = dataSource.nowPlayingInfoPlaybackPosition()
-    nowPlayingInfoCenter.updateNowPlayingProgress(forPlaybackPosition: elapsed)
-  }
-  
-  @objc private func handlePlaybackPaused(_ notification: NSNotification) {
-    nowPlayingInfoCenter.playbackState = .paused
-    guard let dataSource = dataSource else { return }
-    let elapsed = dataSource.nowPlayingInfoPlaybackPosition()
-    nowPlayingInfoCenter.updateNowPlayingProgress(forPlaybackPosition: elapsed)
-  }
-  
-  @objc private func handlePlaybackStopped(_ notification: NSNotification) {
-    nowPlayingInfoCenter.playbackState = .stopped
-    nowPlayingInfoCenter.updateNowPlayingInfo(for: nil, playbackRate: 0)
-  }
-  
-  @objc private func handleCurrentTrackChanged(_ notification: NSNotification) {
-    guard let dataSource = dataSource else { return }
-    let track = dataSource.nowPlayingInfoCurrentTrack()
-    let playbackRate = dataSource.nowPlayingInfoPlaybackRate()
-    DispatchQueue.main.async {
-      self.nowPlayingInfoCenter.updateNowPlayingInfo(for: track, playbackRate: playbackRate)
-    }
+  @objc private func handlePlayerStateChanged(_ notification: NSNotification) {
+    updateNowPlayingInfo()
   }
   
   @objc private func handlePlayerPositionChanged(_ notification: NSNotification) {
+    updateNowPlayingProgress()
+  }
+  
+  private func updateNowPlayingInfo() {
+    guard let dataSource = dataSource else { return }
+    let track = dataSource.nowPlayingInfoCurrentTrack()
+    let playbackRate = dataSource.nowPlayingInfoPlaybackRate()
+    let elapsed = dataSource.nowPlayingInfoPlaybackPosition()
+    nowPlayingInfoCenter.updateNowPlayingInfo(for: track, playbackRate: playbackRate, playbackPosition: elapsed)
+  }
+  
+  private func updateNowPlayingProgress() {
     guard let dataSource = dataSource else { return }
     let elapsed = dataSource.nowPlayingInfoPlaybackPosition()
     nowPlayingInfoCenter.updateNowPlayingProgress(forPlaybackPosition: elapsed)
   }
+  
 }

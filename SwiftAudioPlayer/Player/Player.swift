@@ -34,13 +34,6 @@ class Player: NSObject {
   private let notificationCenter: NotificationCenter!
   private let player = AVPlayer()
   
-  public var volume: Float! {
-    didSet {
-      player.volume = volume
-      UserDefaults.standard.set(volume, forKey: Preferences.Key.volume.rawValue)
-    }
-  }
-  
   private(set) var isSeekInProgress = false
   private var chaseTime: CMTime = .zero
   
@@ -118,6 +111,13 @@ class Player: NSObject {
   }
   
   // MARK: - Public API
+  
+  public var volume: Float! {
+    didSet {
+      player.volume = volume
+      UserDefaults.standard.set(volume, forKey: Preferences.Key.volume.rawValue)
+    }
+  }
   
   var isPlaying: Bool {
     switch playerState {
@@ -205,7 +205,7 @@ class Player: NSObject {
     }
   }
   
-  func actuallySeekToTime() {
+  private func actuallySeekToTime() {
     isSeekInProgress = true
     
     let seekTimeInProgress = chaseTime

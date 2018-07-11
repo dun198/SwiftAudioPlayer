@@ -13,12 +13,19 @@ extension MPNowPlayingInfoCenter {
   func updateNowPlayingInfo(for track: Track?, playbackRate: Float, playbackPosition: TimeInterval = 0) {
     guard let track = track else {
       print("clearNowPlayingInfo")
+      playbackState = .stopped
       nowPlayingInfo = nil
       return
     }
     print("updateNowPlayingInfo(for: \"\(track.filename)\")")
     
-    var info = [String: Any]()
+    if playbackRate == 0 {
+      playbackState = .paused
+    } else {
+      playbackState = .playing
+    }
+    
+    var info = nowPlayingInfo ?? [String: Any]()
     
     let title = track.title ?? track.filename
     let duration = track.duration
@@ -56,5 +63,4 @@ extension MPNowPlayingInfoCenter {
     info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playbackPosition
     nowPlayingInfo = info
   }
-  
 }
