@@ -13,13 +13,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
   var windowController: MainWindowController!
   var remoteCommandManager: RemoteCommandManager!
-  var nowPlayingInforManager: NowPlayingInfoManager!
+  var nowPlayingInfoManager: NowPlayingInfoManager!
+  
+  let player = Player.shared
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     UserDefaults.standard.register(defaults: [String : Any](uniqueKeysWithValues: Preferences.defaultPreferences.map { ($0.0.rawValue, $0.1) }))
     
     remoteCommandManager = RemoteCommandManager()
-    nowPlayingInforManager = NowPlayingInfoManager()
+    remoteCommandManager.delegate = player
+    
+    nowPlayingInfoManager = NowPlayingInfoManager()
+    nowPlayingInfoManager.dataSource = player
     
     windowController = MainWindowController()
     windowController.loadWindow()

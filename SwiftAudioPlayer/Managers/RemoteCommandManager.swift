@@ -8,12 +8,24 @@
 
 import MediaPlayer
 
+protocol RemoteCommandDelegate {
+  func remoteCommandManagerDidPressPlay() -> MPRemoteCommandHandlerStatus
+  func remoteCommandManagerDidPressPause() -> MPRemoteCommandHandlerStatus
+  func remoteCommandManagerDidPressStop() -> MPRemoteCommandHandlerStatus
+  func remoteCommandManagerDidTogglePlayPause() -> MPRemoteCommandHandlerStatus
+  func remoteCommandManagerDidPressNext() -> MPRemoteCommandHandlerStatus
+  func remoteCommandManagerDidPressPrevious() -> MPRemoteCommandHandlerStatus
+  func remoteCommandManager(_ remoteCommandManager: RemoteCommandManager, didChangePlaybackPosition seekTime: CMTime) -> MPRemoteCommandHandlerStatus
+}
+
 class RemoteCommandManager: NSObject {
 
-  fileprivate let remoteCommandCenter = MPRemoteCommandCenter.shared()
-  fileprivate let player = Player.shared
+  fileprivate let remoteCommandCenter: MPRemoteCommandCenter
   
-  override init() {
+  var delegate: RemoteCommandDelegate?
+  
+  init(_ remoteCommandCenter: MPRemoteCommandCenter = .shared()) {
+    self.remoteCommandCenter = remoteCommandCenter
     super.init()
     setupCommands()
   }
@@ -26,55 +38,36 @@ class RemoteCommandManager: NSObject {
     remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handleNextTrackCommandEvent(_:)))
     remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(RemoteCommandManager.handlePreviousTrackCommandEvent(_:)))
     remoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(RemoteCommandManager.handleChangePlaybackPositionCommandEvent(_:)))
-    
   }
 
-  // MARK: Playback Command Handlers
+  // MARK: - Playback Command Handlers
   @objc func handlePauseCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    player.pause()
-    return .success
+    return delegate?.remoteCommandManagerDidPressPause() ?? .commandFailed
   }
   
   @objc func handlePlayCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    guard let track = player.currentTrack else { return .noSuchContent }
-    player.play(track)
-    return .success
+    return delegate?.remoteCommandManagerDidPressPlay() ?? .commandFailed
   }
   
   @objc func handleStopCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    player.stop()
-    return .success
+    return delegate?.remoteCommandManagerDidPressStop() ?? .commandFailed
   }
   
   @objc func handleTogglePlayPauseCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    player.togglePlayPause()
-    return .success
+    return delegate?.remoteCommandManagerDidTogglePlayPause() ?? .commandFailed
   }
 
   @objc func handleChangePlaybackPositionCommandEvent(_ event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
     let seekTime = CMTimeMakeWithSeconds(event.positionTime, preferredTimescale: 1)
-    player.seek(to: seekTime)
-    return .success
+    return delegate?.remoteCommandManager(self, didChangePlaybackPosition: seekTime) ?? .commandFailed
   }
   
-  // MARK: Track Changing Command Handlers
+  // MARK: - Track Changing Command Handlers
   @objc func handleNextTrackCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    if player.currentTrack != nil {
-      player.next()
-      return .success
-    }
-    else {
-      return .noSuchContent
-    }
+    return delegate?.remoteCommandManagerDidPressNext() ?? .commandFailed
   }
   
   @objc func handlePreviousTrackCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-    if player.currentTrack != nil {
-      player.previous()
-      return .success
-    }
-    else {
-      return .noSuchContent
-    }
+    return delegate?.remoteCommandManagerDidPressPrevious() ?? .commandFailed
   }
 }

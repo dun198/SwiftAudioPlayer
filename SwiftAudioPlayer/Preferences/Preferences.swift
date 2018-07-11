@@ -15,7 +15,7 @@ struct Preferences {
     var rawValue: RawValue
     var hashValue: Int {
       return rawValue.hashValue
-    }
+  }
     
     static let quitAfterWindowClosed = Key(rawValue: "quitAfterWindowClosed")
     static let colorScheme = Key(rawValue: "colorScheme")

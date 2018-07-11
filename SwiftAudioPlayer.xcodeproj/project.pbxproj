@@ -22,6 +22,9 @@
 		D280AD2B2071174400692345 /* FileManager+MusicFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D280AD2A2071174400692345 /* FileManager+MusicFiles.swift */; };
 		D295C67220DA3CD50033836C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295C67120DA3CD50033836C /* Preferences.swift */; };
 		D297E87C20714A4E00FE4929 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D297E87B20714A4E00FE4929 /* SidebarViewController.swift */; };
+		D29C0CCD20F6355D00212A76 /* Player+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CCC20F6355D00212A76 /* Player+RemoteCommand.swift */; };
+		D29C0CCF20F6443600212A76 /* Player+NowPlayingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CCE20F6443600212A76 /* Player+NowPlayingInfo.swift */; };
+		D29C0CD120F6517200212A76 /* NowPlayingInfoCenter+Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0CD020F6517200212A76 /* NowPlayingInfoCenter+Track.swift */; };
 		D29C53C22094318D00B83B84 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53C12094318D00B83B84 /* Label.swift */; };
 		D29C53CD2094494000B83B84 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53CC2094494000B83B84 /* ContentViewController.swift */; };
 		D29C53CF20944DC700B83B84 /* PlaybackControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C53CE20944DC700B83B84 /* PlaybackControlsView.swift */; };
@@ -73,6 +76,9 @@
 		D280AD2A2071174400692345 /* FileManager+MusicFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+MusicFiles.swift"; sourceTree = "<group>"; };
 		D295C67120DA3CD50033836C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		D297E87B20714A4E00FE4929 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		D29C0CCC20F6355D00212A76 /* Player+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+RemoteCommand.swift"; sourceTree = "<group>"; };
+		D29C0CCE20F6443600212A76 /* Player+NowPlayingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+NowPlayingInfo.swift"; sourceTree = "<group>"; };
+		D29C0CD020F6517200212A76 /* NowPlayingInfoCenter+Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NowPlayingInfoCenter+Track.swift"; sourceTree = "<group>"; };
 		D29C53C12094318D00B83B84 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		D29C53CC2094494000B83B84 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		D29C53CE20944DC700B83B84 /* PlaybackControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlsView.swift; sourceTree = "<group>"; };
@@ -138,6 +144,7 @@
 				D22CDCF71FE1DDBD00D988B6 /* AppDelegate.swift */,
 				D2699A36209E6AB000D24659 /* MainWindowController.swift */,
 				D295C67020DA3CB60033836C /* Preferences */,
+				D29C0CD220F65E9600212A76 /* Player */,
 				D25E2C9920F2819200A92109 /* Managers */,
 				D26D69A4206A73B000BD1577 /* Model */,
 				D2699A45209E8DAD00D24659 /* Resources */,
@@ -152,11 +159,10 @@
 		D25E2C9920F2819200A92109 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				D280AD28207116CF00692345 /* Player.swift */,
-				D2F0987B209A719A005B2A22 /* TrackLoader.swift */,
-				D2F09885209B6EFA005B2A22 /* TrackMetadataHandler.swift */,
 				D25E2C9D20F2B1E600A92109 /* RemoteCommandManager.swift */,
 				D25E2C9F20F2BC7400A92109 /* NowPlayingInfoManager.swift */,
+				D2F0987B209A719A005B2A22 /* TrackLoader.swift */,
+				D2F09885209B6EFA005B2A22 /* TrackMetadataHandler.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -212,9 +218,20 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		D29C0CD220F65E9600212A76 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				D280AD28207116CF00692345 /* Player.swift */,
+				D29C0CCC20F6355D00212A76 /* Player+RemoteCommand.swift */,
+				D29C0CCE20F6443600212A76 /* Player+NowPlayingInfo.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		D29C53D0209450B800B83B84 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D29C0CD020F6517200212A76 /* NowPlayingInfoCenter+Track.swift */,
 				D280AD2A2071174400692345 /* FileManager+MusicFiles.swift */,
 				D29C53D12094511C00B83B84 /* NSView+Constraints.swift */,
 				D29C53F92098E24000B83B84 /* URL+MusicFile.swift */,
@@ -386,10 +403,12 @@
 				D2E157BC209CB0CD00E56B5C /* NowPlayingInfoView.swift in Sources */,
 				D280AD29207116CF00692345 /* Player.swift in Sources */,
 				D29C53E920965D2300B83B84 /* TrackItem.swift in Sources */,
+				D29C0CCF20F6443600212A76 /* Player+NowPlayingInfo.swift in Sources */,
 				D29C53D22094511C00B83B84 /* NSView+Constraints.swift in Sources */,
 				D25E2C9E20F2B1E600A92109 /* RemoteCommandManager.swift in Sources */,
 				D29C53DD2095326B00B83B84 /* RoundedShadowedBox.swift in Sources */,
 				D29C53F3209764F100B83B84 /* CollapstibleSplitViewItem.swift in Sources */,
+				D29C0CCD20F6355D00212A76 /* Player+RemoteCommand.swift in Sources */,
 				D2699A37209E6AB000D24659 /* MainWindowController.swift in Sources */,
 				D297E87C20714A4E00FE4929 /* SidebarViewController.swift in Sources */,
 				D2F0987E209A79C6005B2A22 /* String+PathExtension.swift in Sources */,
@@ -411,6 +430,7 @@
 				D25E2CA020F2BC7400A92109 /* NowPlayingInfoManager.swift in Sources */,
 				D295C67220DA3CD50033836C /* Preferences.swift in Sources */,
 				D2E157BE209CB15C00E56B5C /* RoundedEffectViewLabel.swift in Sources */,
+				D29C0CD120F6517200212A76 /* NowPlayingInfoCenter+Track.swift in Sources */,
 				D224D7B72069AECE00CA51C3 /* Track.swift in Sources */,
 				D2F0987C209A719A005B2A22 /* TrackLoader.swift in Sources */,
 				D2BB310E209F69E000AF42AE /* Notification+Player.swift in Sources */,

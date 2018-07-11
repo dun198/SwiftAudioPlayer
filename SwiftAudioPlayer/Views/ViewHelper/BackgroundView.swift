@@ -32,14 +32,13 @@ class BackgroundView: NSView {
   }
   
   fileprivate func setupView() {
-    wantsLayer = true
     translatesAutoresizingMaskIntoConstraints = false
   }
   
   override func updateLayer() {
     super.updateLayer()
-    layer?.backgroundColor = backgroundColor?.cgColor ?? CGColor.clear
-    layer?.cornerRadius = cornerRadius ?? 0
+    layer?.backgroundColor = backgroundColor?.cgColor
+    layer?.cornerRadius = cornerRadius ?? 0.0
   }
   
 }

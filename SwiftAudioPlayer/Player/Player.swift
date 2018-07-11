@@ -45,7 +45,7 @@ class Player: NSObject {
   private var chaseTime: CMTime = .zero
   
   // Bindable Dynamic Variables
-  private(set) var percentProgress: Dynamic<Double> = Dynamic(0)
+  private(set) var percentProgress: Dynamic<TimeInterval> = Dynamic(0)
   private(set) var playbackPosition: Dynamic<CMTime> = Dynamic(.zero)
   
   private(set) var currentTrack: Track? = nil {
@@ -215,7 +215,7 @@ class Player: NSObject {
                 toleranceAfter: tolerance) { [unowned self] (isFinished) in
       if CMTimeCompare(seekTimeInProgress, self.chaseTime) == 0 {
         self.isSeekInProgress = false
-        self.notificationCenter.post(name: .playerSeeked, object: seekTimeInProgress)
+        self.notificationCenter.post(name: .playerPositionChanged, object: seekTimeInProgress)
         if self.isPlaying { self.player.play() }
       }
       else

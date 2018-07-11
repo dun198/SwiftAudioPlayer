@@ -29,8 +29,8 @@ extension Notification.Name {
     return .init("playerStateChangedNotification")
   }
   
-  static var playerSeeked: Notification.Name {
-    return .init("playerSeeked")
+  static var playerPositionChanged: Notification.Name {
+    return .init("playerPositionChanged")
   }
   
   static var playNextTrack: Notification.Name {

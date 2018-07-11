@@ -127,11 +127,11 @@ class TrackItem: NSCollectionViewItem {
       }
       view.layer?.cornerRadius = 4
     } else {
-      if #available(OSX 10.14, *) {
-        view.backgroundColor = nil
-        view.cornerRadius = nil
-      } else {
-        view.layer = nil
+      view.backgroundColor = nil
+      view.cornerRadius = nil
+      view.layer = nil
+      
+      if #available(OSX 10.14, *) {} else {
         view.wantsLayer = false
       }
     }

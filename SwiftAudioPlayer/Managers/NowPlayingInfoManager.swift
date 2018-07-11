@@ -8,15 +8,23 @@
 
 import MediaPlayer
 
+protocol NowPlayingInfoDataSource {
+  func nowPlayingInfoCurrentTrack() -> Track?
+  func nowPlayingInfoPlaybackPosition() -> TimeInterval
+  func nowPlayingInfoPlaybackRate() -> Float
+}
+
 class NowPlayingInfoManager: NSObject {
   
-  fileprivate let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-  fileprivate let notificationCenter = NotificationCenter.default
-  fileprivate let player = Player.shared
+  fileprivate let nowPlayingInfoCenter: MPNowPlayingInfoCenter
+  fileprivate let notificationCenter: NotificationCenter
   
-  fileprivate var displayingTrack: Track?
-  
-  override init() {
+  var dataSource: NowPlayingInfoDataSource?
+
+  init(_ nowPlayingInfoCenter: MPNowPlayingInfoCenter = .default(),
+       notificationCenter: NotificationCenter = .default) {
+    self.nowPlayingInfoCenter = nowPlayingInfoCenter
+    self.notificationCenter = notificationCenter
     super.init()
     setupObserver()
   }
@@ -35,8 +43,8 @@ class NowPlayingInfoManager: NSObject {
                                    name: .playbackPaused,
                                    object: nil)
     notificationCenter.addObserver(self,
-                                   selector: #selector(handlePlayerSeeked(_:)),
-                                   name: .playerSeeked,
+                                   selector: #selector(handlePlayerPositionChanged(_:)),
+                                   name: .playerPositionChanged,
                                    object: nil)
     notificationCenter.addObserver(self,
                                    selector: #selector(handleCurrentTrackChanged(_:)),
@@ -46,74 +54,35 @@ class NowPlayingInfoManager: NSObject {
   
   @objc private func handlePlaybackStarted(_ notification: NSNotification) {
     nowPlayingInfoCenter.playbackState = .playing
-    updateNowPlayingProgress(for: player.playbackPosition.value)
+    guard let dataSource = dataSource else { return }
+    let elapsed = dataSource.nowPlayingInfoPlaybackPosition()
+    nowPlayingInfoCenter.updateNowPlayingProgress(forPlaybackPosition: elapsed)
   }
   
   @objc private func handlePlaybackPaused(_ notification: NSNotification) {
     nowPlayingInfoCenter.playbackState = .paused
-    updateNowPlayingProgress(for: player.playbackPosition.value)
+    guard let dataSource = dataSource else { return }
+    let elapsed = dataSource.nowPlayingInfoPlaybackPosition()
+    nowPlayingInfoCenter.updateNowPlayingProgress(forPlaybackPosition: elapsed)
   }
   
   @objc private func handlePlaybackStopped(_ notification: NSNotification) {
-    updateNowPlayingInfo(for: nil)
+    nowPlayingInfoCenter.playbackState = .stopped
+    nowPlayingInfoCenter.updateNowPlayingInfo(for: nil, playbackRate: 0)
   }
   
   @objc private func handleCurrentTrackChanged(_ notification: NSNotification) {
+    guard let dataSource = dataSource else { return }
+    let track = dataSource.nowPlayingInfoCurrentTrack()
+    let playbackRate = dataSource.nowPlayingInfoPlaybackRate()
     DispatchQueue.main.async {
-      let track = notification.object as? Track
-      self.updateNowPlayingInfo(for: track)
+      self.nowPlayingInfoCenter.updateNowPlayingInfo(for: track, playbackRate: playbackRate)
     }
   }
   
-  @objc private func handlePlayerSeeked(_ notification: NSNotification) {
-    updateNowPlayingProgress(for: notification.object as? CMTime)
-  }
-  
-  private func updateNowPlayingProgress(for time: CMTime?) {
-    guard let playbackPosition = time?.seconds else { return }
-    var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
-    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playbackPosition
-    nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
-  }
-  
-  private func updateNowPlayingInfo(for track: Track?) {
-    guard track != displayingTrack else { return }
-    
-    print("updateNowPlayingInfo(for: \"\(track?.filename ?? "none")\")")
-    guard let track = track else {
-      nowPlayingInfoCenter.nowPlayingInfo = nil
-      return
-    }
-    
-    var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
-    
-    let title = track.title ?? track.filename
-    let artist = track.artist ?? ""
-    let album = track.album ?? "Unknown"
-    let duration = track.duration
-    let rate = player.playbackRate
-    
-//    let artworkData = Data()
-//    let image = NSImage(data: artworkData) ?? NSImage()
-//    let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> NSImage in
-//      return image
-//    })
-    
-    nowPlayingInfo[MPMediaItemPropertyTitle] = title
-    nowPlayingInfo[MPMediaItemPropertyArtist] = artist
-    nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
-    nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration
-    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0
-    nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = rate
-    nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = rate
-
-    if #available(OSX 10.13.2, *) {
-//      nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
-    } else {
-      // Fallback on earlier versions
-    }
-    
-    nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
-    displayingTrack = track
+  @objc private func handlePlayerPositionChanged(_ notification: NSNotification) {
+    guard let dataSource = dataSource else { return }
+    let elapsed = dataSource.nowPlayingInfoPlaybackPosition()
+    nowPlayingInfoCenter.updateNowPlayingProgress(forPlaybackPosition: elapsed)
   }
 }
