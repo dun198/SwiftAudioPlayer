@@ -43,6 +43,19 @@ class Player: NSObject {
   private(set) var percentProgress: Dynamic<TimeInterval> = Dynamic(0)
   private(set) var playbackPosition: Dynamic<CMTime> = Dynamic(.zero)
   
+  private var playerItem: AVPlayerItem! {
+    willSet {
+      if playerItem != nil {
+        notificationCenter.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+      }
+    }
+    didSet {
+      if playerItem != nil {
+        notificationCenter.addObserver(self, selector: #selector(handleAVPlayerItemDidPlayToEndTimeNotification(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+      }
+    }
+  }
+  
   private(set) var currentTrack: Track? = nil {
     didSet {
       updateTrackMetadata()
@@ -67,6 +80,7 @@ class Player: NSObject {
     }
   }
   
+  // MARK: Lifecycle
   init(notificationCenter: NotificationCenter = .default, nowPlayingInfoCenter: MPNowPlayingInfoCenter = .default()) {
     self.notificationCenter = notificationCenter
     self.nowPlayingInfoCenter = nowPlayingInfoCenter
@@ -80,6 +94,7 @@ class Player: NSObject {
     player.replaceCurrentItem(with: nil)
   }
   
+  // MARK: Setup
   private func setupObserver() {
     // Add a periodic time observer to keep `percentProgress` and `playbackPosition` up to date.
     let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
@@ -90,10 +105,11 @@ class Player: NSObject {
       })
   }
   
+  // MARK: Private Methods
   private func startPlayback(with track: Track) {
     if track != currentTrack {
-      let item = AVPlayerItem(url: track.file)
-      player.replaceCurrentItem(with: item)
+      playerItem = AVPlayerItem(url: track.file)
+      player.replaceCurrentItem(with: playerItem)
       currentTrack = track
     } else if isPlaying {
       player.pause()
@@ -243,6 +259,11 @@ class Player: NSObject {
   
   func seek(to seekTime: CMTime) {
     pausePlayerAndSeekSmoothlyToTime(newChaseTime: seekTime)
+  }
+  
+  // MARK: Notification Handlers
+  @objc private func handleAVPlayerItemDidPlayToEndTimeNotification(notification: NSNotification) {
+    next()
   }
 }
 
