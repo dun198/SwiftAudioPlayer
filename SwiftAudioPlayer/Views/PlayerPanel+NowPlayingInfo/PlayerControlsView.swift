@@ -50,15 +50,15 @@ class PlayerControlsView: RoundedEffectView {
   override func mouseDown(with event: NSEvent) {
   }
   
-  @objc func didChangePlayerStateToPlaying(track: Track) {
-    print("playing: \(track.filename)")
-  }
-  
-  @objc func didChangePlayerStateToPaused(track: Track) {
-    print("paused: \(track.filename)")
-  }
-  
-  @objc func didChangePlayerStateToIdle() {
-    print("idle")
-  }
+//  @objc func didChangePlayerStateToPlaying(track: Track) {
+//    print("playing: \(track.filename)")
+//  }
+//  
+//  @objc func didChangePlayerStateToPaused(track: Track) {
+//    print("paused: \(track.filename)")
+//  }
+//  
+//  @objc func didChangePlayerStateToIdle() {
+//    print("idle")
+//  }
 }

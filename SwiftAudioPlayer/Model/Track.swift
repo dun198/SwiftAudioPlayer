@@ -10,7 +10,7 @@ import Foundation
 
 /** this is the model which represents a track in the playlist
  */
-class Track: NSObject {
+struct Track: Equatable {
   
   static func == (lhs: Track, rhs: Track) -> Bool {
     return lhs.file == rhs.file
@@ -18,7 +18,7 @@ class Track: NSObject {
   
   let file: URL
   let filename: String
-  let duration: Double
+  let duration: TimeInterval
   
   // optional data
   let title: String?

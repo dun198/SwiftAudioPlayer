@@ -385,7 +385,7 @@ extension ContentViewController: PlaybackControlsDelegate {
   
   @IBAction func next(sender: NSButton) {
     guard let currentTrack = player.currentTrack else { return }
-    guard let nextTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: 1) else { return }
+    guard let nextTrackIndex = tracks.firstIndex(where: {$0 == currentTrack})?.advanced(by: 1) else { return }
     guard nextTrackIndex < tracks.count else { return }
     let nextTrack = tracks[nextTrackIndex]
     player.play(nextTrack)
@@ -393,7 +393,7 @@ extension ContentViewController: PlaybackControlsDelegate {
   
   @IBAction func prev(sender: NSButton) {
     guard let currentTrack = player.currentTrack else { return }
-    guard let prevTrackIndex = tracks.firstIndex(of: currentTrack)?.advanced(by: -1) else { return }
+    guard let prevTrackIndex = tracks.firstIndex(where: {$0 == currentTrack})?.advanced(by: -1) else { return }
     guard prevTrackIndex >= 0 else { return }
     let prevTrack = tracks[prevTrackIndex]
     player.play(prevTrack)
