@@ -29,7 +29,7 @@ class RoundedEffectView: NSVisualEffectView {
     translatesAutoresizingMaskIntoConstraints = false
     blendingMode = .withinWindow
     if #available(OSX 10.14, *) {
-      material = .hudWindow
+      material = .popover
     } else {
       material = .appearanceBased
       wantsLayer = true
