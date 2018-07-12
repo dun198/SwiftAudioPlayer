@@ -116,6 +116,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D20075CA20F6C13800542A0A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D2F09885209B6EFA005B2A22 /* TrackMetadataHandler.swift */,
+				D2F0987B209A719A005B2A22 /* TrackLoader.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		D22CDCEB1FE1DDBD00D988B6 = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +149,7 @@
 				D295C67020DA3CB60033836C /* Preferences */,
 				D29C0CD220F65E9600212A76 /* Player */,
 				D25E2C9920F2819200A92109 /* Managers */,
+				D20075CA20F6C13800542A0A /* Utils */,
 				D26D69A4206A73B000BD1577 /* Model */,
 				D2699A45209E8DAD00D24659 /* Resources */,
 				D2699A40209E8C0200D24659 /* Views */,
@@ -154,8 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				D25E2C9D20F2B1E600A92109 /* RemoteCommandManager.swift */,
-				D2F0987B209A719A005B2A22 /* TrackLoader.swift */,
-				D2F09885209B6EFA005B2A22 /* TrackMetadataHandler.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";

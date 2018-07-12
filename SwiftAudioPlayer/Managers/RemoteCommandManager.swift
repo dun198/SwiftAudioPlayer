@@ -9,15 +9,24 @@
 import MediaPlayer
 
 protocol RemoteCommandDelegate {
+  
   func remoteCommandManagerDidPressPlay() -> MPRemoteCommandHandlerStatus
+  
   func remoteCommandManagerDidPressPause() -> MPRemoteCommandHandlerStatus
+  
   func remoteCommandManagerDidPressStop() -> MPRemoteCommandHandlerStatus
+  
   func remoteCommandManagerDidTogglePlayPause() -> MPRemoteCommandHandlerStatus
+  
   func remoteCommandManagerDidPressNext() -> MPRemoteCommandHandlerStatus
+  
   func remoteCommandManagerDidPressPrevious() -> MPRemoteCommandHandlerStatus
+  
   func remoteCommandManager(_ remoteCommandManager: RemoteCommandManager, didChangePlaybackPosition seekTime: CMTime) -> MPRemoteCommandHandlerStatus
 }
 
+// MARK: -
+/// Manages media keys and delegates their actions to the RemoteCommandDelegate
 class RemoteCommandManager: NSObject {
 
   fileprivate let remoteCommandCenter: MPRemoteCommandCenter
@@ -40,7 +49,7 @@ class RemoteCommandManager: NSObject {
     remoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(RemoteCommandManager.handleChangePlaybackPositionCommandEvent(_:)))
   }
 
-  // MARK: - Playback Command Handlers
+  // MARK: Playback Command Handlers
   @objc func handlePauseCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
     return delegate?.remoteCommandManagerDidPressPause() ?? .commandFailed
   }
@@ -62,7 +71,7 @@ class RemoteCommandManager: NSObject {
     return delegate?.remoteCommandManager(self, didChangePlaybackPosition: seekTime) ?? .commandFailed
   }
   
-  // MARK: - Track Changing Command Handlers
+  // MARK: Track Changing Command Handlers
   @objc func handleNextTrackCommandEvent(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
     return delegate?.remoteCommandManagerDidPressNext() ?? .commandFailed
   }

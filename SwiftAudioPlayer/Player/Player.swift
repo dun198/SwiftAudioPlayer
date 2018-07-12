@@ -96,7 +96,8 @@ class Player: NSObject {
       player.replaceCurrentItem(with: item)
       currentTrack = track
     } else if isPlaying {
-      player.seek(to: CMTime(seconds: 0, preferredTimescale: CMTimeScale(NSEC_PER_SEC)))
+      player.pause()
+      seek(to: .zero)
     }
     player.play()
     playerState = .playing(track)
@@ -113,7 +114,42 @@ class Player: NSObject {
     playerState = .idle
   }
   
-  // MARK: - Public API
+  private func pausePlayerAndSeekSmoothlyToTime(newChaseTime:CMTime) {
+    player.pause()
+    if CMTimeCompare(newChaseTime, player.currentTime()) != 0
+    {
+      chaseTime = newChaseTime;
+      if !isSeekInProgress
+      {
+        actuallySeekToTime()
+      }
+    } else {
+      if isPlaying { player.play() }
+    }
+  }
+  
+  private func actuallySeekToTime() {
+    isSeekInProgress = true
+    
+    let seekTimeInProgress = chaseTime
+    let tolerance: CMTime = .zero
+    
+    player.seek(to: seekTimeInProgress, toleranceBefore: tolerance,
+                toleranceAfter: tolerance) { [unowned self] (isFinished) in
+                  if CMTimeCompare(seekTimeInProgress, self.chaseTime) == 0 {
+                    self.isSeekInProgress = false
+                    if self.isPlaying { self.player.play() }
+                    self.updatePlaybackMetadata()
+                    self.notificationCenter.post(name: .playerPositionChanged, object: seekTimeInProgress)
+                  }
+                  else
+                  {
+                    self.actuallySeekToTime()
+                  }
+    }
+  }
+  
+  // MARK: Public API
   
   public var volume: Float! {
     didSet {
@@ -208,41 +244,6 @@ class Player: NSObject {
   func seek(to seekTime: CMTime) {
     pausePlayerAndSeekSmoothlyToTime(newChaseTime: seekTime)
   }
-  
-  private func pausePlayerAndSeekSmoothlyToTime(newChaseTime:CMTime) {
-    player.pause()
-    if CMTimeCompare(newChaseTime, chaseTime) != 0
-    {
-      chaseTime = newChaseTime;
-      if !isSeekInProgress
-      {
-        actuallySeekToTime()
-      }
-    } else {
-      if isPlaying { player.play() }
-    }
-  }
-  
-  private func actuallySeekToTime() {
-    isSeekInProgress = true
-    
-    let seekTimeInProgress = chaseTime
-    let tolerance: CMTime = .zero
-    
-    player.seek(to: seekTimeInProgress, toleranceBefore: tolerance,
-                toleranceAfter: tolerance) { [unowned self] (isFinished) in
-      if CMTimeCompare(seekTimeInProgress, self.chaseTime) == 0 {
-        self.isSeekInProgress = false
-        if self.isPlaying { self.player.play() }
-        self.updatePlaybackMetadata()
-        self.notificationCenter.post(name: .playerPositionChanged, object: seekTimeInProgress)
-      }
-      else
-      {
-        self.actuallySeekToTime()
-      }
-    }
-  }
 }
 
 // MARK: - MPNowPlayingInforCenter Management
@@ -270,13 +271,13 @@ extension Player {
     info[MPMediaItemPropertyPlaybackDuration] = track.duration
     info[MPMediaItemPropertyArtist] = track.artist ?? ""
     info[MPMediaItemPropertyAlbumTitle] = track.album ?? ""
-    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(player.currentItem!.currentTime())
+    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds
     
-//    if #available(OSX 10.13.2, *) {
-//      nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
-//    } else {
-//      // Fallback on earlier versions
-//    }
+    //    if #available(OSX 10.13.2, *) {
+    //      nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+    //    } else {
+    //      // Fallback on earlier versions
+    //    }
     
     DispatchQueue.main.async { [unowned self] in
       self.nowPlayingInfoCenter.nowPlayingInfo = info
@@ -284,18 +285,17 @@ extension Player {
   }
   
   func updatePlaybackMetadata() {
-    
     print("updatePlaybackMetadata")
     
     var info = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
     
-    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(player.currentItem!.currentTime())
-    info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = player.rate
-    info[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
+    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds
+    info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = playbackRate
+    info[MPNowPlayingInfoPropertyPlaybackRate] = playbackRate
     
     nowPlayingInfoCenter.nowPlayingInfo = info
-
-    if player.rate == 0.0 {
+    
+    if playbackRate == 0.0 {
       nowPlayingInfoCenter.playbackState = .paused
     }
     else {
