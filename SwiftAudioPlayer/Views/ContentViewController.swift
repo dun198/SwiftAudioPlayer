@@ -244,38 +244,37 @@ extension ContentViewController: NSCollectionViewDelegate {
       }
       return NSDragOperation.move
     }
-    
     print("invalid drop")
     return []
   }
   
   func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: IndexPath, dropOperation: NSCollectionView.DropOperation) -> Bool {
-    
+    // array of all track indexes that are about to be moved
     let dragIndexes = itemsForDraggingSession.map { $0.item }
+    // calculate offset for the drop by counting the removed items above the drop location
     let offset = dragIndexes.filter { $0 < indexPath.item }.count
-    let dropIndexPaths: Set = Set(dragIndexes.indices.map { IndexPath(item: $0 + indexPath.item - offset, section: 0) })
-    
+    // new indexPaths for the moved items (drop location)
+    let dropIndexPaths: Set = Set(dragIndexes.indices
+      .map { IndexPath(item: $0 + indexPath.item - offset, section: 0) })
+    // save the tracks that are about to be deleted in order to insert them again later
     let draggingTracks = tracks
       .enumerated()
       .filter { dragIndexes.contains($0.offset) }
       .map { $0.element }
     
-    print("draggingTracks: ", draggingTracks.map { $0.filename })
-    
     collectionView.deselectAll(nil)
-    
     collectionView.animator().performBatchUpdates({
+      // remove all dragged tracks from the tracks array
       tracks = tracks
         .enumerated()
         .filter { !dragIndexes.contains($0.offset) }
         .map { $0.element }
-      
+      // insert removed tracks at new location
       tracks.insert(contentsOf: draggingTracks, at: indexPath.item - offset)
     }, completionHandler: { success in
       collectionView.reloadData()
       collectionView.selectItems(at: dropIndexPaths, scrollPosition: NSCollectionView.ScrollPosition.centeredHorizontally)
     })
-    
     return true
   }
   
