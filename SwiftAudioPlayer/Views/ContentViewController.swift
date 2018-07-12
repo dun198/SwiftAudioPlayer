@@ -250,30 +250,30 @@ extension ContentViewController: NSCollectionViewDelegate {
   }
   
   func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: IndexPath, dropOperation: NSCollectionView.DropOperation) -> Bool {
-    print("drop indexPath: ", indexPath)
-
+    
+    let dragIndexes = itemsForDraggingSession.map { $0.item }
+    let offset = dragIndexes.filter { $0 < indexPath.item }.count
+    let dropIndexPaths: Set = Set(dragIndexes.indices.map { IndexPath(item: $0 + indexPath.item - offset, section: 0) })
+    
+    let draggingTracks = tracks
+      .enumerated()
+      .filter { dragIndexes.contains($0.offset) }
+      .map { $0.element }
+    
+    print("draggingTracks: ", draggingTracks.map { $0.filename })
+    
     collectionView.deselectAll(nil)
-    var newSelectionIndexes = Set<IndexPath>()
     
     collectionView.animator().performBatchUpdates({
-      for i in 0 ..< itemsForDraggingSession.count {
-        let dragIndexPath = itemsForDraggingSession.removeFirst()
-
-        let dragIndex = dragIndexPath.item
-        let dropIndex = indexPath.item + i
-        let dropOffset = dragIndex >= dropIndex ? 0 : -1
-        
-        let track = tracks[dragIndex]
-        tracks.remove(at: dragIndex)
-        tracks.insert(track, at: dropIndex + dropOffset)
-        
-        let dropIndexPath = IndexPath(item: dropIndex + dropOffset, section: 0)
-        collectionView.animator().moveItem(at: dragIndexPath, to: dropIndexPath)
-        newSelectionIndexes.insert(dropIndexPath)
-      }
+      tracks = tracks
+        .enumerated()
+        .filter { !dragIndexes.contains($0.offset) }
+        .map { $0.element }
+      
+      tracks.insert(contentsOf: draggingTracks, at: indexPath.item - offset)
     }, completionHandler: { success in
       collectionView.reloadData()
-      collectionView.selectItems(at: newSelectionIndexes, scrollPosition: NSCollectionView.ScrollPosition.centeredHorizontally)
+      collectionView.selectItems(at: dropIndexPaths, scrollPosition: NSCollectionView.ScrollPosition.centeredHorizontally)
     })
     
     return true
