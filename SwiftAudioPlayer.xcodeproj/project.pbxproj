@@ -51,7 +51,7 @@
 		D2F09888209B8E83005B2A22 /* CMTime+DurationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F09887209B8E83005B2A22 /* CMTime+DurationText.swift */; };
 		D2F0988D209BBFBD005B2A22 /* CollectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0988C209BBFBD005B2A22 /* CollectionScrollView.swift */; };
 		D2F8AC5F20F8317E004EBC4D /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F8AC5E20F8317E004EBC4D /* MenuBarManager.swift */; };
-		D2F8AC6220F8DB74004EBC4D /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F8AC6120F8DB74004EBC4D /* Defaults.swift */; };
+		D2F8AC6220F8DB74004EBC4D /* UserDefaults+Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F8AC6120F8DB74004EBC4D /* UserDefaults+Preferences.swift */; };
 		D2FADA4C20EF76A900CC5E88 /* ToolbarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2FADA4B20EF76A900CC5E88 /* ToolbarBackgroundView.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,7 +103,7 @@
 		D2F09887209B8E83005B2A22 /* CMTime+DurationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMTime+DurationText.swift"; sourceTree = "<group>"; };
 		D2F0988C209BBFBD005B2A22 /* CollectionScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionScrollView.swift; sourceTree = "<group>"; };
 		D2F8AC5E20F8317E004EBC4D /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
-		D2F8AC6120F8DB74004EBC4D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		D2F8AC6120F8DB74004EBC4D /* UserDefaults+Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Preferences.swift"; sourceTree = "<group>"; };
 		D2FADA4B20EF76A900CC5E88 /* ToolbarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarBackgroundView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				D295C67120DA3CD50033836C /* Preferences.swift */,
-				D2F8AC6120F8DB74004EBC4D /* Defaults.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -217,6 +216,7 @@
 		D29C53D0209450B800B83B84 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D2F8AC6120F8DB74004EBC4D /* UserDefaults+Preferences.swift */,
 				D280AD2A2071174400692345 /* FileManager+MusicFiles.swift */,
 				D29C53D12094511C00B83B84 /* NSView+Constraints.swift */,
 				D29C53F92098E24000B83B84 /* URL+MusicFile.swift */,
@@ -430,7 +430,7 @@
 				D2F09882209A9A72005B2A22 /* CALayer.swift in Sources */,
 				D2DE00E820F30B4500A84E3A /* VolumePopoverViewController.swift in Sources */,
 				D2FADA4C20EF76A900CC5E88 /* ToolbarBackgroundView.swift in Sources */,
-				D2F8AC6220F8DB74004EBC4D /* Defaults.swift in Sources */,
+				D2F8AC6220F8DB74004EBC4D /* UserDefaults+Preferences.swift in Sources */,
 				D29C53E72096549A00B83B84 /* SingleColumnFlowLayout.swift in Sources */,
 				D21B323120A305320082C26C /* ColorSchemeMenu.swift in Sources */,
 				D29C53D42094A8CF00B83B84 /* ProgressBarView.swift in Sources */,

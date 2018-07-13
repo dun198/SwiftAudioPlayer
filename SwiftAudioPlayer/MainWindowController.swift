@@ -62,7 +62,7 @@ class MainWindowController: NSWindowController {
   }
   
   private func setupObserver() {
-    observer = UserDefaults.standard.observe(\.colorScheme, options: [.initial, .new], changeHandler: { [weak self] (defaults, change) in
+    observer = UserDefaults.standard.observe(\.colorScheme, options: [.initial, .new], changeHandler: { (defaults, change) in
       guard let colorSchemeName = change.newValue else { return }
       let colorScheme: Preferences.ColorScheme = Preferences.ColorScheme(rawValue: colorSchemeName) ?? .system
       var appearance: NSAppearance?
