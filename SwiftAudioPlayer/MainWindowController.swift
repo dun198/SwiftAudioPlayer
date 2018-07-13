@@ -52,7 +52,7 @@ class MainWindowController: NSWindowController {
     return identifiers
   }
   
-  var colorScheme: ColorScheme = ColorScheme.system {
+  var colorScheme: ViewModel.ColorScheme = .system {
     didSet {
       setColorScheme(to: colorScheme)
     }
@@ -104,7 +104,7 @@ class MainWindowController: NSWindowController {
     }
   }
   
-  private func setColorScheme(to colorScheme: ColorScheme) {
+  private func setColorScheme(to colorScheme: ViewModel.ColorScheme) {
     var appearance: NSAppearance?
     switch colorScheme {
     case .system:

@@ -15,6 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="QQt-h3-Kng" userLabel="Delegate" customClass="AppDelegate" customModule="SwiftAudioPlayer" customModuleProvider="target"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="Rpk-zd-VY9" customClass="MenuBarManager" customModule="SwiftAudioPlayer" customModuleProvider="target"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="SwiftAudioPlayer" id="1Xt-HY-uBw">
@@ -627,7 +628,11 @@
                             </menuItem>
                             <menuItem title="Color Scheme" id="xCS-A6-IN5">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Color Scheme" id="GAK-qf-Ya6" customClass="ColorSchemeMenu" customModule="SwiftAudioPlayer" customModuleProvider="target"/>
+                                <menu key="submenu" title="Color Scheme" id="GAK-qf-Ya6" userLabel="Color Scheme Menu" customClass="ColorSchemeMenu" customModule="SwiftAudioPlayer" customModuleProvider="target">
+                                    <connections>
+                                        <outlet property="menuDelegate" destination="Rpk-zd-VY9" id="d87-gv-MHe"/>
+                                    </connections>
+                                </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">

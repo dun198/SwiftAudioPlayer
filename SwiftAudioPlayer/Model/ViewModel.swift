@@ -8,29 +8,24 @@
 
 import Foundation
 
-enum ColorScheme: String {
-  case system = "System"
-  case dark = "Dark"
-  case light = "Light"
-  
-  static let allValues = [system, dark, light]
-}
 
 protocol ViewModelProtocol {
-  var colorScheme: Dynamic<ColorScheme> { get }
-  func changeColorScheme(to colorScheme: ColorScheme)
+  var colorScheme: ViewModel.ColorScheme { get set }
 }
 
-struct ViewModel:  ViewModelProtocol {
+struct ViewModel: ViewModelProtocol {
   
-  let colorScheme: Dynamic<ColorScheme>
-  
-  func changeColorScheme(to colorScheme: ColorScheme) {
-    self.colorScheme.value = colorScheme
-    print("colorScheme changed to \(colorScheme)")
+  enum ColorScheme: String, CaseIterable {
+    case system = "System"
+    case dark = "Dark"
+    case light = "Light"
+    
+    static let allValues = [system, dark, light]
   }
   
-  init() {
-    self.colorScheme = Dynamic(.system)
+  var colorScheme: ColorScheme
+ 
+  init(colorScheme: ColorScheme = .system) {
+    self.colorScheme = .system
   }
 }

@@ -28,7 +28,7 @@ struct Preferences {
   
   static let defaultPreferences: [Preferences.Key: Any] = [
     .quitAfterWindowClosed: false,
-    .colorScheme: ColorScheme.system.rawValue,
+    .colorScheme: ViewModel.ColorScheme.system.rawValue,
     .fadeControlsWhenScrolling: true,
     .controlsVisibility: 0.2,
     .volume: 1.0
