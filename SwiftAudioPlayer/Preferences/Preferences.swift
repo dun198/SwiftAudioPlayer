@@ -24,11 +24,19 @@ struct Preferences {
     static let volume = Key(rawValue: "volume")
   }
   
+  enum ColorScheme: String, CaseIterable {
+    case system = "System"
+    case dark = "Dark"
+    case light = "Light"
+    
+    static let allValues = [system, dark, light]
+  }
+  
   // MARK: - Defaults
   
   static let defaultPreferences: [Preferences.Key: Any] = [
     .quitAfterWindowClosed: false,
-    .colorScheme: ViewModel.ColorScheme.system.rawValue,
+    .colorScheme: ColorScheme.system.rawValue,
     .fadeControlsWhenScrolling: true,
     .controlsVisibility: 0.2,
     .volume: 1.0

@@ -6,14 +6,20 @@
 //  Copyright © 2018 Tobias Dunkel. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 class MenuBarManager: NSObject {
+
+  static let shared = MenuBarManager()
+  
+  @IBAction func changeColorScheme(_ sender: NSMenu) {
+
+  }
   
 }
 
 extension MenuBarManager: ColorSchemeMenuDelegate {
-  func test() {
-    print("colorSchemeMenuBarDelegate is working")
+  func colorSchemeMenu(_ menu: NSMenu, didSelectColorScheme colorScheme: Preferences.ColorScheme) {
+    print(colorScheme.rawValue)
   }
 }

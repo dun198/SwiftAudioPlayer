@@ -15,7 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="QQt-h3-Kng" userLabel="Delegate" customClass="AppDelegate" customModule="SwiftAudioPlayer" customModuleProvider="target"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="Rpk-zd-VY9" customClass="MenuBarManager" customModule="SwiftAudioPlayer" customModuleProvider="target"/>
+        <customObject id="Rpk-zd-VY9" userLabel="Menu Bar Manager" customClass="MenuBarManager" customModule="SwiftAudioPlayer" customModuleProvider="target"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="SwiftAudioPlayer" id="1Xt-HY-uBw">
@@ -628,10 +628,12 @@
                             </menuItem>
                             <menuItem title="Color Scheme" id="xCS-A6-IN5">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Color Scheme" id="GAK-qf-Ya6" userLabel="Color Scheme Menu" customClass="ColorSchemeMenu" customModule="SwiftAudioPlayer" customModuleProvider="target">
-                                    <connections>
-                                        <outlet property="menuDelegate" destination="Rpk-zd-VY9" id="d87-gv-MHe"/>
-                                    </connections>
+                                <menu key="submenu" autoenablesItems="NO" id="KgJ-QY-QAG" customClass="ColorSchemeMenu" customModule="SwiftAudioPlayer" customModuleProvider="target">
+                                    <items>
+                                        <menuItem title="System" state="on" id="aST-ca-kKS"/>
+                                        <menuItem title="Dark" id="Xqh-WV-tQ2"/>
+                                        <menuItem title="Light" id="a8y-rt-9wg"/>
+                                    </items>
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
@@ -744,16 +746,16 @@
                                 </textField>
                             </gridCell>
                             <gridCell row="xa7-Dg-sux" column="DGk-cA-qyc" id="rQb-wH-Wiw">
-                                <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VdJ-u3-tP2">
+                                <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M8W-Co-u2p">
                                     <rect key="frame" x="94" y="68" width="83" height="26"/>
-                                    <popUpButtonCell key="cell" type="push" title="System" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4fJ-fB-sT5" id="VkM-ib-LYs">
+                                    <popUpButtonCell key="cell" type="push" title="System" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Wz5-hU-B7P" id="LiE-4C-Eba">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
-                                        <menu key="menu" id="hCB-Ql-kZd">
+                                        <menu key="menu" id="TEL-Se-eAf" customClass="ColorSchemeMenu" customModule="SwiftAudioPlayer" customModuleProvider="target">
                                             <items>
-                                                <menuItem title="System" state="on" id="4fJ-fB-sT5" userLabel="System"/>
-                                                <menuItem title="Dark" id="oui-8T-9jh"/>
-                                                <menuItem title="Light" id="B72-xa-5ZR"/>
+                                                <menuItem title="System" state="on" id="Wz5-hU-B7P"/>
+                                                <menuItem title="Dark" id="chJ-hi-V1L"/>
+                                                <menuItem title="Light" id="kH5-80-yQ4"/>
                                             </items>
                                         </menu>
                                     </popUpButtonCell>

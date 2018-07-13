@@ -169,21 +169,21 @@ class ContentViewController: NSViewController {
   }
   
   func showControls() {
-    setViewState(to: .visible, for: fadingControls)
+    setControlsVisibility(to: .visible, for: fadingControls)
   }
   
   func fadeControls() {
     guard UserDefaults.standard.bool(forKey: Preferences.Key.fadeControlsWhenScrolling.rawValue) == true else { return }
-    setViewState(to: .hidden, for: fadingControls)
+    setControlsVisibility(to: .hidden, for: fadingControls)
   }
   
-  private func setViewState(to state: Visibility, for views: [NSView]) {
+  private func setControlsVisibility(to state: Visibility, for views: [NSView]) {
     let alphaValue: CGFloat = state == .visible ? 1 : CGFloat(UserDefaults.standard.float(forKey: Preferences.Key.controlsVisibility.rawValue))
     NSAnimationContext.runAnimationGroup({ (context) in
       context.duration = showHideInterfaceAnimationDuration
       context.timingFunction = CAMediaTimingFunction(name: .easeOut)
-      for view in views {
-        view.animator().alphaValue = alphaValue
+      views.forEach {
+        $0.animator().alphaValue = alphaValue
       }
     })
   }

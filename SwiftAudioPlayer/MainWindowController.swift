@@ -32,6 +32,8 @@ struct ToolbarItemConfiguration {
 
 class MainWindowController: NSWindowController {
   
+  var observer: NSKeyValueObservation?
+  
   lazy var splitViewController: MainSplitViewController = {
     let vc = MainSplitViewController()
     vc.sidebarDelegate = self
@@ -52,16 +54,30 @@ class MainWindowController: NSWindowController {
     return identifiers
   }
   
-  var colorScheme: ViewModel.ColorScheme = .system {
-    didSet {
-      setColorScheme(to: colorScheme)
-    }
-  }
-  
   override func loadWindow() {
     super.loadWindow()
     setupWindow()
     setupToolbar()
+    setupObserver()
+  }
+  
+  private func setupObserver() {
+    observer = UserDefaults.standard.observe(\.colorScheme, options: [.initial, .new], changeHandler: { [weak self] (defaults, change) in
+      guard let colorSchemeName = change.newValue else { return }
+      let colorScheme: Preferences.ColorScheme = Preferences.ColorScheme(rawValue: colorSchemeName) ?? .system
+      var appearance: NSAppearance?
+      switch colorScheme {
+      case .system:
+        appearance = nil
+      case .dark:
+        appearance = NSAppearance(named: .vibrantDark)
+      case .light:
+        appearance = NSAppearance(named: .vibrantLight)
+      }
+      for window in NSApp.windows {
+        window.appearance = appearance
+      }
+    })
   }
   
   override func windowDidLoad() {
@@ -74,7 +90,7 @@ class MainWindowController: NSWindowController {
     guard let window = window else { fatalError() }
     window.delegate = self
     window.contentView = splitViewController.view
-    
+
     window.title = "SwiftAudioPlayer"
     window.setFrameAutosaveName("MainWindow")
     window.titleVisibility = .hidden
@@ -102,19 +118,6 @@ class MainWindowController: NSWindowController {
       toolbar.insertItem(withItemIdentifier: .flexibleSpace, at: 4)
       toolbar.insertItem(withItemIdentifier: .search, at: 5)
     }
-  }
-  
-  private func setColorScheme(to colorScheme: ViewModel.ColorScheme) {
-    var appearance: NSAppearance?
-    switch colorScheme {
-    case .system:
-      appearance = nil
-    case .dark:
-      appearance = NSAppearance(named: .vibrantDark)
-    case .light:
-      appearance = NSAppearance(named: .vibrantLight)
-    }
-    self.window?.appearance = appearance
   }
 }
 

@@ -13,8 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
   var windowController: MainWindowController!
   var remoteCommandManager: RemoteCommandManager!
-//  var nowPlayingInfoManager: NowPlayingInfoManager!
-  
+    
   let player = Player.shared
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {

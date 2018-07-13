@@ -8,19 +8,18 @@
 
 import Cocoa
 
-@objc protocol ColorSchemeMenuDelegate {
-  func test()
+protocol ColorSchemeMenuDelegate {
+  func colorSchemeMenu(_ menu: NSMenu, didSelectColorScheme colorScheme: Preferences.ColorScheme)
 }
 
 class ColorSchemeMenu: NSMenu {
   
-  @IBOutlet weak var menuDelegate: ColorSchemeMenuDelegate?
-  
-  var colorScheme: ViewModel.ColorScheme = .system {
+  var menuDelegate: ColorSchemeMenuDelegate?
+  var observer: NSKeyValueObservation?
+
+  var selectedColorSchemeName: String! {
     didSet {
       updateMenuItems()
-      guard let windowController = NSApp.mainWindow?.windowController as? MainWindowController else { return }
-      windowController.colorScheme = colorScheme
     }
   }
   
@@ -35,30 +34,33 @@ class ColorSchemeMenu: NSMenu {
   }
   
   private func setup() {
-    for theme in ViewModel.ColorScheme.allCases {
+    self.removeAllItems()
+    for theme in Preferences.ColorScheme.allCases {
       let item = NSMenuItem()
       item.title = theme.rawValue
       item.action = #selector(handleSetColorScheme(_:))
       item.target = self
       self.addItem(item)
     }
-    let colorSchemeName = UserDefaults.standard.string(forKey: Preferences.Key.colorScheme.rawValue) ?? "System"
-    self.colorScheme = ViewModel.ColorScheme(rawValue: colorSchemeName) ?? .system
+    self.selectedColorSchemeName = UserDefaults.standard.string(forKey: Preferences.Key.colorScheme.rawValue) ?? "System"
+
+    observer = UserDefaults.standard.observe(\.colorScheme, options: [.initial, .new], changeHandler: { [weak self] (defaults, change) in
+      self?.selectedColorSchemeName = change.newValue
+    })
+  }
+  
+  deinit {
+    observer?.invalidate()
   }
   
   private func updateMenuItems() {
     for item in self.items {
-      item.image = item.title == colorScheme.rawValue ? item.onStateImage : item.offStateImage
-      item.isEnabled = item.title == colorScheme.rawValue ? false : true
-      item.target = item.title == colorScheme.rawValue ? nil : self
+      item.state = item.title == selectedColorSchemeName ? NSControl.StateValue.on : NSControl.StateValue.off
     }
   }
   
   @objc private func handleSetColorScheme(_ sender: NSMenuItem?) {
-    menuDelegate?.test()
-    colorScheme = ViewModel.ColorScheme(rawValue: sender?.title ?? colorScheme.rawValue) ?? colorScheme
+    guard let colorSchemeName = sender?.title else { return }
+    UserDefaults.standard.set(colorSchemeName, forKey: Preferences.Key.colorScheme.rawValue)
   }
-}
-
-extension ColorSchemeMenu: NSMenuDelegate {
 }

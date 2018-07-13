@@ -34,13 +34,13 @@ class Player: NSObject {
   fileprivate let notificationCenter: NotificationCenter!
   fileprivate let nowPlayingInfoCenter: MPNowPlayingInfoCenter!
   
-  private let player = AVPlayer()
+  fileprivate let player = AVPlayer()
   
-  private(set) var isSeekInProgress = false
-  private var chaseTime: CMTime = .zero
+  fileprivate var seekInProgress = false
+  fileprivate var chaseTime: CMTime = .zero
   
   // Bindable Dynamic Variables
-  private(set) var percentProgress: Dynamic<TimeInterval> = Dynamic(0)
+  private(set) var percentProgress: Dynamic<Double> = Dynamic(0)
   private(set) var playbackPosition: Dynamic<CMTime> = Dynamic(.zero)
   
   private var playerItem: AVPlayerItem! {
@@ -135,7 +135,7 @@ class Player: NSObject {
     if CMTimeCompare(newChaseTime, player.currentTime()) != 0
     {
       chaseTime = newChaseTime;
-      if !isSeekInProgress
+      if !seekInProgress
       {
         actuallySeekToTime()
       }
@@ -145,7 +145,7 @@ class Player: NSObject {
   }
   
   private func actuallySeekToTime() {
-    isSeekInProgress = true
+    seekInProgress = true
     
     let seekTimeInProgress = chaseTime
     let tolerance: CMTime = .zero
@@ -153,7 +153,7 @@ class Player: NSObject {
     player.seek(to: seekTimeInProgress, toleranceBefore: tolerance,
                 toleranceAfter: tolerance) { [unowned self] (isFinished) in
                   if CMTimeCompare(seekTimeInProgress, self.chaseTime) == 0 {
-                    self.isSeekInProgress = false
+                    self.seekInProgress = false
                     if self.isPlaying { self.player.play() }
                     self.updatePlaybackMetadata()
                     self.notificationCenter.post(name: .playerPositionChanged, object: seekTimeInProgress)
@@ -172,6 +172,10 @@ class Player: NSObject {
       player.volume = volume
       UserDefaults.standard.set(volume, forKey: Preferences.Key.volume.rawValue)
     }
+  }
+  
+  public var playbackRate: Float {
+    return player.rate
   }
   
   public var isPlaying: Bool {
@@ -201,8 +205,8 @@ class Player: NSObject {
     }
   }
   
-  var playbackRate: Float {
-    return player.rate
+  public var isSeekInProgress: Bool {
+    return seekInProgress
   }
   
   func play(_ track: Track) {
@@ -268,7 +272,7 @@ class Player: NSObject {
 }
 
 // MARK: - MPNowPlayingInforCenter Management
-extension Player {
+private extension Player {
   
   func updateTrackMetadata() {
     guard let track = currentTrack else {
