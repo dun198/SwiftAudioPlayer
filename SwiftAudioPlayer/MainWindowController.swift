@@ -95,7 +95,9 @@ class MainWindowController: NSWindowController {
     window.setFrameAutosaveName("MainWindow")
     window.titleVisibility = .hidden
     window.titlebarAppearsTransparent = true
-    window.isMovableByWindowBackground = true
+    if #available(macOS 10.14, *) {
+      window.isMovableByWindowBackground = true
+    } else {}
     window.styleMask.insert([.fullSizeContentView])
     window.toolbar = NSToolbar(identifier: NSToolbar.Identifier.init("MainToolbar"))
     window.makeKeyAndOrderFront(nil)

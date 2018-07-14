@@ -124,14 +124,17 @@ class TrackItem: NSCollectionViewItem {
       } else {
         view.wantsLayer = true
         view.backgroundColor = NSColor.selectedTextBackgroundColor
+        trackTitleLabel.textColor = .black
+        [trackNumberLabel, durationLabel].forEach { $0.textColor = NSColor(white: 0.3, alpha: 1) }
       }
       view.layer?.cornerRadius = 4
     } else {
       view.backgroundColor = nil
       view.cornerRadius = nil
       view.layer = nil
-      
       if #available(OSX 10.14, *) {} else {
+        trackTitleLabel.textColor = .labelColor
+        [trackNumberLabel, durationLabel].forEach { $0.textColor = .secondaryLabelColor }
         view.wantsLayer = false
       }
     }
